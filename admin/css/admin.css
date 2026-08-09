@@ -1,0 +1,246 @@
+.card-dashboard {
+
+    background: #000;
+
+    border: 2px solid #bb9000;
+
+    border-radius: 15px;
+
+    padding: 30px;
+
+    text-align: center;
+
+    height: 100%;
+
+    transition: .3s;
+
+}
+
+
+
+.card-dashboard:hover {
+
+    transform: translateY(-5px);
+
+    box-shadow: 0 0 20px rgba(212, 175, 55, .30);
+
+}
+
+
+
+.icone-dashboard {
+
+    font-size: 60px;
+
+    color: #bb9000;
+
+    margin-bottom: 20px;
+
+}
+
+
+
+.card-dashboard h4 {
+
+    color: #bb9000;
+
+    font-weight: 700;
+
+    margin-bottom: 15px;
+
+}
+
+
+
+.card-dashboard p {
+
+    color: #ddd;
+
+    min-height: 60px;
+
+}
+
+
+
+.text-gold {
+
+    color: #bb9000;
+
+}
+
+/* TITULO */
+
+.titulo-admin {
+
+    color: #bb9000;
+    font-weight: 800;
+    text-transform: uppercase;
+    border-bottom: 3px solid #bb9000;
+    padding-bottom: 10px;
+
+}
+
+
+
+/* BOT√O ADICIONAR */
+
+.btn-adicionar {
+
+    background: #bb9000 !important;
+    color: #000 !important;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 12px 25px;
+    border-radius: 10px;
+    border: none;
+    transition: .3s;
+
+}
+
+
+
+.btn-adicionar:hover {
+
+    background: #fff !important;
+    color: #000 !important;
+    transform: translateY(-2px);
+
+}
+
+/* FORM ADMIN */
+
+.card-admin {
+
+    background: #000;
+    border: 2px solid #bb9000;
+    border-radius: 15px;
+    padding: 30px;
+
+}
+
+
+
+.form-label {
+
+    color: #bb9000;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: .9rem;
+
+}
+
+
+
+.form-control,
+.form-select {
+
+    background: #5f5f5f;
+    color: #fff;
+    border: 1px solid #bb9000;
+    border-radius: 8px;
+
+}
+
+
+
+.form-control:focus,
+.form-select:focus {
+
+    background: #5f5f5f;
+    color: #fff;
+    border-color: #fff;
+    box-shadow: 0 0 0 .2rem rgba(212, 175, 55, .25);
+
+}
+
+
+
+.form-select option {
+
+    background: #5f5f5f;
+    color: #fff;
+
+}
+
+
+
+/* PREVIEW */
+
+.preview-imagem {
+
+    padding: 10px;
+    background: #5f5f5f;
+    border: 2px solid #bb9000;
+    border-radius: 12px;
+    display: inline-block;
+
+}
+
+
+.preview-imagem img {
+
+    width: 250px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 8px;
+
+}
+
+
+
+/* BOT√ÉO VOLTAR */
+
+.btn-voltar {
+
+    background: #333 !important;
+    color: #fff !important;
+    font-weight: bold;
+
+}
+
+
+.btn-voltar:hover {
+
+    background: #555 !important;
+    color: #fff !important;
+
+}
+
+.btn-gold {
+
+    background: #be9200 !important;
+    color: #fff;
+    font-weight: bold;
+
+}
+
+
+.btn-gold:hover {
+
+    background: #555 !important;
+    color: #fff;
+
+}
+
+
+
+
+@media(max-width:768px) {
+
+
+    .card-admin {
+
+        padding: 15px;
+
+    }
+
+
+    .preview-imagem img {
+
+        width: 100%;
+        height: auto;
+
+    }
+
+
+}
