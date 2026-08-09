@@ -227,11 +227,25 @@ ORDER BY ma.nome,mo.nome
                 </label>
 
 
-                <input
-                    type="text"
-                    class="form-control"
+                <select
                     name="cambio"
-                    value="<?= $veiculo['cambio'] ?? '' ?>">
+                    class="form-select">
+
+                    <option value="">
+                        Selecione o câmbio
+                    </option>
+
+
+                    <option value="manual" <?= $veiculo['cambio'] == "manual" ? 'selected' : '' ?>>
+                        manual
+                    </option>
+
+                    <option value="automático" <?= $veiculo['cambio'] == "automatico" ? 'selected' : '' ?>>
+                        automático
+                    </option>
+
+
+                </select>
 
 
             </div>
@@ -249,11 +263,41 @@ ORDER BY ma.nome,mo.nome
                 </label>
 
 
-                <input
-                    type="text"
-                    class="form-control"
+                <select
                     name="combustivel"
-                    value="<?= $veiculo['combustivel'] ?? '' ?>">
+                    class="form-select">
+
+                    <option value="">
+                        Selecione o combustível
+                    </option>
+
+
+                    <option value="flex" <?= $veiculo['combustivel'] == "flex" ? 'selected' : '' ?>>
+                        flex
+                    </option>
+
+                    <option value="gasolina" <?= $veiculo['combustivel'] == "gasolina" ? 'selected' : '' ?>>
+                        gasolina
+                    </option>
+
+                    <option value="etanol" <?= $veiculo['combustivel'] == "etanol" ? 'selected' : '' ?>>
+                        etanol
+                    </option>
+
+                    <option value="diesel" <?= $veiculo['combustivel'] == "diesel" ? 'selected' : '' ?>>
+                        diesel
+                    </option>
+
+                    <option value="eletrico" <?= $veiculo['combustivel'] == "hibrido" ? 'selected' : '' ?>>
+                        elétrico
+                    </option>
+
+                    <option value="hibrido" <?= $veiculo['combustivel'] == "hibrido" ? 'selected' : '' ?>>
+                        híbrido
+                    </option>
+
+
+                </select>
 
 
             </div>

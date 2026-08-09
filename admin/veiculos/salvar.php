@@ -12,7 +12,7 @@ $ano = $_POST['ano'];
 $km = $_POST['km'];
 $cambio = $_POST['cambio'];
 $combustivel = $_POST['combustivel'];
-$descricao = $_POST['descricao'];
+$descricao = $_POST['descricao'];   
 
 
 // Tratamento do valor
@@ -40,7 +40,7 @@ if (
     $pasta = "../../img/carros/";
 
 
-    // cria pasta se não existir
+    // cria pasta se nï¿½o existir
 
     if (!is_dir($pasta)) {
 
@@ -118,7 +118,7 @@ if ($id) {
     } else {
 
 
-        // mantém imagem atual
+        // mantï¿½m imagem atual
 
         $sql = $pdo->prepare("
 
