@@ -125,63 +125,81 @@ $veiculos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                         <div class="card-body">
 
+                            <div class="dados-veiculo">
 
-                            <h4 class="marca">
-                                <?= htmlspecialchars($veiculo['marca']) ?>
-                            </h4>
+                                <div class="identificacao-veiculo">
 
+                                    <h4 class="marca">
+                                        <?= htmlspecialchars($veiculo['marca']) ?>
+                                    </h4>
 
-                            <h5 class="modelo">
-                                <?= htmlspecialchars($veiculo['modelo']) ?>
-                            </h5>
-
-
-                            <hr>
-
-
-                            <div class="info-veiculo">
-
-                                <div class="item-info">
-
-                                    <i class="bi bi-calendar3"></i>
-
-                                    <?= $veiculo['ano'] ?>
+                                    <h5 class="modelo">
+                                        <?= htmlspecialchars($veiculo['modelo']) ?>
+                                    </h5>
 
                                 </div>
 
-                                <div class="item-info">
 
-                                    <i class="bi bi-speedometer2"></i>
+                                <div class="info-veiculo">
 
-                                    <?= number_format($veiculo['km'], 0, ",", ".") ?>
+                                    <div class="item-info">
 
-                                </div>
+                                        <i class="bi bi-calendar3"></i>
 
-                                <div class="item-info">
+                                        <?= $veiculo['ano'] ?>
 
-                                    <i class="bi bi-gear-fill"></i>
+                                    </div>
 
-                                    <?= htmlspecialchars($veiculo['cambio']) ?>
 
-                                </div>
+                                    <div class="item-info">
 
-                                <div class="item-info">
+                                        <i class="bi bi-speedometer2"></i>
 
-                                    <i class="bi bi-fuel-pump-fill"></i>
+                                        <?= number_format($veiculo['km'], 0, ",", ".") ?>
 
-                                    <?= htmlspecialchars($veiculo['combustivel']) ?>
+                                    </div>
+
+
+                                    <div class="item-info">
+
+                                        <i class="bi bi-gear-fill"></i>
+
+                                        <?= htmlspecialchars($veiculo['cambio']) ?>
+
+                                    </div>
+
+
+                                    <div class="item-info">
+
+                                        <i class="bi bi-fuel-pump-fill"></i>
+
+                                        <?= htmlspecialchars($veiculo['combustivel']) ?>
+
+                                    </div>
 
                                 </div>
 
                             </div>
 
 
-                            <h3 class="valor">
+                            <div class="acoes-veiculo">
 
-                                R$ <?= number_format($veiculo['valor'], 2, ",", ".") ?>
+                                <div class="valor">
 
-                            </h3>
+                                    R$ <?= number_format($veiculo['valor'], 2, ",", ".") ?>
 
+                                </div>
+
+
+                                <a
+                                    href="veiculo.php?id=<?= $veiculo['id'] ?>"
+                                    class="btn-saiba-mais">
+
+                                    Saiba mais
+
+                                </a>
+
+                            </div>
 
                         </div>
 

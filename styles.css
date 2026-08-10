@@ -411,6 +411,130 @@
 
 }
 
+.dados-veiculo {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin-bottom: 18px;
+
+}
+
+
+/* Marca e modelo */
+
+.identificacao-veiculo {
+
+    flex: 0 0 38%;
+    text-align: center;
+
+}
+
+
+.card-veiculo .marca {
+
+    color: #bb9000;
+
+    font-size: 1.35rem;
+
+    font-weight: 700;
+
+    margin: 0 0 4px 0;
+
+}
+
+
+.card-veiculo .modelo {
+
+    color: #fff;
+
+    font-size: 1rem;
+
+    font-weight: 400;
+
+    margin: 0;
+
+}
+
+
+/* Características */
+
+.card-veiculo .info-veiculo {
+
+    flex: 1;
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 8px 10px;
+
+    background: #2a2a2a;
+
+    border-radius: 10px;
+
+    padding: 10px;
+
+    margin: 0;
+
+}
+
+
+.card-veiculo .item-info {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    color: #e5e5e5;
+
+    font-size: .78rem;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+
+}
+
+
+.card-veiculo .item-info i {
+
+    color: #bb9000;
+
+    font-size: 1rem;
+
+}
+
+
+/* Valor */
+
+.card-veiculo .valor {
+
+    margin-top: 18px;
+
+    text-align: center;
+
+    background: #bb9000;
+
+    color: #111;
+
+    border-radius: 10px;
+
+    padding: 12px;
+
+    font-weight: 700;
+
+    font-size: 1.55rem;
+
+    box-shadow: 0 0 12px rgba(187, 144, 0, .22);
+
+}
+
 .card-veiculo .imagem-veiculo {
     height: 240px;
     background: #f5f5f5;
@@ -427,6 +551,152 @@
     object-fit: cover;
 }
 
+@media(max-width:768px) {
+
+    .dados-veiculo {
+
+        flex-direction: row;
+
+        align-items: center;
+
+        gap: 12px;
+
+    }
+
+
+    .identificacao-veiculo {
+
+        flex: none;
+
+    }
+
+
+    .card-veiculo .info-veiculo {
+
+        grid-template-columns: 1fr 1fr;
+
+    }
+
+
+    .card-veiculo .marca {
+
+        font-size: 1.3rem;
+
+    }
+
+
+    .card-veiculo .modelo {
+
+        font-size: 1rem;
+
+    }
+
+
+    .card-veiculo .valor {
+
+        font-size: 1.35rem;
+
+    }
+
+}
+
+.acoes-veiculo {
+
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 18px;
+
+}
+
+
+.acoes-veiculo .valor {
+
+    flex: 1;
+
+    margin: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #bb9000;
+
+    color: #111;
+
+    border-radius: 10px;
+
+    padding: 12px;
+
+    font-weight: 700;
+
+    font-size: 1.35rem;
+
+    box-shadow: 0 0 12px rgba(187, 144, 0, .22);
+
+}
+
+
+.btn-saiba-mais {
+
+    flex: 1;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: transparent;
+
+    color: #bb9000;
+
+    border: 1px solid #bb9000;
+
+    border-radius: 10px;
+
+    padding: 12px;
+
+    font-size: 1rem;
+
+    font-weight: 700;
+
+    text-decoration: none;
+
+    transition: .3s;
+
+}
+
+
+.btn-saiba-mais:hover {
+
+    background: #bb9000;
+
+    color: #111;
+
+    box-shadow: 0 0 12px rgba(187, 144, 0, .25);
+
+}
+
+@media(max-width:768px) {
+
+    .acoes-veiculo {
+
+        flex-direction: column;
+
+    }
+
+    .acoes-veiculo .valor,
+    .btn-saiba-mais {
+
+        width: 100%;
+
+    }
+
+}
 
 
 /* Responsivo */
