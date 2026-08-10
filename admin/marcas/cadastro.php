@@ -1,6 +1,7 @@
 <?php
 
 require_once "../../conexao.php";
+require_once "../includes/auth.php";
 
 $id = $_GET['id'] ?? null;
 

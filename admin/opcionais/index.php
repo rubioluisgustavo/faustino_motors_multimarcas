@@ -4,7 +4,7 @@
 
 require_once "../../conexao.php";
 require_once "../includes/auth.php";
-require_once "../includes/auth.php";
+
 
 // excluir
 
@@ -13,7 +13,7 @@ if (isset($_GET['excluir'])) {
     $id = $_GET['excluir'];
 
     $sql = $pdo->prepare("
-        DELETE FROM veiculos 
+        DELETE FROM opcionais 
         WHERE id = ?
     ");
 
@@ -31,44 +31,31 @@ $sql = $pdo->query("
 
 SELECT
 
-v.id,
-ma.nome AS marca,
-mo.nome AS modelo,
-v.ano,
-v.km,
-v.valor
+id,
+nome
 
 
-FROM veiculos v
+FROM opcionais
 
-
-INNER JOIN modelos mo
-ON mo.id = v.id_modelo
-
-
-INNER JOIN marcas ma
-ON ma.id = mo.id_marca
-
-
-ORDER BY v.id DESC
+ORDER BY nome ASC
 
 
 ");
 
 
-$veiculos = $sql->fetchAll();
+$opcionais = $sql->fetchAll();
 
 
 ?>
 
-<link href="../veiculos/veiculos.css" rel="stylesheet">
+<link href="../opcionais/opcionais.css" rel="stylesheet">
 
 
 <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
 
 
     <h2 class="titulo-admin m-0">
-        Veículos
+        Opcionais
     </h2>
 
 
@@ -78,7 +65,7 @@ $veiculos = $sql->fetchAll();
 
         <i class="bi bi-plus-circle"></i>
 
-        Adicionar veículo
+        Adicionar opcional
 
     </a>
 
@@ -106,13 +93,9 @@ $veiculos = $sql->fetchAll();
 
                 <tr>
 
-                    <th>Marca</th>
-                    <th>Modelo</th>
-                    <th>Ano</th>
-                    <th>KM</th>
-                    <th>Valor</th>
+                    <th>ID</th>
+                    <th>Nome</th>
                     <th>Opções</th>
-
                 </tr>
 
             </thead>
@@ -121,36 +104,19 @@ $veiculos = $sql->fetchAll();
             <tbody>
 
 
-                <?php foreach ($veiculos as $v): ?>
+                <?php foreach ($opcionais as $o): ?>
 
 
                     <tr>
 
 
                         <td>
-                            <?= htmlspecialchars($v['marca']) ?>
+                            <?= htmlspecialchars($o['id']) ?>
                         </td>
 
 
                         <td>
-                            <?= htmlspecialchars($v['modelo']) ?>
-                        </td>
-
-
-                        <td>
-                            <?= $v['ano'] ?>
-                        </td>
-
-
-                        <td>
-                            <?= number_format($v['km'], 0, ",", ".") ?>
-                        </td>
-
-
-                        <td class="valor">
-
-                            R$ <?= number_format((float)$v['valor'], 2, ",", ".") ?>
-
+                            <?= htmlspecialchars($o['nome']) ?>
                         </td>
 
 
@@ -159,19 +125,19 @@ $veiculos = $sql->fetchAll();
 
 
                             <a
-                                href="cadastro.php?id=<?= $v['id'] ?>"
+                                href="cadastro.php?id=<?= $o['id'] ?>"
                                 class="btn btn-sm btn-editar">
                                 Editar
                             </a>
 
 
 
-                            <a
-                                href="index.php?excluir=<?= $v['id'] ?>"
+                            <!-- <a
+                                href="index.php?excluir=<?= $o['id'] ?>"
                                 class="btn btn-sm btn-excluir"
-                                onclick="return confirm('Excluir veÃ­culo?')">
+                                onclick="return confirm('Excluir opcional?')">
                                 Excluir
-                            </a>
+                            </a> -->
 
 
                         </td>

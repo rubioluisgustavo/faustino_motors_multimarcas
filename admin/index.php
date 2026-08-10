@@ -164,6 +164,40 @@ require_once "includes/auth.php";
 
             </div>
 
+            <div class="col-lg-4 col-md-6">
+
+                <div class="card-dashboard">
+
+                    <div class="icone-dashboard">
+
+                        <i class="bi bi-tools"></i>
+
+                    </div>
+
+                    <h4>
+
+                        Opcionais
+
+                    </h4>
+
+                    <p>
+
+                        Cadastre e gerencie itens opcionais dos veículos.
+
+                    </p>
+
+                    <a
+                        href="opcionais/index.php"
+                        class="btn btn-adicionar w-100">
+
+                        Acessar
+
+                    </a>
+
+                </div>
+
+            </div>
+
 
         </div>
 

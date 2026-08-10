@@ -1,9 +1,19 @@
 <?php
 
 require_once "../../conexao.php";
+require_once "../includes/auth.php";
+
+
+// =============================
+// ID DO VEÍCULO
+// =============================
 
 $id = $_GET['id'] ?? null;
 
+
+// =============================
+// DADOS PADRÃO DO VEÍCULO
+// =============================
 
 $veiculo = [
 
@@ -19,21 +29,67 @@ $veiculo = [
 ];
 
 
+// =============================
+// OPCIONAIS SELECIONADOS
+// =============================
+
+$opcionaisSelecionados = [];
+
+
+// =============================
+// BUSCA VEÍCULO PARA EDIÇÃO
+// =============================
+
 if ($id) {
 
     $sql = $pdo->prepare("
+
         SELECT *
         FROM veiculos
-        WHERE id=?
+        WHERE id = ?
+
     ");
 
     $sql->execute([$id]);
 
-    $veiculo = $sql->fetch();
+    $resultado = $sql->fetch(PDO::FETCH_ASSOC);
+
+
+    if ($resultado) {
+
+        $veiculo = $resultado;
+
+    }
+
+
+    // =============================
+    // BUSCA OPCIONAIS DO VEÍCULO
+    // =============================
+
+    $sql = $pdo->prepare("
+
+        SELECT id_opcionais
+
+        FROM veiculos_opcionais
+
+        WHERE id_veiculo = ?
+
+    ");
+
+    $sql->execute([$id]);
+
+
+    $opcionaisSelecionados = $sql->fetchAll(
+        PDO::FETCH_COLUMN
+    );
+
 }
 
 
+// =============================
 // FORMATA VALOR
+// =============================
+
 $valor = '';
 
 if (!empty($veiculo['valor'])) {
@@ -44,65 +100,55 @@ if (!empty($veiculo['valor'])) {
         ",",
         "."
     );
+
 }
 
 
-$id = $_GET['id'] ?? null;
-
-
-$veiculo = [
-
-    'id_modelo' => '',
-    'ano' => '',
-    'km' => '',
-    'cambio' => '',
-    'combustivel' => '',
-    'valor' => '',
-    'imagem_principal' => '',
-    'descricao' => ''
-
-];
-
-
-
-if ($id) {
-
-
-    $sql = $pdo->prepare("
-SELECT *
-FROM veiculos
-WHERE id=?
-");
-
-
-    $sql->execute([$id]);
-
-
-    $veiculo = $sql->fetch();
-}
-
-
+// =============================
+// BUSCA MODELOS
+// =============================
 
 $modelos = $pdo->query("
 
-SELECT
+    SELECT
 
-mo.id,
-CONCAT(ma.nome,' - ',mo.nome) AS nome
+        mo.id,
+
+        CONCAT(
+            ma.nome,
+            ' - ',
+            mo.nome
+        ) AS nome
+
+    FROM modelos mo
+
+    INNER JOIN marcas ma
+        ON ma.id = mo.id_marca
+
+    ORDER BY
+        ma.nome,
+        mo.nome
+
+")->fetchAll(PDO::FETCH_ASSOC);
 
 
-FROM modelos mo
+// =============================
+// BUSCA OPCIONAIS
+// =============================
 
+$opcionais = $pdo->query("
 
-INNER JOIN marcas ma
-ON ma.id=mo.id_marca
+    SELECT
 
+        op.id,
+        op.nome
 
-ORDER BY ma.nome,mo.nome
+    FROM opcionais op
 
+    ORDER BY
+        op.nome
 
-")->fetchAll();
-
+")->fetchAll(PDO::FETCH_ASSOC);
 
 
 ?>
@@ -396,6 +442,50 @@ ORDER BY ma.nome,mo.nome
                     rows="5"
                     name="descricao"><?= $veiculo['descricao'] ?? '' ?></textarea>
 
+
+            </div>
+
+            <div class="col-12">
+
+                <label class="form-label">
+                    Opcionais
+                </label>
+
+                <div class="opcionais-container">
+
+                    <?php foreach ($opcionais as $opcional): ?>
+
+                        <div class="form-check form-check-inline opcional-item">
+
+                            <input
+                                type="checkbox"
+                                class="form-check-input"
+                                name="opcionais[]"
+                                value="<?= $opcional['id'] ?>"
+                                id="opcional_<?= $opcional['id'] ?>"
+
+                                <?=
+                                in_array(
+                                    $opcional['id'],
+                                    $opcionaisSelecionados ?? []
+                                )
+                                    ? 'checked'
+                                    : ''
+                                ?>>
+
+                            <label
+                                class="form-check-label text-gold"
+                                for="opcional_<?= $opcional['id'] ?>">
+
+                                <?= htmlspecialchars($opcional['nome']) ?>
+
+                            </label>
+
+                        </div>
+
+                    <?php endforeach; ?>
+
+                </div>
 
             </div>
 

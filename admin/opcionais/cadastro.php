@@ -3,66 +3,29 @@
 require_once "../../conexao.php";
 require_once "../includes/auth.php";
 
-
 $id = $_GET['id'] ?? null;
 
 
+$opcional = [
 
-$modelo = [
-
-    'id_marca' => '',
-    'nome' => ''
+    'id' => '',
+    'nome' => '',
 
 ];
 
 
-
-
-
 if ($id) {
 
-
     $sql = $pdo->prepare("
-
         SELECT *
-
-        FROM modelos
-
+        FROM opcionais
         WHERE id=?
-
     ");
-
-
 
     $sql->execute([$id]);
 
-
-
-    $modelo = $sql->fetch();
+    $opcional = $sql->fetch();
 }
-
-
-
-
-
-$marcas = $pdo->query("
-
-    SELECT
-
-        id,
-
-        nome
-
-
-    FROM marcas
-
-
-    ORDER BY nome
-
-
-")->fetchAll();
-
-
 
 ?>
 
@@ -73,8 +36,8 @@ $marcas = $pdo->query("
 
     <form
         method="POST"
-        action="salvar.php">
-
+        action="salvar.php"
+        enctype="multipart/form-data">
 
 
         <input
@@ -84,93 +47,22 @@ $marcas = $pdo->query("
 
 
 
-
-
         <div class="row g-4">
 
 
-
-
-
-            <!-- Marca -->
-            <div class="col-md-6">
+            <div class="col-md-4">
 
 
                 <label class="form-label">
-                    Marca
+                    Nome
                 </label>
-
-
-
-                <select
-                    name="id_marca"
-                    class="form-select">
-
-
-
-                    <option value="">
-                        Selecione a marca
-                    </option>
-
-
-
-
-                    <?php foreach ($marcas as $m): ?>
-
-
-
-                        <option
-
-                            value="<?= $m['id'] ?>"
-
-                            <?= $m['id'] == ($modelo['id_marca'] ?? '') ? 'selected' : '' ?>>
-
-
-                            <?= htmlspecialchars($m['nome']) ?>
-
-
-                        </option>
-
-
-
-                    <?php endforeach; ?>
-
-
-
-                </select>
-
-
-
-            </div>
-
-
-
-
-
-
-
-            <!-- Nome -->
-            <div class="col-md-6">
-
-
-
-                <label class="form-label">
-                    Nome do Modelo
-                </label>
-
-
 
 
                 <input
-
                     type="text"
-
                     class="form-control"
-
                     name="nome"
-
-                    value="<?= $modelo['nome'] ?? '' ?>">
-
+                    value="<?= $opcional['nome'] ?? '' ?>">
 
 
             </div>
@@ -178,57 +70,35 @@ $marcas = $pdo->query("
 
 
 
-
-
-
-            <!-- Botões -->
+            <!-- BotÃµes -->
             <div class="col-12 mt-3">
 
 
-
                 <button
-
                     class="btn btn-gold px-5">
 
-
-
                     <i class="bi bi-check-lg"></i>
-
                     Salvar
-
 
 
                 </button>
 
 
 
-
-
-
                 <a
-
                     href="index.php"
-
                     class="btn btn-voltar px-4">
-
-
 
                     Voltar
 
-
-
                 </a>
-
 
 
             </div>
 
 
 
-
-
         </div>
-
 
 
     </form>

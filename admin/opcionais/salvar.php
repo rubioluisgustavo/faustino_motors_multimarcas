@@ -21,7 +21,7 @@ if ($id) {
 
     $sql = $pdo->prepare("
 
-            UPDATE marcas SET
+            UPDATE opcionais SET
                 nome = ?
 
             WHERE id = ?
@@ -40,7 +40,7 @@ if ($id) {
 
     $sql = $pdo->prepare("
 
-        INSERT INTO marcas
+        INSERT INTO opcionais
 
         (
             nome
