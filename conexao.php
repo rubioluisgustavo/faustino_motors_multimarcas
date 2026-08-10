@@ -1,9 +1,49 @@
 <?php
 
-$host = "localhost";
-$dbname = "faustino_motors_multimarcas";
-$user = "root";
-$password = "";
+/*
+|--------------------------------------------------------------------------
+| CONFIGURAÇÃO DO BANCO DE DADOS
+|--------------------------------------------------------------------------
+| Detecta automaticamente se está rodando:
+|
+| - Local: XAMPP
+| - Produção: Hostinger
+|
+|--------------------------------------------------------------------------
+*/
+
+
+if ($_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_NAME'] === '127.0.0.1') {
+
+    // =========================================================
+    // AMBIENTE LOCAL - XAMPP
+    // =========================================================
+
+    $host = "localhost";
+    $dbname = "faustino_motors_multimarcas";
+    $user = "root";
+    $password = "";
+
+} else {
+
+    // =========================================================
+    // AMBIENTE DE PRODUÇÃO - HOSTINGER
+    // =========================================================
+
+    $host = "localhost";
+    $dbname = "u458022580_faustinoProd";
+    $user = "u458022580_raiz";
+
+    // COLOQUE A NOVA SENHA DO BANCO DA HOSTINGER AQUI
+    $password = "SUA_NOVA_SENHA_AQUI";
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| CONEXÃO PDO
+|--------------------------------------------------------------------------
+*/
 
 try {
 
@@ -12,6 +52,13 @@ try {
         $user,
         $password
     );
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Configurações do PDO
+    |--------------------------------------------------------------------------
+    */
 
     $pdo->setAttribute(
         PDO::ATTR_ERRMODE,
@@ -22,7 +69,16 @@ try {
         PDO::ATTR_DEFAULT_FETCH_MODE,
         PDO::FETCH_ASSOC
     );
+
+
 } catch (PDOException $e) {
 
-    die("Erro na conexão com banco de dados: " . $e->getMessage());
+    /*
+    |--------------------------------------------------------------------------
+    | Não exibir detalhes da conexão em produção
+    |--------------------------------------------------------------------------
+    */
+
+    die("Erro ao conectar ao banco de dados.");
+
 }
