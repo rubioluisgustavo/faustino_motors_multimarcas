@@ -12,7 +12,7 @@
             <ul class="navbar-nav mx-auto">
 
                 <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:8080/faustino_motors_multimarcas">INÍCIO</a>
+                    <a class="nav-link" href="/new/">INÍCIO</a>
                 </li>
 
                 <li class="nav-item">

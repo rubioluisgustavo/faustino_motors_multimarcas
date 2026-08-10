@@ -1,23 +1,11 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| CONFIGURAÇÃO DO BANCO DE DADOS
-|--------------------------------------------------------------------------
-| Detecta automaticamente se está rodando:
-|
-| - Local: XAMPP
-| - Produção: Hostinger
-|
-|--------------------------------------------------------------------------
-*/
+if (
+    $_SERVER['SERVER_NAME'] === 'localhost' ||
+    $_SERVER['SERVER_NAME'] === '127.0.0.1'
+) {
 
-
-if ($_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_NAME'] === '127.0.0.1') {
-
-    // =========================================================
-    // AMBIENTE LOCAL - XAMPP
-    // =========================================================
+    // Ambiente local - XAMPP
 
     $host = "localhost";
     $dbname = "faustino_motors_multimarcas";
@@ -26,24 +14,14 @@ if ($_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_NAME'] === '127.
 
 } else {
 
-    // =========================================================
-    // AMBIENTE DE PRODUÇÃO - HOSTINGER
-    // =========================================================
+    // Ambiente produção - Hostinger
 
     $host = "localhost";
-    $dbname = "u458022580_faustinoProd";
-    $user = "u458022580_raiz";
+    $dbname = "u458022580_5HHE2";
+    $user = "u458022580_mz51w";
+    $password = "FaustinoMotorsMultimarcas123!!!";
 
-    // COLOQUE A NOVA SENHA DO BANCO DA HOSTINGER AQUI
-    $password = "SUA_NOVA_SENHA_AQUI";
 }
-
-
-/*
-|--------------------------------------------------------------------------
-| CONEXÃO PDO
-|--------------------------------------------------------------------------
-*/
 
 try {
 
@@ -52,13 +30,6 @@ try {
         $user,
         $password
     );
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | Configurações do PDO
-    |--------------------------------------------------------------------------
-    */
 
     $pdo->setAttribute(
         PDO::ATTR_ERRMODE,
@@ -70,15 +41,8 @@ try {
         PDO::FETCH_ASSOC
     );
 
-
 } catch (PDOException $e) {
 
-    /*
-    |--------------------------------------------------------------------------
-    | Não exibir detalhes da conexão em produção
-    |--------------------------------------------------------------------------
-    */
-
-    die("Erro ao conectar ao banco de dados.");
+    die($e);
 
 }

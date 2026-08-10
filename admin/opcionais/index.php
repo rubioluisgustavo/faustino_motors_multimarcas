@@ -70,7 +70,7 @@ $opcionais = $sql->fetchAll();
     </a>
 
     <a
-        href="http://localhost:8080/faustino_motors_multimarcas/admin"
+        href="/new/admin"
         class="btn btn-adicionar">
 
         <i class="bi bi-plus-circle"></i>

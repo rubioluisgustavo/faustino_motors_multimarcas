@@ -96,7 +96,7 @@ $modelos = $sql->fetchAll(PDO::FETCH_ASSOC);
 
 
     <a
-        href="http://localhost:8080/faustino_motors_multimarcas/admin"
+        href="/new/admin"
         class="btn btn-adicionar">
 
         <i class="bi bi-arrow-left-circle"></i>
