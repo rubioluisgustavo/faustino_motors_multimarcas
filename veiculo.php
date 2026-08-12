@@ -241,8 +241,8 @@ $opcionais = $stmtOpcionais->fetchAll(PDO::FETCH_ASSOC);
                     <!-- WHATSAPP -->
 
                     <a
-                        href="https://wa.me/5514998522092?text=<?= urlencode(
-                                                                    'Olá! Tenho interesse no veículo ' .
+                        href="https://wa.me/5514997533055?text=<?= urlencode(
+                                                                    'Olá! Venho pelo site e tenho interesse no veículo ' .
                                                                         $veiculo['marca'] . ' ' .
                                                                         $veiculo['modelo'] . ' ' .
                                                                         $veiculo['ano']

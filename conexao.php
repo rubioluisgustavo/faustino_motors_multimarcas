@@ -11,7 +11,6 @@ if (
     $dbname = "faustino_motors_multimarcas";
     $user = "root";
     $password = "";
-
 } else {
 
     // Ambiente produção - Hostinger
@@ -20,7 +19,6 @@ if (
     $dbname = "u458022580_5HHE2";
     $user = "u458022580_mz51w";
     $password = "FaustinoMotorsMultimarcas123!!!";
-
 }
 
 try {
@@ -40,9 +38,7 @@ try {
         PDO::ATTR_DEFAULT_FETCH_MODE,
         PDO::FETCH_ASSOC
     );
-
 } catch (PDOException $e) {
 
     die($e);
-
 }
