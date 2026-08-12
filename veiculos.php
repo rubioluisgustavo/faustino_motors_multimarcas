@@ -104,21 +104,25 @@ $veiculos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                         <div class="imagem-veiculo">
 
-                            <?php if (!empty($veiculo['imagem_principal'])): ?>
+                            <a href="index.php?id=<?= $veiculo['id'] ?>">
 
-                                <img
-                                    src="<?= htmlspecialchars($veiculo['imagem_principal']) ?>"
-                                    class="card-img-top"
-                                    alt="<?= $veiculo['marca'] . ' ' . $veiculo['modelo'] ?>">
+                                <?php if (!empty($veiculo['imagem_principal'])): ?>
 
-                            <?php else: ?>
+                                    <img
+                                        src="<?= htmlspecialchars($veiculo['imagem_principal']) ?>"
+                                        class="card-img-top"
+                                        alt="<?= htmlspecialchars($veiculo['marca'] . ' ' . $veiculo['modelo']) ?>">
 
-                                <img
-                                    src="img/sem-imagem.jpg"
-                                    class="card-img-top"
-                                    alt="Sem imagem">
+                                <?php else: ?>
 
-                            <?php endif; ?>
+                                    <img
+                                        src="img/sem-imagem.jpg"
+                                        class="card-img-top"
+                                        alt="Sem imagem">
+
+                                <?php endif; ?>
+
+                            </a>
 
                         </div>
 

@@ -1036,3 +1036,211 @@
     }
 
 }
+
+/* =========================
+   DETALHES DO VEÍCULO
+========================= */
+
+.detalhes-veiculo {
+    background: #f8f8f8;
+    min-height: 70vh;
+}
+
+
+/* IMAGEM */
+
+.imagem-detalhes-veiculo {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+}
+
+.imagem-detalhes-veiculo img {
+    width: 100%;
+    height: 520px;
+    object-fit: cover;
+    display: block;
+}
+
+
+/* INFORMAÇÕES */
+
+.info-detalhes-veiculo {
+    background: #fff;
+    border-radius: 12px;
+    padding: 35px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+}
+
+.marca-detalhes {
+    color: #bb9000;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.info-detalhes-veiculo h1 {
+    margin: 5px 0 20px;
+    font-size: 34px;
+    font-weight: 700;
+    color: #111;
+}
+
+.preco-detalhes {
+    color: #bb9000;
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+
+/* DADOS */
+
+.dados-detalhes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.item-detalhe {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px;
+    background: #f7f7f7;
+    border-radius: 8px;
+}
+
+.item-detalhe i {
+    font-size: 23px;
+    color: #bb9000;
+}
+
+.item-detalhe span {
+    display: block;
+    font-size: 13px;
+    color: #777;
+}
+
+.item-detalhe strong {
+    display: block;
+    color: #222;
+    font-size: 15px;
+    margin-top: 2px;
+}
+
+
+/* BOTÃO WHATSAPP */
+
+.btn-interesse {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    width: 100%;
+
+    padding: 15px;
+
+    background: #bb9000;
+    color: #fff;
+
+    border-radius: 7px;
+
+    font-size: 17px;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    transition: all 0.3s ease;
+}
+
+.btn-interesse:hover {
+    background: #000;
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+.btn-interesse i {
+    font-size: 21px;
+}
+
+
+/* VOLTAR */
+
+.btn-voltar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    margin-top: 12px;
+
+    padding: 12px;
+
+    color: #555;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    transition: 0.3s;
+}
+
+.btn-voltar:hover {
+    color: #bb9000;
+}
+
+
+/* LINK DA FOTO */
+
+.imagem-veiculo a {
+    display: block;
+}
+
+.imagem-veiculo img {
+    cursor: pointer;
+    transition: transform 0.4s ease;
+}
+
+.imagem-veiculo:hover img {
+    transform: scale(1.03);
+}
+
+
+/* RESPONSIVO */
+
+@media (max-width: 991px) {
+
+    .imagem-detalhes-veiculo img {
+        height: 420px;
+    }
+
+}
+
+@media (max-width: 575px) {
+
+    .info-detalhes-veiculo {
+        padding: 25px 20px;
+    }
+
+    .info-detalhes-veiculo h1 {
+        font-size: 27px;
+    }
+
+    .preco-detalhes {
+        font-size: 25px;
+    }
+
+    .imagem-detalhes-veiculo img {
+        height: 300px;
+    }
+
+    .dados-detalhes {
+        grid-template-columns: 1fr;
+    }
+
+}
