@@ -196,7 +196,7 @@ $veiculos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
                                 <a
-                                    href="veiculo.php?id=<?= $veiculo['id'] ?>"
+                                    href="index.php?id=<?= $veiculo['id'] ?>"
                                     class="btn-saiba-mais">
 
                                     Saiba mais
