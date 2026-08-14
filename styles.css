@@ -1141,6 +1141,26 @@
     margin-top: 2px;
 }
 
+/* Estilo para a etiqueta de Novidade */
+.badge-novidade {
+    display: inline-block;
+    background-color: #dc3545;
+    /* Vermelho (cor padrão do Bootstrap para 'danger') */
+    color: #ffffff;
+    /* Texto Branco */
+    padding: 5px 12px;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    /* Deixa o texto em maiúsculo */
+    border-radius: 4px;
+    /* Cantos arredondados */
+    margin-bottom: 10px;
+    /* Espaço entre a etiqueta e a marca */
+    letter-spacing: 0.5px;
+    /* Espaçamento leve entre as letras */
+}
+
 
 /* BOTÃO WHATSAPP */
 

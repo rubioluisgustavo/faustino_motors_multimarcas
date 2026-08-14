@@ -26,7 +26,8 @@ $sql = "
         v.cambio,
         v.combustivel,
         v.valor,
-        v.imagem_principal
+        v.imagem_principal,
+        v.novo
     FROM veiculos v
 
     INNER JOIN modelos mo
@@ -123,8 +124,12 @@ $opcionais = $stmtOpcionais->fetchAll(PDO::FETCH_ASSOC);
             <div class="col-lg-5">
 
                 <div class="info-detalhes-veiculo">
+                    
+                    <?php if (isset($veiculo['novo']) && $veiculo['novo'] == 'y'): ?>
+                        <span class="badge-novidade">Novidade</span>
+                    <?php endif; ?>
 
-
+                    <hr>
                     <span class="marca-detalhes">
 
                         <?= htmlspecialchars($veiculo['marca']) ?>
