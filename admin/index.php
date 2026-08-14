@@ -1,6 +1,6 @@
 <?php
 
-require_once "includes/auth.php";
+    require_once "includes/auth.php";
 
 ?>
 
@@ -46,6 +46,79 @@ require_once "includes/auth.php";
 
         <div class="row g-4">
 
+            <!-- MARCAS -->
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="card-dashboard">
+
+                    <div class="icone-dashboard">
+
+                        <i class="bi bi-award-fill"></i>
+
+                    </div>
+
+                    <h4>
+
+                        Marcas
+
+                    </h4>
+
+                    <p>
+
+                        Gerencie todas as marcas cadastradas.
+
+                    </p>
+
+                    <a
+                        href="marcas/index.php"
+                        class="btn btn-adicionar w-100">
+
+                        Acessar
+
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- MODELOS -->
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="card-dashboard">
+
+                    <div class="icone-dashboard">
+
+                        <i class="bi bi-list-ul"></i>
+
+                    </div>
+
+                    <h4>
+
+                        Modelos
+
+                    </h4>
+
+                    <p>
+
+                        Cadastre e organize os modelos dos veículos.
+
+                    </p>
+
+                    <a
+                        href="modelos/index.php"
+                        class="btn btn-adicionar w-100">
+
+                        Acessar
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
 
             <!-- VEÍCULOS -->
 
@@ -85,79 +158,7 @@ require_once "includes/auth.php";
 
 
 
-            <!-- MARCAS -->
 
-            <div class="col-lg-4 col-md-6">
-
-                <div class="card-dashboard">
-
-                    <div class="icone-dashboard">
-
-                        <i class="bi bi-award-fill"></i>
-
-                    </div>
-
-                    <h4>
-
-                        Marcas
-
-                    </h4>
-
-                    <p>
-
-                        Gerencie todas as marcas cadastradas.
-
-                    </p>
-
-                    <a
-                        href="marcas/index.php"
-                        class="btn btn-adicionar w-100">
-
-                        Acessar
-
-                    </a>
-
-                </div>
-
-            </div>
-
-
-
-            <!-- MODELOS -->
-
-            <div class="col-lg-4 col-md-6">
-
-                <div class="card-dashboard">
-
-                    <div class="icone-dashboard">
-
-                        <i class="bi bi-list-ul"></i>
-
-                    </div>
-
-                    <h4>
-
-                        Modelos
-
-                    </h4>
-
-                    <p>
-
-                        Cadastre e organize os modelos dos veículos.
-
-                    </p>
-
-                    <a
-                        href="modelos/index.php"
-                        class="btn btn-adicionar w-100">
-
-                        Acessar
-
-                    </a>
-
-                </div>
-
-            </div>
 
             <div class="col-lg-4 col-md-6">
 

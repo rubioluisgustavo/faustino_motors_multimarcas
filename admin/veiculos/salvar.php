@@ -3,10 +3,9 @@
 require_once "../../conexao.php";
 require_once "../includes/auth.php";
 
-
-// =============================
-// DADOS RECEBIDOS
-// =============================
+// ============================= 
+// DADOS RECEBIDOS 
+// ============================= 
 
 $id = $_POST['id'] ?? null;
 
@@ -16,55 +15,42 @@ $km = $_POST['km'];
 $cambio = $_POST['cambio'];
 $combustivel = $_POST['combustivel'];
 $descricao = $_POST['descricao'];
+$novo = isset($_POST['novo']) && $_POST['novo'] == 'y' ? 'y' : 'n';
 
-// Opcionais selecionados
+// Opcionais selecionados 
 $opcionais = $_POST['opcionais'] ?? [];
 
-
-// =============================
-// TRATAMENTO DO VALOR
-// =============================
+// ============================= 
+// TRATAMENTO DO VALOR 
+// ============================= 
 
 $valor = $_POST['valor'];
-
 $valor = str_replace('.', '', $valor);
 $valor = str_replace(',', '.', $valor);
 
-
-// =============================
-// UPLOAD DA IMAGEM
-// =============================
+// ============================= 
+// UPLOAD DA IMAGEM 
+// ============================= 
 
 $imagem = null;
-
 
 if (
     isset($_FILES['imagem_principal']) &&
     $_FILES['imagem_principal']['error'] == 0
 ) {
-
     $pasta = "../../img/carros/";
 
-
-    // Cria pasta se não existir
-
     if (!is_dir($pasta)) {
-
         mkdir($pasta, 0777, true);
     }
-
 
     $extensao = pathinfo(
         $_FILES['imagem_principal']['name'],
         PATHINFO_EXTENSION
     );
 
-
     $nomeArquivo = time() . "_" . uniqid() . "." . $extensao;
-
-
     $destino = $pasta . $nomeArquivo;
-
 
     if (
         move_uploaded_file(
@@ -72,55 +58,42 @@ if (
             $destino
         )
     ) {
-
         $imagem = "img/carros/" . $nomeArquivo;
     }
 }
 
-
-// =============================
-// TRANSAÇÃO
-// =============================
+// ============================= 
+// TRANSAÇÃO 
+// ============================= 
 
 $pdo->beginTransaction();
 
-
 try {
 
-
-    // =============================
-    // EDITAR
-    // =============================
-
+    // ============================= 
+    // EDITAR 
+    // ============================= 
     if ($id) {
 
-
-        // -----------------------------
-        // Com nova imagem
-        // -----------------------------
-
+        // Com nova imagem 
         if ($imagem) {
-
-            $sql = $pdo->prepare("
-
-                UPDATE veiculos SET
-
-                    id_modelo = ?,
-                    ano = ?,
-                    km = ?,
-                    cambio = ?,
-                    combustivel = ?,
-                    valor = ?,
-                    imagem_principal = ?,
-                    descricao = ?
-
-                WHERE id = ?
-
+            // Corrigido: Removida aspas do ? do campo novo e adicionada a vírgula antes de novo
+            $sql = $pdo->prepare(" 
+                UPDATE veiculos SET 
+                    id_modelo = ?, 
+                    ano = ?, 
+                    km = ?, 
+                    cambio = ?, 
+                    combustivel = ?, 
+                    valor = ?, 
+                    imagem_principal = ?, 
+                    descricao = ?,
+                    novo = ? 
+                WHERE id = ? 
             ");
 
-
+            // Corrigido: Ordem das variáveis sincronizada com a query acima ($novo antes do $id)
             $sql->execute([
-
                 $id_modelo,
                 $ano,
                 $km,
@@ -129,37 +102,28 @@ try {
                 $valor,
                 $imagem,
                 $descricao,
+                $novo,
                 $id
-
             ]);
         }
 
-
-        // -----------------------------
-        // Sem nova imagem
-        // -----------------------------
-
+        // Sem nova imagem 
         else {
-
-            $sql = $pdo->prepare("
-
-                UPDATE veiculos SET
-
-                    id_modelo = ?,
-                    ano = ?,
-                    km = ?,
-                    cambio = ?,
-                    combustivel = ?,
-                    valor = ?,
-                    descricao = ?
-
-                WHERE id = ?
-
+            // Corrigido: Adicionada a vírgula antes do campo novo e removida a aspas do ?
+            $sql = $pdo->prepare(" 
+                UPDATE veiculos SET 
+                    id_modelo = ?, 
+                    ano = ?, 
+                    km = ?, 
+                    cambio = ?, 
+                    combustivel = ?, 
+                    valor = ?, 
+                    descricao = ?,
+                    novo = ? 
+                WHERE id = ? 
             ");
 
-
             $sql->execute([
-
                 $id_modelo,
                 $ano,
                 $km,
@@ -167,47 +131,40 @@ try {
                 $combustivel,
                 $valor,
                 $descricao,
+                $novo,
                 $id
-
             ]);
         }
 
 
-        // O ID continua sendo o mesmo
+
         $id_veiculo = $id;
     }
 
-
-    // =============================
-    // NOVO CADASTRO
-    // =============================
-
+    // ============================= 
+    // NOVO CADASTRO 
+    // ============================= 
     else {
 
-
-        $sql = $pdo->prepare("
-
-            INSERT INTO veiculos
-
-            (
-                id_modelo,
-                ano,
-                km,
-                cambio,
-                combustivel,
-                valor,
-                imagem_principal,
-                descricao
-            )
-
-            VALUES
-            (?,?,?,?,?,?,?,?)
-
+        // Corrigido: Removidas as aspas do '?' do campo novo
+        $sql = $pdo->prepare(" 
+            INSERT INTO veiculos 
+            ( 
+                id_modelo, 
+                ano, 
+                km, 
+                cambio, 
+                combustivel, 
+                valor, 
+                imagem_principal, 
+                descricao, 
+                novo 
+            ) 
+            VALUES 
+            (?,?,?,?,?,?,?,?,?) 
         ");
 
-
         $sql->execute([
-
             $id_modelo,
             $ano,
             $km,
@@ -215,92 +172,56 @@ try {
             $combustivel,
             $valor,
             $imagem,
-            $descricao
-
+            $descricao,
+            $novo
         ]);
 
-
-        // Pega o ID do veículo recém-criado
         $id_veiculo = $pdo->lastInsertId();
     }
 
-
-    // =============================
-    // OPCIONAIS
-    // =============================
-
-    // Primeiro remove os opcionais
-    // que estavam vinculados ao veículo.
-
-    $sql = $pdo->prepare("
-
-        DELETE FROM veiculos_opcionais
-
-        WHERE id_veiculo = ?
-
+    // ============================= 
+    // OPCIONAIS 
+    // ============================= 
+    $sql = $pdo->prepare(" 
+        DELETE FROM veiculos_opcionais 
+        WHERE id_veiculo = ? 
     ");
 
-    $sql->execute([
-        $id_veiculo
-    ]);
+    $sql->execute([$id_veiculo]);
 
-
-    // =============================
-    // INSERE OS NOVOS OPCIONAIS
-    // =============================
-
+    // ============================= 
+    // INSERE OS NOVOS OPCIONAIS 
+    // ============================= 
     if (!empty($opcionais)) {
 
-
-        $sql = $pdo->prepare("
-
-            INSERT INTO veiculos_opcionais
-
-            (
-                id_veiculo,
-                id_opcionais
-            )
-
-            VALUES (?, ?)
-
+        $sql = $pdo->prepare(" 
+            INSERT INTO veiculos_opcionais 
+            ( 
+                id_veiculo, 
+                id_opcionais 
+            ) 
+            VALUES (?, ?) 
         ");
 
-
         foreach ($opcionais as $id_opcional) {
-
             $sql->execute([
-
                 $id_veiculo,
                 $id_opcional
-
             ]);
         }
     }
 
-
-    // =============================
-    // CONFIRMA
-    // =============================
-
+    // ============================= 
+    // CONFIRMA 
+    // ============================= 
     $pdo->commit();
 
-
-    // =============================
-    // RETORNA PARA LISTA
-    // =============================
-
+    // ============================= 
+    // RETORNA PARA LISTA 
+    // ============================= 
     header("Location: index.php");
-
     exit;
 } catch (Exception $e) {
-
-
-    // Se alguma coisa der errado,
-    // desfaz todas as alterações.
-
     $pdo->rollBack();
-
-
-    die("Erro ao salvar veículo: "
-        . $e->getMessage());
+    die("Erro ao salvar veículo: " . $e->getMessage());
 }

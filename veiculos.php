@@ -19,6 +19,7 @@ SELECT
     ma.nome AS marca,
     mo.nome AS modelo,
     v.ano,
+    v.novo,
     v.km,
     v.cambio,
     v.combustivel,
@@ -104,6 +105,14 @@ $veiculos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                         <div class="imagem-veiculo">
 
+                            <?php if ($veiculo['novo'] == 'y'): ?>
+
+                                <div class="tarja-novo">
+                                    NOVIDADE
+                                </div>
+
+                            <?php endif; ?>
+
                             <a href="index.php?id=<?= $veiculo['id'] ?>">
 
                                 <?php if (!empty($veiculo['imagem_principal'])): ?>
@@ -116,7 +125,7 @@ $veiculos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <?php else: ?>
 
                                     <img
-                                        src="img/sem-imagem.jpg"
+                                        src="img/carros/noimage.svg"
                                         class="card-img-top"
                                         alt="Sem imagem">
 

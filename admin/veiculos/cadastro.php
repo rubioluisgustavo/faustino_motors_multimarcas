@@ -1,7 +1,9 @@
+<link href="../veiculos/veiculos.css" rel="stylesheet">
 <?php
 
 require_once "../../conexao.php";
 require_once "../includes/auth.php";
+
 
 
 // =============================
@@ -24,7 +26,8 @@ $veiculo = [
     'combustivel' => '',
     'valor' => '',
     'imagem_principal' => '',
-    'descricao' => ''
+    'descricao' => '',
+    'novo' => ''
 
 ];
 
@@ -58,7 +61,6 @@ if ($id) {
     if ($resultado) {
 
         $veiculo = $resultado;
-
     }
 
 
@@ -82,7 +84,6 @@ if ($id) {
     $opcionaisSelecionados = $sql->fetchAll(
         PDO::FETCH_COLUMN
     );
-
 }
 
 
@@ -100,7 +101,6 @@ if (!empty($veiculo['valor'])) {
         ",",
         "."
     );
-
 }
 
 
@@ -489,7 +489,35 @@ $opcionais = $pdo->query("
 
             </div>
 
+            <!-- Marcar como novo -->
+            <div class="col-12">
+                <div class="marcar-novo-container">
 
+                    <input
+                        type="checkbox"
+                        class="marcar-novo-checkbox"
+                        id="marcar_novo"
+                        name="novo"
+                        value="y"
+                        <?= ($veiculo['novo'] ?? 'n') == 'y' ? 'checked' : '' ?>>
+
+                    <label
+                        for="marcar_novo"
+                        class="marcar-novo-label">
+
+                        <span class="marcar-novo-check">
+                            <i class="bi bi-check-lg"></i>
+                        </span>
+
+                        <span class="marcar-novo-texto">
+                            <strong>Marcar como novo</strong>
+                            <small>Exibir este veículo com o selo "Novo"</small>
+                        </span>
+
+                    </label>
+
+                </div>
+            </div>
 
 
 

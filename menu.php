@@ -20,10 +20,6 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#">ESTOQUE</a>
-                </li>
-
-                <li class="nav-item">
                     <a class="nav-link" href="#">VENDIDOS</a>
                 </li>
 

@@ -4,7 +4,6 @@
 
 require_once "../../conexao.php";
 require_once "../includes/auth.php";
-require_once "../includes/auth.php";
 
 // excluir
 
@@ -34,6 +33,7 @@ SELECT
 v.id,
 ma.nome AS marca,
 mo.nome AS modelo,
+v.novo,
 v.ano,
 v.km,
 v.valor
