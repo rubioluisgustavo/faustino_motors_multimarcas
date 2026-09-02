@@ -1306,3 +1306,239 @@
     }
 
 }
+
+/* =====================================================
+   SOBRE A EMPRESA
+===================================================== */
+
+.sobre-empresa {
+    background: #fff;
+}
+
+
+/* =====================================================
+   IMAGEM
+===================================================== */
+
+.imagem-empresa {
+    width: 100%;
+    height: 500px;
+    overflow: hidden;
+    border-radius: 16px;
+    background: #f5f5f5;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.imagem-empresa img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+
+/* =====================================================
+   INFORMAÇÕES
+===================================================== */
+
+.info-empresa {
+    padding: 20px 10px;
+}
+
+.info-empresa .marca-detalhes {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #bb9000;
+    margin-bottom: 8px;
+}
+
+.info-empresa h1 {
+    font-size: 42px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 15px;
+}
+
+.info-empresa p {
+    color: #666;
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 18px;
+}
+
+
+/* =====================================================
+   LINHA DOURADA
+===================================================== */
+
+.linha-detalhe {
+    width: 60px;
+    height: 4px;
+    background: #bb9000;
+    border-radius: 5px;
+    margin-bottom: 25px;
+}
+
+.linha-detalhe-central {
+    width: 60px;
+    height: 4px;
+    background: #bb9000;
+    border-radius: 5px;
+    margin: 15px auto 0;
+}
+
+
+/* =====================================================
+   DIFERENCIAIS
+===================================================== */
+
+.diferenciais-empresa {
+    padding-top: 30px;
+}
+
+.diferenciais-empresa h2 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #111;
+    margin-top: 8px;
+}
+
+.diferencial-item {
+    height: 100%;
+    padding: 35px 30px;
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 14px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.diferencial-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+    border-color: #bb9000;
+}
+
+.icone-diferencial {
+    width: 65px;
+    height: 65px;
+    margin: 0 auto 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #f8f4e8;
+    color: #bb9000;
+
+    font-size: 28px;
+}
+
+.diferencial-item h3 {
+    font-size: 21px;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 12px;
+}
+
+.diferencial-item p {
+    color: #777;
+    font-size: 15px;
+    line-height: 1.7;
+    margin: 0;
+}
+
+
+/* =====================================================
+   FRASE
+===================================================== */
+
+.frase-empresa {
+    background: #111;
+    border-radius: 16px;
+    padding: 45px 30px;
+    text-align: center;
+}
+
+.frase-empresa i {
+    color: #bb9000;
+    font-size: 40px;
+}
+
+.frase-empresa p {
+    max-width: 700px;
+    margin: 10px auto 15px;
+
+    color: #fff;
+
+    font-size: 25px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.frase-empresa span {
+    color: #bb9000;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+
+/* =====================================================
+   RESPONSIVO
+===================================================== */
+
+@media (max-width: 991px) {
+
+    .imagem-empresa {
+        height: 400px;
+    }
+
+    .info-empresa {
+        padding: 0;
+    }
+
+    .info-empresa h1 {
+        font-size: 36px;
+    }
+
+}
+
+
+@media (max-width: 767px) {
+
+    .imagem-empresa {
+        height: 300px;
+        border-radius: 12px;
+    }
+
+    .info-empresa h1 {
+        font-size: 30px;
+    }
+
+    .info-empresa p {
+        font-size: 15px;
+        line-height: 1.7;
+    }
+
+    .diferenciais-empresa h2 {
+        font-size: 27px;
+    }
+
+    .diferencial-item {
+        padding: 30px 25px;
+    }
+
+    .frase-empresa {
+        padding: 35px 20px;
+    }
+
+    .frase-empresa p {
+        font-size: 20px;
+    }
+
+}

@@ -32,10 +32,19 @@ echo password_hash("", PASSWORD_DEFAULT);
     <?php if (isset($_GET['id']) && filter_var($_GET['id'], FILTER_VALIDATE_INT)) {
 
         include("veiculo.php");
-    } else {
+    } else if (isset($_GET['menu'])) {
+        switch ($_GET['menu']) {
+            case 'empresa':
+                include("empresa.php");
+                break;
 
-        include("veiculos.php");
-    } ?>
+            default:
+                # code...
+                break;
+        }
+    } else {
+        include("veiculos.php"); 
+    }?>
     <?php include("footer.php"); ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>

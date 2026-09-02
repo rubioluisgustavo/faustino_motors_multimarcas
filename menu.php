@@ -16,7 +16,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#">A EMPRESA</a>
+                    <a class="nav-link" href="?menu=empresa">A EMPRESA</a>
                 </li>
 
                 <li class="nav-item">
