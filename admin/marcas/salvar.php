@@ -2,67 +2,20 @@
 
 require_once "../../conexao.php";
 require_once "../includes/auth.php";
+require_once __DIR__ . '/MarcaRepository.php';
 
-// Dados recebidos
+$marcaRepository = new MarcaRepository($pdo);
 
-$id = $_POST['id'] ?? null;
-$nome = $_POST['nome'];
+$id = isset($_POST['id']) && $_POST['id'] !== '' ? (int) $_POST['id'] : null;
+$nome = trim($_POST['nome'] ?? '');
 
-
-// =============================
-// EDITAR
-// =============================
-
-if ($id) {
-
-
-
-    // mant�m imagem atual
-
-    $sql = $pdo->prepare("
-
-            UPDATE marcas SET
-                nome = ?
-
-            WHERE id = ?
-
-        ");
-
-
-    $sql->execute([
-
-        $nome,
-        $id
-
-    ]);
-} else {
-
-
-    $sql = $pdo->prepare("
-
-        INSERT INTO marcas
-
-        (
-            nome
-        )
-
-        VALUES
-        (?)
-
-    ");
-
-
-
-    $sql->execute([
-
-        $nome
-    ]);
+if ($nome === '') {
+    header('Location: cadastro.php' . ($id ? '?id=' . $id : ''));
+    exit;
 }
 
-
-
-// retorna para lista
+$marca = new Marca($id, $nome);
+$marcaRepository->salvar($marca);
 
 header("Location:index.php");
-
 exit;
