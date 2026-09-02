@@ -4,48 +4,19 @@
 
 require_once "../../conexao.php";
 require_once "../includes/auth.php";
+require_once __DIR__ . '/MarcaRepository.php';
 
-
-// excluir
+$marcaRepository = new MarcaRepository($pdo);
 
 if (isset($_GET['excluir'])) {
-
-    $id = $_GET['excluir'];
-
-    $sql = $pdo->prepare("
-        DELETE FROM marcas 
-        WHERE id = ?
-    ");
-
-    $sql->execute([$id]);
-
+    $id = (int) $_GET['excluir'];
+    $marcaRepository->excluir($id);
 
     header("Location:index.php");
-
     exit;
 }
 
-
-
-$sql = $pdo->query("
-
-SELECT
-
-id,
-nome
-
-
-FROM marcas
-
-ORDER BY nome ASC
-
-
-");
-
-
-$marcas = $sql->fetchAll();
-
-
+$marcas = $marcaRepository->listar();
 ?>
 
 <link href="../marcas/marcas.css" rel="stylesheet">
@@ -104,19 +75,18 @@ $marcas = $sql->fetchAll();
             <tbody>
 
 
-                <?php foreach ($marcas as $m): ?>
-
+                <?php foreach ($marcas as $marca): ?>
 
                     <tr>
 
 
                         <td>
-                            <?= htmlspecialchars($m['id']) ?>
+                            <?= htmlspecialchars((string) $marca->getId()) ?>
                         </td>
 
 
                         <td>
-                            <?= htmlspecialchars($m['nome']) ?>
+                            <?= htmlspecialchars($marca->getNome()) ?>
                         </td>
 
 
@@ -125,7 +95,7 @@ $marcas = $sql->fetchAll();
 
 
                             <a
-                                href="cadastro.php?id=<?= $m['id'] ?>"
+                                href="cadastro.php?id=<?= $marca->getId() ?>"
                                 class="btn btn-sm btn-editar">
                                 Editar
                             </a>
@@ -133,12 +103,11 @@ $marcas = $sql->fetchAll();
 
 
                             <a
-                                href="index.php?excluir=<?= $m['id'] ?>"
+                                href="index.php?excluir=<?= $marca->getId() ?>"
                                 class="btn btn-sm btn-excluir"
                                 onclick="return confirm('Excluir marca?')">
                                 Excluir
                             </a>
-
 
                         </td>
 

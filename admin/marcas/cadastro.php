@@ -2,31 +2,20 @@
 
 require_once "../../conexao.php";
 require_once "../includes/auth.php";
+require_once __DIR__ . '/MarcaRepository.php';
 
-$id = $_GET['id'] ?? null;
+$marcaRepository = new MarcaRepository($pdo);
+$id = isset($_GET['id']) ? (int) $_GET['id'] : null;
 
-
-$marca = [
-
-    'id' => '',
-    'nome' => '',
-
-];
-
+$marca = new Marca();
 
 if ($id) {
+    $marcaExistente = $marcaRepository->buscarPorId($id);
 
-    $sql = $pdo->prepare("
-        SELECT *
-        FROM marcas
-        WHERE id=?
-    ");
-
-    $sql->execute([$id]);
-
-    $marca = $sql->fetch();
+    if ($marcaExistente) {
+        $marca = $marcaExistente;
+    }
 }
-
 ?>
 
 <link href="../css/admin.css" rel="stylesheet">
@@ -43,7 +32,7 @@ if ($id) {
         <input
             type="hidden"
             name="id"
-            value="<?= $id ?>">
+            value="<?= $marca->getId() ?? '' ?>">
 
 
 
@@ -62,7 +51,7 @@ if ($id) {
                     type="text"
                     class="form-control"
                     name="nome"
-                    value="<?= $marca['nome'] ?? '' ?>">
+                    value="<?= htmlspecialchars($marca->getNome()) ?>">
 
 
             </div>
