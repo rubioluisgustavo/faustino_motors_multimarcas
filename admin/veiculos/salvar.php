@@ -38,7 +38,7 @@ if (
     isset($_FILES['imagem_principal']) &&
     $_FILES['imagem_principal']['error'] == 0
 ) {
-    $pasta = "../../img/carros/";
+    $pasta = "../../public/img/carros/";
 
     if (!is_dir($pasta)) {
         mkdir($pasta, 0777, true);
@@ -58,7 +58,7 @@ if (
             $destino
         )
     ) {
-        $imagem = "img/carros/" . $nomeArquivo;
+        $imagem = "public/img/carros/" . $nomeArquivo;
     }
 }
 

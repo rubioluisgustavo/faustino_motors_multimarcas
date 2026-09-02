@@ -29,7 +29,7 @@
 
             <div class="col-lg-6">
                 <a class="navbar-brand d-flex align-items-center m-0" href="/new/">
-                    <img src="img/logo.png" alt="Logo" class="me-3">
+                    <img src="public/img/logo.png" alt="Logo" class="me-3">
 
                     <div>
                         <h2 class="text-gold fw-bold m-0">
