@@ -125,7 +125,7 @@ $veiculos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <?php else: ?>
 
                                     <img
-                                        src="img/carros/noimage.svg"
+                                        src="public/img/carros/noimage.svg"
                                         class="card-img-top"
                                         alt="Sem imagem">
 

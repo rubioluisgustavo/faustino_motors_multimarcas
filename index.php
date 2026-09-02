@@ -11,7 +11,7 @@ echo password_hash("", PASSWORD_DEFAULT);
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="public/img/favicon-16x16.png">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
     <title>Faustino Motors Multimarcas</title>
@@ -24,8 +24,8 @@ echo password_hash("", PASSWORD_DEFAULT);
 </head>
 
 <body>
-    <?php include('navbar.php'); ?>
-    <?php include('menu.php'); ?>
+    <?php include('components/navbar.php'); ?>
+    <?php include('components/menu.php'); ?>
     <?php include('filter.php'); ?>
     <?php if (isset($_GET['id']) && filter_var($_GET['id'], FILTER_VALIDATE_INT)) {
 
@@ -33,7 +33,7 @@ echo password_hash("", PASSWORD_DEFAULT);
     } else if (isset($_GET['menu'])) {
         switch ($_GET['menu']) {
             case 'empresa':
-                include("empresa.php");
+                include("models/empresa.php");
                 break;
 
             default:
@@ -43,7 +43,7 @@ echo password_hash("", PASSWORD_DEFAULT);
     } else {
         include("veiculos.php"); 
     }?>
-    <?php include("footer.php"); ?>
+    <?php include("components/footer.php"); ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
 
