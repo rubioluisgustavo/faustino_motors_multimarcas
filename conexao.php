@@ -4,13 +4,10 @@ if (
     $_SERVER['SERVER_NAME'] === 'localhost' ||
     $_SERVER['SERVER_NAME'] === '127.0.0.1'
 ) {
-
-    // Ambiente local - XAMPP X
-
     $host = "localhost";
     $dbname = "faustino_motors_multimarcas";
-    $user = "root";
-    $password = "";
+    $user = "pedroteles";
+    $password = "xV*MwYNkwZ(E]b0R";
 } else {
 
     // Ambiente produção - Hostinger
