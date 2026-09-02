@@ -5,7 +5,7 @@ if (
     $_SERVER['SERVER_NAME'] === '127.0.0.1'
 ) {
 
-    // Ambiente local - XAMPP
+    // Ambiente local - XAMPP X
 
     $host = "localhost";
     $dbname = "faustino_motors_multimarcas";
