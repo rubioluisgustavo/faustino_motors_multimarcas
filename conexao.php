@@ -6,16 +6,16 @@ if (
 ) {
     $host = "localhost";
     $dbname = "faustino_motors_multimarcas";
-    $user = "pedroteles";
-    $password = "xV*MwYNkwZ(E]b0R";
+    $user = "root";
+    $password = "mnQlWXnnrT6UTAKU";
 } else {
 
     // Ambiente produção - Hostinger
 
-    $host = "localhost";
-    $dbname = "u458022580_5HHE2";
-    $user = "u458022580_mz51w";
-    $password = "FaustinoMotorsMultimarcas123!!!";
+    // $host = "localhost";
+    // $dbname = "u458022580_5HHE2";
+    // $user = "u458022580_mz51w";
+    // $password = "FaustinoMotorsMultimarcas123!!!";
 }
 
 try {
