@@ -1,0 +1,85 @@
+.card-admin {
+    background: #000;
+    border: 2px solid #bb9000;
+    border-radius: 15px;
+    padding: 20px;
+}
+
+.table-admin {
+    background: #000;
+    color: #fff;
+    margin: 0;
+}
+
+.table-admin thead th {
+    background: #bb9000;
+    color: #000;
+    font-weight: 800;
+    text-transform: uppercase;
+    border: none;
+    white-space: nowrap;
+}
+
+.table-admin tbody td {
+    background: #5f5f5f;
+    color: #fff;
+    border-bottom: 1px solid rgba(212, 175, 55, .25);
+    vertical-align: middle;
+}
+
+.table-admin tbody tr:hover td {
+    background: #222;
+}
+
+.venda-imagem-admin {
+    width: 90px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #bb9000;
+}
+
+.venda-depoimento {
+    min-width: 280px;
+    max-width: 520px;
+    white-space: normal;
+}
+
+.btn-editar {
+    background: #bb9000;
+    color: #000;
+    font-weight: bold;
+    border: none;
+}
+
+.btn-editar:hover {
+    background: #fff;
+    color: #000;
+}
+
+.btn-excluir {
+    background: #8b0000;
+    color: #fff;
+    font-weight: bold;
+}
+
+.btn-excluir:hover {
+    background: #ff0000;
+    color: #fff;
+}
+
+@media (max-width: 768px) {
+    .table-admin {
+        font-size: .85rem;
+    }
+
+    .btn-sm {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .venda-imagem-admin {
+        width: 70px;
+        height: 48px;
+    }
+}

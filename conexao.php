@@ -36,6 +36,7 @@ try {
         PDO::FETCH_ASSOC
     );
 } catch (PDOException $e) {
-
-    die($e);
+    error_log('Falha na conexão com o banco de dados: ' . $e->getMessage());
+    http_response_code(500);
+    exit('Não foi possível conectar ao banco de dados.');
 }

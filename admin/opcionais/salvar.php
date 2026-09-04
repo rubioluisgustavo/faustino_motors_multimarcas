@@ -2,62 +2,19 @@
 
 require_once "../../conexao.php";
 require_once "../includes/auth.php";
+require_once __DIR__ . '/OpcionalRepository.php';
 
 // Dados recebidos
 
-$id = $_POST['id'] ?? null;
-$nome = $_POST['nome'];
+$id = isset($_POST['id']) && $_POST['id'] !== '' ? (int) $_POST['id'] : null;
+$nome = trim($_POST['nome'] ?? '');
 
-
-// =============================
-// EDITAR
-// =============================
-
-if ($id) {
-
-
-
-    // mant�m imagem atual
-
-    $sql = $pdo->prepare("
-
-            UPDATE opcionais SET
-                nome = ?
-
-            WHERE id = ?
-
-        ");
-
-
-    $sql->execute([
-
-        $nome,
-        $id
-
-    ]);
-} else {
-
-
-    $sql = $pdo->prepare("
-
-        INSERT INTO opcionais
-
-        (
-            nome
-        )
-
-        VALUES
-        (?)
-
-    ");
-
-
-
-    $sql->execute([
-
-        $nome
-    ]);
+if ($nome === '') {
+    header('Location: cadastro.php' . ($id ? '?id=' . $id : ''));
+    exit;
 }
+
+(new OpcionalRepository($pdo))->salvar(new Opcional($id, $nome));
 
 
 

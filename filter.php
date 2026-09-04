@@ -1,39 +1,11 @@
 <?php
 
 require_once "conexao.php";
+require_once __DIR__ . '/admin/marcas/MarcaRepository.php';
+require_once __DIR__ . '/admin/modelos/ModeloRepository.php';
 
-$sqlMarcas = $pdo->query("
-    SELECT DISTINCT
-        ma.id,
-        ma.nome
-    FROM marcas ma
-
-    INNER JOIN modelos mo
-        ON mo.id_marca = ma.id
-
-    INNER JOIN veiculos v
-        ON v.id_modelo = mo.id
-
-    ORDER BY ma.nome ASC
-");
-
-$marcas = $sqlMarcas->fetchAll(PDO::FETCH_ASSOC);
-
-
-$sqlModelos = $pdo->query("
-    SELECT DISTINCT
-        mo.id,
-        mo.id_marca,
-        mo.nome
-    FROM modelos mo
-
-    INNER JOIN veiculos v
-        ON v.id_modelo = mo.id
-
-    ORDER BY mo.nome ASC
-");
-
-$modelos = $sqlModelos->fetchAll(PDO::FETCH_ASSOC);
+$marcas = (new MarcaRepository($pdo))->listarDisponiveis();
+$modelos = (new ModeloRepository($pdo))->listarDisponiveis();
 
 ?>
 
@@ -66,13 +38,13 @@ $modelos = $sqlModelos->fetchAll(PDO::FETCH_ASSOC);
                         <?php foreach ($marcas as $marca): ?>
 
                             <option
-                                value="<?= $marca['id'] ?>"
+                                value="<?= $marca->getId() ?>"
                                 <?= (
                                     isset($_GET['marca']) &&
-                                    $_GET['marca'] == $marca['id']
+                                    $_GET['marca'] == $marca->getId()
                                 ) ? 'selected' : '' ?>>
 
-                                <?= htmlspecialchars($marca['nome']) ?>
+                                <?= htmlspecialchars($marca->getNome()) ?>
 
                             </option>
 
@@ -174,7 +146,14 @@ $modelos = $sqlModelos->fetchAll(PDO::FETCH_ASSOC);
 
 
 <script>
-    const modelos = <?= json_encode($modelos, JSON_UNESCAPED_UNICODE) ?>;
+    const modelos = <?= json_encode(array_map(
+        static fn (Modelo $modelo): array => [
+            'id' => $modelo->getId(),
+            'id_marca' => $modelo->getIdMarca(),
+            'nome' => $modelo->getNome(),
+        ],
+        $modelos
+    ), JSON_UNESCAPED_UNICODE) ?>;
 
     const selectMarca = document.getElementById('filtroMarca');
     const selectModelo = document.getElementById('filtroModelo');

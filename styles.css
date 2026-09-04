@@ -24,8 +24,7 @@
 }
 
 .navbar-brand img {
-    width: auto;
-    height: 150px;
+    width: 250px;
 }
 
 .aviso {
@@ -46,7 +45,7 @@
 @media (max-width: 991px) {
 
     .navbar-brand img {
-        height: 110px;
+        height: 125px;
     }
 
     .navbar-brand h2 {
@@ -69,7 +68,7 @@
     }
 
     .navbar-brand img {
-        height: 130px;
+        height: auto;
         margin: 0 0 15px 0 !important;
     }
 
@@ -258,6 +257,47 @@
 .filtro-veiculos {
     background: #000000;
     border-bottom: 4px solid #bb9000;
+}
+
+.vendidos {
+    background: #111;
+    border-top: 3px solid #bb9000;
+}
+
+.titulo-secao {
+    color: #fff;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.titulo-secao h2 {
+    color: #bb9000;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.card-vendido {
+    overflow: hidden;
+    background: #000;
+    border: 1px solid rgba(187, 144, 0, .55);
+    color: #fff;
+}
+
+.card-vendido .card-img-top {
+    height: 220px;
+    object-fit: cover;
+}
+
+.card-vendido h3 {
+    color: #bb9000;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+}
+
+.card-vendido blockquote {
+    margin: 1rem 0 0;
+    color: #eee;
+    font-style: italic;
 }
 
 .filtro-veiculos label {
@@ -1055,6 +1095,32 @@
     min-height: 70vh;
 }
 
+@media (min-width: 992px) {
+    .detalhes-veiculo .row {
+        align-items: stretch !important;
+    }
+
+    .detalhes-veiculo .col-lg-7 {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .detalhes-veiculo .col-lg-5 {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .info-detalhes-veiculo {
+        flex: 1;
+    }
+
+    .opcionais-quadro {
+        flex: 1;
+    }
+}
+
 
 /* IMAGEM */
 
@@ -1102,6 +1168,76 @@
     font-size: 30px;
     font-weight: 700;
     margin-bottom: 30px;
+}
+
+.planos-veiculo {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.plano-veiculo {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 18px;
+    border: 1px solid #bb9000;
+    border-radius: 10px;
+    background: #fafafa;
+}
+
+.plano-veiculo .plano-titulo {
+    color: #bb9000;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.plano-veiculo strong {
+    color: #222;
+    font-size: 1.25rem;
+}
+
+.plano-veiculo small {
+    color: #666;
+}
+
+.vantagens-plano {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 10px 0 0;
+    padding: 0;
+    list-style: none;
+    color: #333;
+    font-size: .9rem;
+}
+
+.vantagens-plano li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.vantagens-plano i {
+    color: #198754;
+}
+
+.vantagens-plano i.indisponivel {
+    color: #dc3545;
+}
+
+.plano-premium {
+    background: #fff8df;
+    border-width: 2px;
+}
+
+.opcionais-quadro {
+    padding: 28px;
+    /* border: 2px solid #bb9000; */
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, .08);
 }
 
 
@@ -1303,6 +1439,18 @@
 
     .dados-detalhes {
         grid-template-columns: 1fr;
+    }
+
+    .planos-veiculo {
+        grid-template-columns: 1fr;
+    }
+
+    .detalhes-veiculo .col-lg-7 {
+        display: block;
+    }
+
+    .opcionais-quadro {
+        flex: none;
     }
 
 }

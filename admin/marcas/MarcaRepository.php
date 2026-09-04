@@ -26,6 +26,19 @@ class MarcaRepository
         return $marcas;
     }
 
+    public function listarDisponiveis(): array
+    {
+        $sql = $this->pdo->query(
+            'SELECT DISTINCT ma.id, ma.nome
+             FROM marcas ma
+             INNER JOIN modelos mo ON mo.id_marca = ma.id
+             INNER JOIN veiculos v ON v.id_modelo = mo.id
+             ORDER BY ma.nome ASC'
+        );
+
+        return array_map([Marca::class, 'fromArray'], $sql->fetchAll());
+    }
+
     public function buscarPorId(int $id): ?Marca
     {
         $sql = $this->pdo->prepare('SELECT id, nome FROM marcas WHERE id = :id');

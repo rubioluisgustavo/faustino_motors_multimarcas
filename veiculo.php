@@ -1,6 +1,7 @@
 <?php
 
 require_once "conexao.php";
+require_once __DIR__ . '/admin/veiculos/VeiculoRepository.php';
 
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 
@@ -16,35 +17,8 @@ if (!$id) {
 |--------------------------------------------------------------------------
 */
 
-$sql = "
-    SELECT
-        v.id,
-        ma.nome AS marca,
-        mo.nome AS modelo,
-        v.ano,
-        v.km,
-        v.cambio,
-        v.combustivel,
-        v.valor,
-        v.imagem_principal,
-        v.novo
-    FROM veiculos v
-
-    INNER JOIN modelos mo
-        ON mo.id = v.id_modelo
-
-    INNER JOIN marcas ma
-        ON ma.id = mo.id_marca
-
-    WHERE v.id = ?
-
-    LIMIT 1
-";
-
-$stmt = $pdo->prepare($sql);
-$stmt->execute([$id]);
-
-$veiculo = $stmt->fetch(PDO::FETCH_ASSOC);
+$veiculoRepository = new VeiculoRepository($pdo);
+$veiculo = $veiculoRepository->buscarPorId($id);
 
 
 if (!$veiculo) {
@@ -60,24 +34,7 @@ if (!$veiculo) {
 |--------------------------------------------------------------------------
 */
 
-$sqlOpcionais = "
-    SELECT
-        o.id,
-        o.nome
-    FROM veiculos_opcionais vo
-
-    INNER JOIN opcionais o
-        ON o.id = vo.id_opcionais
-
-    WHERE vo.id_veiculo = ?
-
-    ORDER BY o.nome ASC
-";
-
-$stmtOpcionais = $pdo->prepare($sqlOpcionais);
-$stmtOpcionais->execute([$id]);
-
-$opcionais = $stmtOpcionais->fetchAll(PDO::FETCH_ASSOC);
+$opcionais = $veiculoRepository->listarOpcionais($id);
 
 ?>
 
@@ -98,12 +55,12 @@ $opcionais = $stmtOpcionais->fetchAll(PDO::FETCH_ASSOC);
 
                 <div class="imagem-detalhes-veiculo">
 
-                    <?php if (!empty($veiculo['imagem_principal'])): ?>
+                    <?php if (!empty($veiculo->getImagemPrincipal())): ?>
 
                         <img
-                            src="<?= htmlspecialchars($veiculo['imagem_principal']) ?>"
+                            src="<?= htmlspecialchars($veiculo->getImagemPrincipal()) ?>"
                             alt="<?= htmlspecialchars(
-                                        $veiculo['marca'] . ' ' . $veiculo['modelo']
+                                        $veiculo->getMarca() . ' ' . $veiculo->getModelo()
                                     ) ?>">
 
                     <?php else: ?>
@@ -116,6 +73,26 @@ $opcionais = $stmtOpcionais->fetchAll(PDO::FETCH_ASSOC);
 
                 </div>
 
+                <?php if (!empty($opcionais)): ?>
+                    <div class="opcionais-veiculo mt-4 opcionais-quadro">
+                        <div class="opcionais-header">
+                            <h2>
+                                <i class="bi bi-check-circle-fill"></i>
+                                Opcionais
+                            </h2>
+                        </div>
+
+                        <div class="lista-opcionais">
+                            <?php foreach ($opcionais as $opcional): ?>
+                                <div class="opcional-item">
+                                    <i class="bi bi-check-lg"></i>
+                                    <span><?= htmlspecialchars($opcional->getNome()) ?></span>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                <?php endif; ?>
+
             </div>
 
 
@@ -124,37 +101,47 @@ $opcionais = $stmtOpcionais->fetchAll(PDO::FETCH_ASSOC);
             <div class="col-lg-5">
 
                 <div class="info-detalhes-veiculo">
-                    
-                    <?php if (isset($veiculo['novo']) && $veiculo['novo'] == 'y'): ?>
+
+                    <?php if ($veiculo->isNovo()): ?>
                         <span class="badge-novidade">Novidade</span>
+
                     <?php endif; ?>
 
                     <hr>
                     <span class="marca-detalhes">
 
-                        <?= htmlspecialchars($veiculo['marca']) ?>
+                        <?= htmlspecialchars($veiculo->getMarca()) ?>
 
                     </span>
 
 
                     <h1>
 
-                        <?= htmlspecialchars($veiculo['modelo']) ?>
+                        <?= htmlspecialchars($veiculo->getModelo()) ?>
 
                     </h1>
+                    <hr>
 
 
-                    <div class="preco-detalhes">
-
-                        R$
-
-                        <?= number_format(
-                            $veiculo['valor'],
-                            2,
-                            ",",
-                            "."
-                        ) ?>
-
+                    <div class="planos-veiculo">
+                        <div class="plano-veiculo">
+                            <span class="plano-titulo">Venda essencial</span>
+                            <strong>R$ <?= number_format($veiculo->getValor(), 2, ",", ".") ?></strong>
+                            <ul class="vantagens-plano">
+                                <li><i class="bi bi-check-circle-fill"></i> Revisão básica</li>
+                                <li><i class="bi bi-x-circle-fill indisponivel"></i> Garantia de 1 ano</li>
+                                <li><i class="bi bi-x-circle-fill indisponivel"></i> Assistência 24 horas</li>
+                            </ul>
+                        </div>
+                        <div class="plano-veiculo plano-premium">
+                            <span class="plano-titulo">Venda premium</span>
+                            <strong>R$ <?= number_format($veiculo->getValorPremium() ?? $veiculo->getValor(), 2, ",", ".") ?></strong>
+                            <ul class="vantagens-plano">
+                                <li><i class="bi bi-check-circle-fill"></i> Revisão básica</li>
+                                <li><i class="bi bi-check-circle-fill"></i> Garantia de 1 ano</li>
+                                <li><i class="bi bi-check-circle-fill"></i> Assistência 24 horas</li>
+                            </ul>
+                        </div>
                     </div>
 
 
@@ -172,7 +159,7 @@ $opcionais = $stmtOpcionais->fetchAll(PDO::FETCH_ASSOC);
                                 <span>Ano</span>
 
                                 <strong>
-                                    <?= htmlspecialchars($veiculo['ano']) ?>
+                                    <?= htmlspecialchars((string) $veiculo->getAno()) ?>
                                 </strong>
 
                             </div>
@@ -191,7 +178,7 @@ $opcionais = $stmtOpcionais->fetchAll(PDO::FETCH_ASSOC);
                                 <strong>
 
                                     <?= number_format(
-                                        $veiculo['km'],
+                                        $veiculo->getKm(),
                                         0,
                                         ",",
                                         "."
@@ -215,7 +202,7 @@ $opcionais = $stmtOpcionais->fetchAll(PDO::FETCH_ASSOC);
                                 <span>Câmbio</span>
 
                                 <strong>
-                                    <?= htmlspecialchars($veiculo['cambio']) ?>
+                                    <?= htmlspecialchars($veiculo->getCambio()) ?>
                                 </strong>
 
                             </div>
@@ -232,7 +219,7 @@ $opcionais = $stmtOpcionais->fetchAll(PDO::FETCH_ASSOC);
                                 <span>Combustível</span>
 
                                 <strong>
-                                    <?= htmlspecialchars($veiculo['combustivel']) ?>
+                                    <?= htmlspecialchars($veiculo->getCombustivel()) ?>
                                 </strong>
 
                             </div>
@@ -248,9 +235,9 @@ $opcionais = $stmtOpcionais->fetchAll(PDO::FETCH_ASSOC);
                     <a
                         href="https://wa.me/5514997533055?text=<?= urlencode(
                                                                     'Olá! Venho pelo site e tenho interesse no veículo ' .
-                                                                        $veiculo['marca'] . ' ' .
-                                                                        $veiculo['modelo'] . ' ' .
-                                                                        $veiculo['ano']
+                                                                        $veiculo->getMarca() . ' ' .
+                                                                        $veiculo->getModelo() . ' ' .
+                                                                        $veiculo->getAno()
                                                                 ) ?>"
                         target="_blank"
                         class="btn-interesse">
@@ -267,50 +254,6 @@ $opcionais = $stmtOpcionais->fetchAll(PDO::FETCH_ASSOC);
             </div>
 
         </div>
-
-
-        <!-- =====================================================
-             OPCIONAIS
-        ====================================================== -->
-
-        <?php if (!empty($opcionais)): ?>
-
-            <div class="opcionais-veiculo mt-5">
-
-                <div class="opcionais-header">
-
-                    <h2>
-
-                        <i class="bi bi-check-circle-fill"></i>
-
-                        Opcionais
-
-                    </h2>
-
-                </div>
-
-
-                <div class="lista-opcionais">
-
-                    <?php foreach ($opcionais as $opcional): ?>
-
-                        <div class="opcional-item">
-
-                            <i class="bi bi-check-lg"></i>
-
-                            <span>
-                                <?= htmlspecialchars($opcional['nome']) ?>
-                            </span>
-
-                        </div>
-
-                    <?php endforeach; ?>
-
-                </div>
-
-            </div>
-
-        <?php endif; ?>
 
 
         <!-- VOLTAR -->

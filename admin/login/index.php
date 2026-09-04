@@ -2,10 +2,6 @@
 
 session_start();
 
-error_reporting(E_ERROR);
-ini_set('display_errors', 1);
-
-
 if (isset($_SESSION['usuario'])) {
 
     header("Location: ../index.php");
@@ -15,13 +11,8 @@ if (isset($_SESSION['usuario'])) {
 
 ?>
 
-<link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
-    rel="stylesheet">
+<?php require_once __DIR__ . '/../includes/head.php'; ?>
 
-<link
-    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-    rel="stylesheet">
 <link href="login.css" rel="stylesheet">
 <div class="login-container">
 
@@ -121,7 +112,7 @@ if (isset($_SESSION['usuario'])) {
 
         </form>
 
-        <?php if ($_REQUEST['erro']): ?>
+        <?php if (isset($_GET['erro'])): ?>
 
             <div class="alert alert-danger">
                 E-mail ou senha inválidos.

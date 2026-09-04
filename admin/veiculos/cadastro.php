@@ -3,6 +3,10 @@
 
 require_once "../../conexao.php";
 require_once "../includes/auth.php";
+require_once __DIR__ . '/VeiculoRepository.php';
+require_once __DIR__ . '/../modelos/ModeloRepository.php';
+require_once __DIR__ . '/../opcionais/OpcionalRepository.php';
+require_once __DIR__ . '/../includes/head.php';
 
 
 
@@ -10,26 +14,14 @@ require_once "../includes/auth.php";
 // ID DO VEÍCULO
 // =============================
 
-$id = $_GET['id'] ?? null;
+$id = isset($_GET['id']) ? (int) $_GET['id'] : null;
 
 
 // =============================
 // DADOS PADRÃO DO VEÍCULO
 // =============================
 
-$veiculo = [
-
-    'id_modelo' => '',
-    'ano' => '',
-    'km' => '',
-    'cambio' => '',
-    'combustivel' => '',
-    'valor' => '',
-    'imagem_principal' => '',
-    'descricao' => '',
-    'novo' => ''
-
-];
+$veiculo = new Veiculo();
 
 
 // =============================
@@ -45,22 +37,9 @@ $opcionaisSelecionados = [];
 
 if ($id) {
 
-    $sql = $pdo->prepare("
-
-        SELECT *
-        FROM veiculos
-        WHERE id = ?
-
-    ");
-
-    $sql->execute([$id]);
-
-    $resultado = $sql->fetch(PDO::FETCH_ASSOC);
-
-
-    if ($resultado) {
-
-        $veiculo = $resultado;
+    $veiculoEncontrado = (new VeiculoRepository($pdo))->buscarPorId($id);
+    if ($veiculoEncontrado) {
+        $veiculo = $veiculoEncontrado;
     }
 
 
@@ -93,14 +72,19 @@ if ($id) {
 
 $valor = '';
 
-if (!empty($veiculo['valor'])) {
+if ($veiculo->getValor() > 0) {
 
     $valor = number_format(
-        $veiculo['valor'],
+        $veiculo->getValor(),
         2,
         ",",
         "."
     );
+}
+
+$valorPremium = '';
+if ($veiculo->getValorPremium() !== null) {
+    $valorPremium = number_format($veiculo->getValorPremium(), 2, ",", ".");
 }
 
 
@@ -108,54 +92,19 @@ if (!empty($veiculo['valor'])) {
 // BUSCA MODELOS
 // =============================
 
-$modelos = $pdo->query("
-
-    SELECT
-
-        mo.id,
-
-        CONCAT(
-            ma.nome,
-            ' - ',
-            mo.nome
-        ) AS nome
-
-    FROM modelos mo
-
-    INNER JOIN marcas ma
-        ON ma.id = mo.id_marca
-
-    ORDER BY
-        ma.nome,
-        mo.nome
-
-")->fetchAll(PDO::FETCH_ASSOC);
+$modelos = (new ModeloRepository($pdo))->listar();
 
 
 // =============================
 // BUSCA OPCIONAIS
 // =============================
 
-$opcionais = $pdo->query("
-
-    SELECT
-
-        op.id,
-        op.nome
-
-    FROM opcionais op
-
-    ORDER BY
-        op.nome
-
-")->fetchAll(PDO::FETCH_ASSOC);
+$opcionais = (new OpcionalRepository($pdo))->listar();
 
 
 ?>
 
 <link href="../css/admin.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-
 <div class="card-admin">
 
     <form
@@ -198,11 +147,11 @@ $opcionais = $pdo->query("
 
                         <option
 
-                            value="<?= $m['id'] ?>"
+                            value="<?= $m->getId() ?>"
 
-                            <?= $m['id'] == $veiculo['id_modelo'] ? 'selected' : '' ?>>
+                            <?= $m->getId() == $veiculo->getIdModelo() ? 'selected' : '' ?>>
 
-                            <?= htmlspecialchars($m['nome']) ?>
+                            <?= htmlspecialchars($m->getMarca() . ' - ' . $m->getNome()) ?>
 
 
                         </option>
@@ -233,7 +182,7 @@ $opcionais = $pdo->query("
                     type="number"
                     class="form-control"
                     name="ano"
-                    value="<?= $veiculo['ano'] ?? '' ?>">
+                    value="<?= $veiculo->getAno() ?: '' ?>">
 
 
             </div>
@@ -255,7 +204,7 @@ $opcionais = $pdo->query("
                     type="number"
                     class="form-control"
                     name="km"
-                    value="<?= $veiculo['km'] ?? '' ?>">
+                    value="<?= $veiculo->getKm() ?: '' ?>">
 
 
             </div>
@@ -282,11 +231,11 @@ $opcionais = $pdo->query("
                     </option>
 
 
-                    <option value="manual" <?= $veiculo['cambio'] == "manual" ? 'selected' : '' ?>>
+                    <option value="manual" <?= $veiculo->getCambio() == "manual" ? 'selected' : '' ?>>
                         manual
                     </option>
 
-                    <option value="automático" <?= $veiculo['cambio'] == "automatico" ? 'selected' : '' ?>>
+                    <option value="automático" <?= $veiculo->getCambio() == "automatico" ? 'selected' : '' ?>>
                         automático
                     </option>
 
@@ -294,6 +243,16 @@ $opcionais = $pdo->query("
                 </select>
 
 
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label">Valor premium</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    name="valor_premium"
+                    value="<?= htmlspecialchars($valorPremium) ?>"
+                    placeholder="Opcional">
             </div>
 
 
@@ -318,27 +277,27 @@ $opcionais = $pdo->query("
                     </option>
 
 
-                    <option value="flex" <?= $veiculo['combustivel'] == "flex" ? 'selected' : '' ?>>
+                    <option value="flex" <?= $veiculo->getCombustivel() == "flex" ? 'selected' : '' ?>>
                         flex
                     </option>
 
-                    <option value="gasolina" <?= $veiculo['combustivel'] == "gasolina" ? 'selected' : '' ?>>
+                    <option value="gasolina" <?= $veiculo->getCombustivel() == "gasolina" ? 'selected' : '' ?>>
                         gasolina
                     </option>
 
-                    <option value="etanol" <?= $veiculo['combustivel'] == "etanol" ? 'selected' : '' ?>>
+                    <option value="etanol" <?= $veiculo->getCombustivel() == "etanol" ? 'selected' : '' ?>>
                         etanol
                     </option>
 
-                    <option value="diesel" <?= $veiculo['combustivel'] == "diesel" ? 'selected' : '' ?>>
+                    <option value="diesel" <?= $veiculo->getCombustivel() == "diesel" ? 'selected' : '' ?>>
                         diesel
                     </option>
 
-                    <option value="eletrico" <?= $veiculo['combustivel'] == "hibrido" ? 'selected' : '' ?>>
+                    <option value="eletrico" <?= $veiculo->getCombustivel() == "eletrico" ? 'selected' : '' ?>>
                         elétrico
                     </option>
 
-                    <option value="hibrido" <?= $veiculo['combustivel'] == "hibrido" ? 'selected' : '' ?>>
+                    <option value="hibrido" <?= $veiculo->getCombustivel() == "hibrido" ? 'selected' : '' ?>>
                         híbrido
                     </option>
 
@@ -400,7 +359,7 @@ $opcionais = $pdo->query("
             <div class="col-md-6">
 
 
-                <?php if (!empty($veiculo['imagem_principal'])): ?>
+                <?php if (!empty($veiculo->getImagemPrincipal())): ?>
 
 
                     <label class="form-label">
@@ -412,7 +371,7 @@ $opcionais = $pdo->query("
 
 
                         <img
-                            src="../../<?= $veiculo['imagem_principal'] ?>"
+                            src="../../<?= htmlspecialchars($veiculo->getImagemPrincipal()) ?>"
                             class="img-fluid">
 
 
@@ -440,7 +399,7 @@ $opcionais = $pdo->query("
                 <textarea
                     class="form-control"
                     rows="5"
-                    name="descricao"><?= $veiculo['descricao'] ?? '' ?></textarea>
+                    name="descricao"><?= htmlspecialchars($veiculo->getDescricao()) ?></textarea>
 
 
             </div>
@@ -461,12 +420,12 @@ $opcionais = $pdo->query("
                                 type="checkbox"
                                 class="form-check-input"
                                 name="opcionais[]"
-                                value="<?= $opcional['id'] ?>"
-                                id="opcional_<?= $opcional['id'] ?>"
+                                value="<?= $opcional->getId() ?>"
+                                id="opcional_<?= $opcional->getId() ?>"
 
                                 <?=
                                 in_array(
-                                    $opcional['id'],
+                                    $opcional->getId(),
                                     $opcionaisSelecionados ?? []
                                 )
                                     ? 'checked'
@@ -475,9 +434,9 @@ $opcionais = $pdo->query("
 
                             <label
                                 class="form-check-label text-gold"
-                                for="opcional_<?= $opcional['id'] ?>">
+                                for="opcional_<?= $opcional->getId() ?>">
 
-                                <?= htmlspecialchars($opcional['nome']) ?>
+                                <?= htmlspecialchars($opcional->getNome()) ?>
 
                             </label>
 
@@ -499,7 +458,7 @@ $opcionais = $pdo->query("
                         id="marcar_novo"
                         name="novo"
                         value="y"
-                        <?= ($veiculo['novo'] ?? 'n') == 'y' ? 'checked' : '' ?>>
+                        <?= $veiculo->isNovo() ? 'checked' : '' ?>>
 
                     <label
                         for="marcar_novo"

@@ -1,22 +1,19 @@
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-
 <?php
 
 require_once "../../conexao.php";
 require_once "../includes/auth.php";
+require_once __DIR__ . '/VeiculoRepository.php';
+require_once __DIR__ . '/../includes/head.php';
 
 // excluir
 
 if (isset($_GET['excluir'])) {
 
-    $id = $_GET['excluir'];
-
-    $sql = $pdo->prepare("
-        DELETE FROM veiculos 
-        WHERE id = ?
-    ");
-
-    $sql->execute([$id]);
+    $id = filter_input(INPUT_GET, 'excluir', FILTER_VALIDATE_INT);
+    if ($id) {
+        $stmt = $pdo->prepare("DELETE FROM veiculos WHERE id = ?");
+        $stmt->execute([$id]);
+    }
 
 
     header("Location:index.php");
@@ -26,37 +23,7 @@ if (isset($_GET['excluir'])) {
 
 
 
-$sql = $pdo->query("
-
-SELECT
-
-v.id,
-ma.nome AS marca,
-mo.nome AS modelo,
-v.novo,
-v.ano,
-v.km,
-v.valor
-
-
-FROM veiculos v
-
-
-INNER JOIN modelos mo
-ON mo.id = v.id_modelo
-
-
-INNER JOIN marcas ma
-ON ma.id = mo.id_marca
-
-
-ORDER BY v.id DESC
-
-
-");
-
-
-$veiculos = $sql->fetchAll();
+$veiculos = (new VeiculoRepository($pdo))->listar();
 
 
 ?>
@@ -105,7 +72,7 @@ $veiculos = $sql->fetchAll();
             <thead>
 
                 <tr>
-
+                    <th>Imagem</th>
                     <th>Marca</th>
                     <th>Modelo</th>
                     <th>Ano</th>
@@ -125,31 +92,40 @@ $veiculos = $sql->fetchAll();
 
 
                     <tr>
-
+                        <td>
+                            <?php if ($v->getImagemPrincipal()): ?>
+                                <img
+                                    src="../../<?= htmlspecialchars($v->getImagemPrincipal()) ?>"
+                                    alt="<?= htmlspecialchars($v->getMarca() . ' ' . $v->getModelo()) ?>"
+                                    class="veiculo-imagem-admin">
+                            <?php else: ?>
+                                Sem imagem
+                            <?php endif; ?>
+                        </td>
 
                         <td>
-                            <?= htmlspecialchars($v['marca']) ?>
+                            <?= htmlspecialchars($v->getMarca()) ?>
                         </td>
 
 
                         <td>
-                            <?= htmlspecialchars($v['modelo']) ?>
+                            <?= htmlspecialchars($v->getModelo()) ?>
                         </td>
 
 
                         <td>
-                            <?= $v['ano'] ?>
+                            <?= $v->getAno() ?>
                         </td>
 
 
                         <td>
-                            <?= number_format($v['km'], 0, ",", ".") ?>
+                            <?= number_format($v->getKm(), 0, ",", ".") ?>
                         </td>
 
 
                         <td class="valor">
 
-                            R$ <?= number_format((float)$v['valor'], 2, ",", ".") ?>
+                            R$ <?= number_format($v->getValor(), 2, ",", ".") ?>
 
                         </td>
 
@@ -159,7 +135,7 @@ $veiculos = $sql->fetchAll();
 
 
                             <a
-                                href="cadastro.php?id=<?= $v['id'] ?>"
+                                href="cadastro.php?id=<?= $v->getId() ?>"
                                 class="btn btn-sm btn-editar">
                                 Editar
                             </a>
@@ -167,7 +143,7 @@ $veiculos = $sql->fetchAll();
 
 
                             <a
-                                href="index.php?excluir=<?= $v['id'] ?>"
+                                href="index.php?excluir=<?= $v->getId() ?>"
                                 class="btn btn-sm btn-excluir"
                                 onclick="return confirm('Excluir veÃ­culo?')">
                                 Excluir

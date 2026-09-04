@@ -2,36 +2,16 @@
 
 require_once "../../conexao.php";
 require_once "../includes/auth.php";
+require_once __DIR__ . '/OpcionalRepository.php';
+require_once __DIR__ . '/../includes/head.php';
 
-$id = $_GET['id'] ?? null;
-
-
-$opcional = [
-
-    'id' => '',
-    'nome' => '',
-
-];
-
-
-if ($id) {
-
-    $sql = $pdo->prepare("
-        SELECT *
-        FROM opcionais
-        WHERE id=?
-    ");
-
-    $sql->execute([$id]);
-
-    $opcional = $sql->fetch();
-}
+$opcionalRepository = new OpcionalRepository($pdo);
+$id = isset($_GET['id']) ? (int) $_GET['id'] : null;
+$opcional = $id ? $opcionalRepository->buscarPorId($id) : new Opcional();
 
 ?>
 
 <link href="../css/admin.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-
 <div class="card-admin">
 
     <form
@@ -43,7 +23,7 @@ if ($id) {
         <input
             type="hidden"
             name="id"
-            value="<?= $id ?>">
+            value="<?= $opcional->getId() ?? '' ?>">
 
 
 
@@ -62,7 +42,7 @@ if ($id) {
                     type="text"
                     class="form-control"
                     name="nome"
-                    value="<?= $opcional['nome'] ?? '' ?>">
+                    value="<?= htmlspecialchars($opcional->getNome()) ?>">
 
 
             </div>

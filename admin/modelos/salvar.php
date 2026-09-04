@@ -2,95 +2,21 @@
 
 require_once "../../conexao.php";
 require_once "../includes/auth.php";
+require_once __DIR__ . '/ModeloRepository.php';
 
 
 // Dados recebidos
 
-$id = $_POST['id'] ?? null;
+$id = isset($_POST['id']) && $_POST['id'] !== '' ? (int) $_POST['id'] : null;
+$idMarca = isset($_POST['id_marca']) && $_POST['id_marca'] !== '' ? (int) $_POST['id_marca'] : null;
+$nome = trim($_POST['nome'] ?? '');
 
-$id_marca = $_POST['id_marca'] ?? null;
-
-$nome = $_POST['nome'] ?? '';
-
-
-
-
-
-// =============================
-// EDITAR
-// =============================
-
-if ($id) {
-
-
-    $sql = $pdo->prepare("
-
-        UPDATE modelos SET
-
-            id_marca = ?,
-
-            nome = ?
-
-
-        WHERE id = ?
-
-    ");
-
-
-
-    $sql->execute([
-
-        $id_marca,
-
-        $nome,
-
-        $id
-
-    ]);
-} else {
-
-
-
-    // =============================
-    // NOVO CADASTRO
-    // =============================
-
-
-    $sql = $pdo->prepare("
-
-        INSERT INTO modelos
-
-        (
-
-            id_marca,
-
-            nome
-
-        )
-
-
-        VALUES
-
-        (
-
-            ?,
-
-            ?
-
-        )
-
-    ");
-
-
-
-    $sql->execute([
-
-        $id_marca,
-
-        $nome
-
-    ]);
+if ($idMarca === null || $nome === '') {
+    header('Location: cadastro.php' . ($id ? '?id=' . $id : ''));
+    exit;
 }
+
+(new ModeloRepository($pdo))->salvar(new Modelo($id, $idMarca, $nome));
 
 
 

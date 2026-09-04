@@ -6,7 +6,7 @@ session_start();
 require_once "../../conexao.php";
 
 
-$email = $_POST['email'] ?? '';
+$email = trim($_POST['email'] ?? '');
 
 $senha = $_POST['senha'] ?? '';
 
@@ -14,7 +14,7 @@ $senha = $_POST['senha'] ?? '';
 
 $sql = $pdo->prepare("
 
-    SELECT *
+    SELECT id, nome, senha
 
     FROM usuarios
 
@@ -34,6 +34,7 @@ if (
     $usuario &&
     password_verify($senha, $usuario['senha'])
 ) {
+    session_regenerate_id(true);
 
 
     $_SESSION['usuario'] = [

@@ -1,29 +1,18 @@
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-
 <?php
 
 require_once "../../conexao.php";
 require_once "../includes/auth.php";
+require_once __DIR__ . '/ModeloRepository.php';
+require_once __DIR__ . '/../includes/head.php';
 
+$modeloRepository = new ModeloRepository($pdo);
 
 // excluir modelo
 
 if (isset($_GET['excluir'])) {
 
 
-    $id = intval($_GET['excluir']);
-
-
-    $sql = $pdo->prepare("
-
-        DELETE FROM modelos
-
-        WHERE id = ?
-
-    ");
-
-
-    $sql->execute([$id]);
+    $modeloRepository->excluir((int) $_GET['excluir']);
 
 
 
@@ -38,39 +27,7 @@ if (isset($_GET['excluir'])) {
 
 // listar modelos
 
-$sql = $pdo->query("
-
-    SELECT
-
-        mo.id,
-
-        ma.nome AS marca,
-
-        mo.nome
-
-
-    FROM modelos mo
-
-
-    INNER JOIN marcas ma
-
-    ON ma.id = mo.id_marca
-
-
-    ORDER BY
-
-        ma.nome ASC,
-
-        mo.nome ASC
-
-
-");
-
-
-
-$modelos = $sql->fetchAll(PDO::FETCH_ASSOC);
-
-
+$modelos = $modeloRepository->listar();
 
 ?>
 <link href="../modelos/modelos.css" rel="stylesheet">
@@ -143,19 +100,19 @@ $modelos = $sql->fetchAll(PDO::FETCH_ASSOC);
 
 
                         <td>
-                            <?= htmlspecialchars($m['id']) ?>
+                            <?= htmlspecialchars((string) $m->getId()) ?>
                         </td>
 
 
 
                         <td>
-                            <?= htmlspecialchars($m['marca']) ?>
+                            <?= htmlspecialchars($m->getMarca()) ?>
                         </td>
 
 
 
                         <td>
-                            <?= htmlspecialchars($m['nome']) ?>
+                            <?= htmlspecialchars($m->getNome()) ?>
                         </td>
 
 
@@ -164,7 +121,7 @@ $modelos = $sql->fetchAll(PDO::FETCH_ASSOC);
 
 
                             <a
-                                href="cadastro.php?id=<?= $m['id'] ?>"
+                                href="cadastro.php?id=<?= $m->getId() ?>"
                                 class="btn btn-sm btn-editar">
 
                                 Editar
@@ -175,7 +132,7 @@ $modelos = $sql->fetchAll(PDO::FETCH_ASSOC);
 
 
                             <a
-                                href="index.php?excluir=<?= $m['id'] ?>"
+                                href="index.php?excluir=<?= $m->getId() ?>"
                                 class="btn btn-sm btn-excluir"
                                 onclick="return confirm('Excluir modelo?')">
 

@@ -9,18 +9,8 @@
 <html lang="pt-BR">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" sizes="16x16" href="../img/favicon-16x16.png">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="theme-color" content="#ffffff">
-    <title>Faustino Motors Multimarcas</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <?php require_once __DIR__ . '/includes/head.php'; ?>
     <link href="css/admin.css" rel="stylesheet">
-    <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 
 <body>
@@ -192,6 +182,18 @@
 
                 </div>
 
+            </div>
+
+            <!-- VENDIDOS -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card-dashboard">
+                    <div class="icone-dashboard">
+                        <i class="bi bi-chat-quote-fill"></i>
+                    </div>
+                    <h4>Vendidos</h4>
+                    <p>Cadastre os veículos vendidos e os depoimentos dos clientes.</p>
+                    <a href="vendas/index.php" class="btn btn-adicionar w-100">Acessar</a>
+                </div>
             </div>
 
 

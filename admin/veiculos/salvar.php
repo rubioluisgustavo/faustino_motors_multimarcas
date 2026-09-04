@@ -28,6 +28,11 @@ $valor = $_POST['valor'];
 $valor = str_replace('.', '', $valor);
 $valor = str_replace(',', '.', $valor);
 
+$valorPremium = trim($_POST['valor_premium'] ?? '');
+$valorPremium = $valorPremium === ''
+    ? null
+    : str_replace(',', '.', str_replace('.', '', $valorPremium));
+
 // ============================= 
 // UPLOAD DA IMAGEM 
 // ============================= 
@@ -38,18 +43,26 @@ if (
     isset($_FILES['imagem_principal']) &&
     $_FILES['imagem_principal']['error'] == 0
 ) {
+    $extensao = strtolower(pathinfo($_FILES['imagem_principal']['name'], PATHINFO_EXTENSION));
+    $tiposPermitidos = [
+        'jpg' => 'image/jpeg',
+        'jpeg' => 'image/jpeg',
+        'png' => 'image/png',
+        'webp' => 'image/webp',
+    ];
+    $mime = (new finfo(FILEINFO_MIME_TYPE))->file($_FILES['imagem_principal']['tmp_name']);
+
+    if (!isset($tiposPermitidos[$extensao]) || $tiposPermitidos[$extensao] !== $mime) {
+        die("Formato de imagem não permitido.");
+    }
+
     $pasta = "../../img/carros/";
 
     if (!is_dir($pasta)) {
-        mkdir($pasta, 0777, true);
+        mkdir($pasta, 0755, true);
     }
 
-    $extensao = pathinfo(
-        $_FILES['imagem_principal']['name'],
-        PATHINFO_EXTENSION
-    );
-
-    $nomeArquivo = time() . "_" . uniqid() . "." . $extensao;
+    $nomeArquivo = bin2hex(random_bytes(16)) . "." . $extensao;
     $destino = $pasta . $nomeArquivo;
 
     if (
@@ -85,7 +98,8 @@ try {
                     km = ?, 
                     cambio = ?, 
                     combustivel = ?, 
-                    valor = ?, 
+                    valor = ?,
+                    valor_premium = ?,
                     imagem_principal = ?, 
                     descricao = ?,
                     novo = ? 
@@ -100,6 +114,7 @@ try {
                 $cambio,
                 $combustivel,
                 $valor,
+                $valorPremium,
                 $imagem,
                 $descricao,
                 $novo,
@@ -117,7 +132,8 @@ try {
                     km = ?, 
                     cambio = ?, 
                     combustivel = ?, 
-                    valor = ?, 
+                    valor = ?,
+                    valor_premium = ?,
                     descricao = ?,
                     novo = ? 
                 WHERE id = ? 
@@ -130,6 +146,7 @@ try {
                 $cambio,
                 $combustivel,
                 $valor,
+                $valorPremium,
                 $descricao,
                 $novo,
                 $id
@@ -155,13 +172,14 @@ try {
                 km, 
                 cambio, 
                 combustivel, 
-                valor, 
+                valor,
+                valor_premium,
                 imagem_principal, 
                 descricao, 
                 novo 
             ) 
             VALUES 
-            (?,?,?,?,?,?,?,?,?) 
+            (?,?,?,?,?,?,?,?,?,?)
         ");
 
         $sql->execute([
@@ -171,6 +189,7 @@ try {
             $cambio,
             $combustivel,
             $valor,
+            $valorPremium,
             $imagem,
             $descricao,
             $novo

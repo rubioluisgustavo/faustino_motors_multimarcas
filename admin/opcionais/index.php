@@ -1,23 +1,17 @@
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-
 <?php
 
 require_once "../../conexao.php";
 require_once "../includes/auth.php";
+require_once __DIR__ . '/OpcionalRepository.php';
+require_once __DIR__ . '/../includes/head.php';
 
+$opcionalRepository = new OpcionalRepository($pdo);
 
 // excluir
 
 if (isset($_GET['excluir'])) {
 
-    $id = $_GET['excluir'];
-
-    $sql = $pdo->prepare("
-        DELETE FROM opcionais 
-        WHERE id = ?
-    ");
-
-    $sql->execute([$id]);
+    $opcionalRepository->excluir((int) $_GET['excluir']);
 
 
     header("Location:index.php");
@@ -27,23 +21,7 @@ if (isset($_GET['excluir'])) {
 
 
 
-$sql = $pdo->query("
-
-SELECT
-
-id,
-nome
-
-
-FROM opcionais
-
-ORDER BY nome ASC
-
-
-");
-
-
-$opcionais = $sql->fetchAll();
+$opcionais = $opcionalRepository->listar();
 
 
 ?>
@@ -111,12 +89,12 @@ $opcionais = $sql->fetchAll();
 
 
                         <td>
-                            <?= htmlspecialchars($o['id']) ?>
+                            <?= htmlspecialchars((string) $o->getId()) ?>
                         </td>
 
 
                         <td>
-                            <?= htmlspecialchars($o['nome']) ?>
+                            <?= htmlspecialchars($o->getNome()) ?>
                         </td>
 
 
@@ -125,7 +103,7 @@ $opcionais = $sql->fetchAll();
 
 
                             <a
-                                href="cadastro.php?id=<?= $o['id'] ?>"
+                                href="cadastro.php?id=<?= $o->getId() ?>"
                                 class="btn btn-sm btn-editar">
                                 Editar
                             </a>

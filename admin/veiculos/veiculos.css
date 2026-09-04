@@ -49,6 +49,14 @@
 
 }
 
+.veiculo-imagem-admin {
+    width: 90px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #bb9000;
+}
+
 
 
 /* VALOR */
@@ -121,6 +129,11 @@
         display: block;
         margin-bottom: 5px;
 
+    }
+
+    .veiculo-imagem-admin {
+        width: 70px;
+        height: 48px;
     }
 
 

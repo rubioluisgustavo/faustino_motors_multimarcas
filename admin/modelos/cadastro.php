@@ -2,73 +2,22 @@
 
 require_once "../../conexao.php";
 require_once "../includes/auth.php";
+require_once __DIR__ . '/ModeloRepository.php';
+require_once __DIR__ . '/../marcas/MarcaRepository.php';
+require_once __DIR__ . '/../includes/head.php';
 
 
-$id = $_GET['id'] ?? null;
-
-
-
-$modelo = [
-
-    'id_marca' => '',
-    'nome' => ''
-
-];
-
-
-
-
-
-if ($id) {
-
-
-    $sql = $pdo->prepare("
-
-        SELECT *
-
-        FROM modelos
-
-        WHERE id=?
-
-    ");
-
-
-
-    $sql->execute([$id]);
-
-
-
-    $modelo = $sql->fetch();
-}
-
-
-
-
-
-$marcas = $pdo->query("
-
-    SELECT
-
-        id,
-
-        nome
-
-
-    FROM marcas
-
-
-    ORDER BY nome
-
-
-")->fetchAll();
+$modeloRepository = new ModeloRepository($pdo);
+$marcaRepository = new MarcaRepository($pdo);
+$id = isset($_GET['id']) ? (int) $_GET['id'] : null;
+$modelo = $id ? $modeloRepository->buscarPorId($id) : new Modelo();
+$marcas = $marcaRepository->listar();
 
 
 
 ?>
 
 <link href="../css/admin.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-
 <div class="card-admin">
 
     <form
@@ -80,7 +29,7 @@ $marcas = $pdo->query("
         <input
             type="hidden"
             name="id"
-            value="<?= $id ?>">
+            value="<?= $modelo->getId() ?? '' ?>">
 
 
 
@@ -121,12 +70,11 @@ $marcas = $pdo->query("
 
                         <option
 
-                            value="<?= $m['id'] ?>"
+                            value="<?= $m->getId() ?>"
+                            <?= $m->getId() == $modelo->getIdMarca() ? 'selected' : '' ?>>
 
-                            <?= $m['id'] == ($modelo['id_marca'] ?? '') ? 'selected' : '' ?>>
 
-
-                            <?= htmlspecialchars($m['nome']) ?>
+                            <?= htmlspecialchars($m->getNome()) ?>
 
 
                         </option>
@@ -169,7 +117,7 @@ $marcas = $pdo->query("
 
                     name="nome"
 
-                    value="<?= $modelo['nome'] ?? '' ?>">
+                    value="<?= htmlspecialchars($modelo->getNome()) ?>">
 
 
 

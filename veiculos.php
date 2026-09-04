@@ -1,6 +1,7 @@
 <?php
 
 require_once "conexao.php";
+require_once __DIR__ . '/admin/veiculos/VeiculoRepository.php';
 
 
 // filtros recebidos
@@ -11,80 +12,11 @@ $ano    = $_GET['ano'] ?? '';
 
 
 
-$sql = "
-
-SELECT
-
-    v.id,
-    ma.nome AS marca,
-    mo.nome AS modelo,
-    v.ano,
-    v.novo,
-    v.km,
-    v.cambio,
-    v.combustivel,
-    v.valor,
-    v.imagem_principal
-
-
-FROM veiculos v
-
-
-INNER JOIN modelos mo
-    ON mo.id = v.id_modelo
-
-
-INNER JOIN marcas ma
-    ON ma.id = mo.id_marca
-
-
-WHERE 1=1
-
-";
-
-
-$params = [];
-
-
-
-if ($marca != '') {
-
-    $sql .= " AND ma.id = ? ";
-
-    $params[] = $marca;
-}
-
-
-
-if ($modelo != '') {
-
-    $sql .= " AND mo.id = ? ";
-
-    $params[] = $modelo;
-}
-
-
-
-if ($ano != '') {
-
-    $sql .= " AND v.ano = ? ";
-
-    $params[] = $ano;
-}
-
-
-
-$sql .= " ORDER BY v.id DESC ";
-
-
-
-$stmt = $pdo->prepare($sql);
-
-
-$stmt->execute($params);
-
-
-$veiculos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$veiculos = (new VeiculoRepository($pdo))->listar([
+    'marca' => $marca,
+    'modelo' => $modelo,
+    'ano' => $ano,
+]);
 
 
 ?>
@@ -105,7 +37,7 @@ $veiculos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                         <div class="imagem-veiculo">
 
-                            <?php if ($veiculo['novo'] == 'y'): ?>
+                            <?php if ($veiculo->isNovo()): ?>
 
                                 <div class="tarja-novo">
                                     NOVIDADE
@@ -113,14 +45,14 @@ $veiculos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                             <?php endif; ?>
 
-                            <a href="index.php?id=<?= $veiculo['id'] ?>">
+                            <a href="index.php?id=<?= $veiculo->getId() ?>">
 
-                                <?php if (!empty($veiculo['imagem_principal'])): ?>
+                                <?php if (!empty($veiculo->getImagemPrincipal())): ?>
 
                                     <img
-                                        src="<?= htmlspecialchars($veiculo['imagem_principal']) ?>"
+                                        src="<?= htmlspecialchars($veiculo->getImagemPrincipal()) ?>"
                                         class="card-img-top"
-                                        alt="<?= htmlspecialchars($veiculo['marca'] . ' ' . $veiculo['modelo']) ?>">
+                                        alt="<?= htmlspecialchars($veiculo->getMarca() . ' ' . $veiculo->getModelo()) ?>">
 
                                 <?php else: ?>
 
@@ -143,11 +75,11 @@ $veiculos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <div class="identificacao-veiculo">
 
                                     <h4 class="marca">
-                                        <?= htmlspecialchars($veiculo['marca']) ?>
+                                        <?= htmlspecialchars($veiculo->getMarca()) ?>
                                     </h4>
 
                                     <h5 class="modelo">
-                                        <?= htmlspecialchars($veiculo['modelo']) ?>
+                                        <?= htmlspecialchars($veiculo->getModelo()) ?>
                                     </h5>
 
                                 </div>
@@ -159,7 +91,7 @@ $veiculos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                                         <i class="bi bi-calendar3"></i>
 
-                                        <?= $veiculo['ano'] ?>
+                                        <?= $veiculo->getAno() ?>
 
                                     </div>
 
@@ -168,7 +100,7 @@ $veiculos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                                         <i class="bi bi-speedometer2"></i>
 
-                                        <?= number_format($veiculo['km'], 0, ",", ".") ?>
+                                        <?= number_format($veiculo->getKm(), 0, ",", ".") ?>
 
                                     </div>
 
@@ -177,7 +109,7 @@ $veiculos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                                         <i class="bi bi-gear-fill"></i>
 
-                                        <?= htmlspecialchars($veiculo['cambio']) ?>
+                                        <?= htmlspecialchars($veiculo->getCambio()) ?>
 
                                     </div>
 
@@ -186,7 +118,7 @@ $veiculos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                                         <i class="bi bi-fuel-pump-fill"></i>
 
-                                        <?= htmlspecialchars($veiculo['combustivel']) ?>
+                                        <?= htmlspecialchars($veiculo->getCombustivel()) ?>
 
                                     </div>
 
@@ -199,13 +131,13 @@ $veiculos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                                 <div class="valor">
 
-                                    R$ <?= number_format($veiculo['valor'], 2, ",", ".") ?>
+                                    R$ <?= number_format($veiculo->getValor(), 2, ",", ".") ?>
 
                                 </div>
 
 
                                 <a
-                                    href="index.php?id=<?= $veiculo['id'] ?>"
+                                    href="index.php?id=<?= $veiculo->getId() ?>"
                                     class="btn-saiba-mais">
 
                                     Saiba mais
