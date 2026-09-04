@@ -7,7 +7,7 @@ if (
     $host = "localhost";
     $dbname = "faustino_motors_multimarcas";
     $user = "root";
-    $password = "mnQlWXnnrT6UTAKU";
+    $password = "";
 } else {
 
     // Ambiente produção - Hostinger
