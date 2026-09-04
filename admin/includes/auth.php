@@ -1,18 +1,11 @@
 <?php
 
-session_start();
+require_once __DIR__ . '/../../app/Support/helpers.php';
 
+if (session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+}
 
 if (!isset($_SESSION['usuario'])) {
-
-    if (
-        $_SERVER['SERVER_NAME'] === 'localhost' ||
-        $_SERVER['SERVER_NAME'] === '127.0.0.1'
-    ) {
-        header("Location: login");
-    } else {
-        header("Location: /new/admin/login");
-    }
-
-    exit;
+    redirect('admin/login');
 }

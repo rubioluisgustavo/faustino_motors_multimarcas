@@ -1,246 +1,303 @@
-.card-dashboard {
-
-    background: #000;
-
-    border: 2px solid #bb9000;
-
-    border-radius: 15px;
-
-    padding: 30px;
-
-    text-align: center;
-
-    height: 100%;
-
-    transition: .3s;
-
+body {
+    background: #101010;
 }
 
-
-
-.card-dashboard:hover {
-
-    transform: translateY(-5px);
-
-    box-shadow: 0 0 20px rgba(212, 175, 55, .30);
-
+.admin-container {
+    padding-top: 40px;
+    padding-bottom: 40px;
 }
-
-
-
-.icone-dashboard {
-
-    font-size: 60px;
-
-    color: #bb9000;
-
-    margin-bottom: 20px;
-
-}
-
-
-
-.card-dashboard h4 {
-
-    color: #bb9000;
-
-    font-weight: 700;
-
-    margin-bottom: 15px;
-
-}
-
-
-
-.card-dashboard p {
-
-    color: #ddd;
-
-    min-height: 60px;
-
-}
-
-
 
 .text-gold {
-
     color: #bb9000;
-
 }
 
-/* TITULO */
-
 .titulo-admin {
-
     color: #bb9000;
     font-weight: 800;
     text-transform: uppercase;
     border-bottom: 3px solid #bb9000;
     padding-bottom: 10px;
-
 }
 
-
-
-/* BOT√O ADICIONAR */
-
-.btn-adicionar {
-
-    background: #bb9000 !important;
-    color: #000 !important;
-    font-weight: 800;
-    text-transform: uppercase;
-    padding: 12px 25px;
-    border-radius: 10px;
-    border: none;
-    transition: .3s;
-
-}
-
-
-
-.btn-adicionar:hover {
-
-    background: #fff !important;
-    color: #000 !important;
-    transform: translateY(-2px);
-
-}
-
-/* FORM ADMIN */
-
+.card-dashboard,
 .card-admin {
-
     background: #000;
     border: 2px solid #bb9000;
     border-radius: 15px;
-    padding: 30px;
-
 }
 
+.card-dashboard {
+    padding: 30px;
+    text-align: center;
+    height: 100%;
+    transition: .3s;
+}
 
+.card-dashboard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 20px rgba(212, 175, 55, .30);
+}
+
+.icone-dashboard {
+    font-size: 60px;
+    color: #bb9000;
+    margin-bottom: 20px;
+}
+
+.card-dashboard h4 {
+    color: #bb9000;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.card-dashboard p {
+    color: #ddd;
+    min-height: 60px;
+}
+
+.card-admin {
+    padding: 30px;
+}
+
+.table-admin {
+    background: #000;
+    color: #fff;
+    margin: 0;
+}
+
+.table-admin thead th {
+    background: #bb9000;
+    color: #000;
+    font-weight: 800;
+    text-transform: uppercase;
+    border: none;
+}
+
+.table-admin tbody td {
+    background: #5f5f5f;
+    color: #fff;
+    border-bottom: 1px solid rgba(212, 175, 55, .25);
+}
+
+.table-admin tbody tr:hover td {
+    background: #222;
+}
+
+.table-admin .valor {
+    color: #bb9000;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.btn-adicionar,
+.btn-editar,
+.btn-gold {
+    background: #bb9000 !important;
+    color: #000 !important;
+    font-weight: 800;
+    border: none;
+}
+
+.btn-adicionar {
+    text-transform: uppercase;
+    padding: 12px 25px;
+    border-radius: 10px;
+    transition: .3s;
+}
+
+.btn-adicionar:hover,
+.btn-editar:hover {
+    background: #fff !important;
+    color: #000 !important;
+    transform: translateY(-2px);
+}
+
+.btn-excluir {
+    background: #8b0000;
+    color: #fff;
+    font-weight: bold;
+}
+
+.btn-excluir:hover {
+    background: #ff0000;
+    color: #fff;
+}
+
+.btn-voltar {
+    background: #333 !important;
+    color: #fff !important;
+    font-weight: bold;
+}
+
+.btn-voltar:hover,
+.btn-gold:hover {
+    background: #555 !important;
+    color: #fff !important;
+}
 
 .form-label {
-
     color: #bb9000;
     font-weight: 700;
     text-transform: uppercase;
     font-size: .9rem;
-
 }
-
-
 
 .form-control,
 .form-select {
-
     background: #5f5f5f;
     color: #fff;
     border: 1px solid #bb9000;
     border-radius: 8px;
-
 }
-
-
 
 .form-control:focus,
 .form-select:focus {
-
     background: #5f5f5f;
     color: #fff;
     border-color: #fff;
     box-shadow: 0 0 0 .2rem rgba(212, 175, 55, .25);
-
 }
-
-
 
 .form-select option {
-
     background: #5f5f5f;
     color: #fff;
-
 }
 
-
-
-/* PREVIEW */
-
 .preview-imagem {
-
     padding: 10px;
     background: #5f5f5f;
     border: 2px solid #bb9000;
     border-radius: 12px;
     display: inline-block;
-
 }
 
-
 .preview-imagem img {
-
     width: 250px;
     height: 160px;
     object-fit: cover;
     border-radius: 8px;
-
 }
 
-
-
-/* BOT√ÉO VOLTAR */
-
-.btn-voltar {
-
-    background: #333 !important;
-    color: #fff !important;
-    font-weight: bold;
-
+.opcionais-container {
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 25px;
 }
 
-
-.btn-voltar:hover {
-
-    background: #555 !important;
-    color: #fff !important;
-
+.opcional-item {
+    margin: 0;
+    min-width: 200px;
 }
 
-.btn-gold {
+.opcional-item .form-check-input {
+    background-color: #000;
+    border: 1px solid #bb9000;
+    cursor: pointer;
+}
 
-    background: #be9200 !important;
+.opcional-item .form-check-input:checked {
+    background-color: #bb9000;
+    border-color: #bb9000;
+}
+
+.opcional-item .form-check-label {
     color: #fff;
-    font-weight: bold;
-
+    cursor: pointer;
 }
 
-
-.btn-gold:hover {
-
-    background: #555 !important;
-    color: #fff;
-
+.opcional-item .form-check-input:focus {
+    box-shadow: 0 0 0 .2rem rgba(187, 144, 0, .25);
 }
 
+.marcar-novo-container {
+    margin-top: 10px;
+}
 
+.marcar-novo-checkbox {
+    display: none;
+}
 
+.marcar-novo-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    border: 1px solid #444;
+    border-radius: 10px;
+    background: #181818;
+    cursor: pointer;
+    transition: all .2s ease;
+    user-select: none;
+}
 
-@media(max-width:768px) {
+.marcar-novo-label:hover {
+    border-color: #bb9000;
+    background: #1e1e1e;
+}
 
+.marcar-novo-check {
+    width: 22px;
+    height: 22px;
+    border: 2px solid #777;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: transparent;
+    transition: all .2s ease;
+}
 
+.marcar-novo-texto {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+.marcar-novo-texto strong,
+.marcar-novo-texto small {
+    color: #bb9000;
+}
+
+.marcar-novo-texto strong {
+    font-size: 15px;
+}
+
+.marcar-novo-texto small {
+    font-size: 12px;
+    margin-top: 3px;
+}
+
+.marcar-novo-checkbox:checked + .marcar-novo-label {
+    border-color: #bb9000;
+    background: rgba(187, 144, 0, .10);
+}
+
+.marcar-novo-checkbox:checked + .marcar-novo-label .marcar-novo-check {
+    background: #bb9000;
+    border-color: #bb9000;
+    color: #000;
+}
+
+@media(max-width: 768px) {
     .card-admin {
-
         padding: 15px;
-
     }
 
+    .table-admin {
+        font-size: .85rem;
+    }
+
+    .btn-sm {
+        display: block;
+        margin-bottom: 5px;
+    }
 
     .preview-imagem img {
-
         width: 100%;
         height: auto;
-
     }
-
-
 }

@@ -1,8 +1,6 @@
-<!-- Barra Superior -->
 <div class="topbar py-2">
     <div class="container">
         <div class="row text-center text-lg-start align-items-center">
-
             <div class="col-lg-4 mb-2 mb-lg-0">
                 <strong>Contato:</strong> (14) 99753-3055
             </div>
@@ -17,19 +15,16 @@
             <div class="col-lg-4 text-lg-end">
                 <strong>Rua Dublin, 150, jardim Europa III, Avaré - SP</strong>
             </div>
-
         </div>
     </div>
 </div>
 
 <nav class="navbar navbar-dark bg-black shadow">
     <div class="container">
-
         <div class="row align-items-center w-100">
-
             <div class="col-lg-6">
-                <a class="navbar-brand d-flex align-items-center m-0" href="/new/">
-                    <img src="public/img/logo.png" alt="Logo" class="me-3">
+                <a class="navbar-brand d-flex align-items-center m-0" href="<?= url() ?>">
+                    <img src="<?= asset('public/img/logo.png') ?>" alt="Logo" class="me-3">
 
                     <div>
                         <h2 class="text-gold fw-bold m-0">
@@ -54,8 +49,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
-
     </div>
 </nav>

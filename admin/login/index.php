@@ -1,6 +1,8 @@
 <?php
 
-session_start();
+if (session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+}
 
 error_reporting(E_ERROR);
 ini_set('display_errors', 1);
@@ -8,7 +10,7 @@ ini_set('display_errors', 1);
 
 if (isset($_SESSION['usuario'])) {
 
-    header("Location: ../index.php");
+    header('Location: ../index.php');
 
     exit;
 }
@@ -121,7 +123,7 @@ if (isset($_SESSION['usuario'])) {
 
         </form>
 
-        <?php if ($_REQUEST['erro']): ?>
+        <?php if (isset($_REQUEST['erro'])): ?>
 
             <div class="alert alert-danger">
                 E-mail ou senha inválidos.

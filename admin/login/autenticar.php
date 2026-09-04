@@ -2,57 +2,24 @@
 
 session_start();
 
+require_once __DIR__ . '/../../app/bootstrap.php';
 
-require_once "../../conexao.php";
-
+$usuarioRepository = new App\Repositories\UsuarioRepository($pdo);
 
 $email = $_POST['email'] ?? '';
-
 $senha = $_POST['senha'] ?? '';
 
+$usuario = $usuarioRepository->autenticar($email, $senha);
 
-
-$sql = $pdo->prepare("
-
-    SELECT *
-
-    FROM usuarios
-
-    WHERE email = ?
-
-");
-
-
-$sql->execute([$email]);
-
-
-$usuario = $sql->fetch(PDO::FETCH_ASSOC);
-
-
-
-if (
-    $usuario &&
-    password_verify($senha, $usuario['senha'])
-) {
-
-
+if ($usuario) {
     $_SESSION['usuario'] = [
-
-        'id' => $usuario['id'],
-
-        'nome' => $usuario['nome']
-
+        'id' => $usuario->getId(),
+        'nome' => $usuario->getNome(),
     ];
 
-
-
-    header("Location: ../index.php");
-
+    header('Location: ../index.php');
     exit;
 }
 
-
-
-header("Location:index.php?erro=1");
-
+header('Location:index.php?erro=1');
 exit;

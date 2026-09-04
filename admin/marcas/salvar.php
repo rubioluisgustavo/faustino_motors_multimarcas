@@ -1,10 +1,9 @@
 <?php
 
-require_once "../../conexao.php";
-require_once "../includes/auth.php";
-require_once __DIR__ . '/MarcaRepository.php';
+require_once __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../../app/bootstrap.php';
 
-$marcaRepository = new MarcaRepository($pdo);
+$marcaRepository = new App\Repositories\MarcaRepository($pdo);
 
 $id = isset($_POST['id']) && $_POST['id'] !== '' ? (int) $_POST['id'] : null;
 $nome = trim($_POST['nome'] ?? '');
@@ -14,8 +13,8 @@ if ($nome === '') {
     exit;
 }
 
-$marca = new Marca($id, $nome);
+$marca = new App\Models\Marca($id, $nome);
 $marcaRepository->salvar($marca);
 
-header("Location:index.php");
+header('Location:index.php');
 exit;
