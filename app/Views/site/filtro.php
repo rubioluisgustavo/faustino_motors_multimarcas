@@ -1,6 +1,6 @@
 <section class="filtro-veiculos py-4">
     <div class="container">
-        <form method="GET" action="<?= url('index.php') ?>">
+        <form method="GET" action="<?= url() ?>">
             <div class="row g-3 align-items-end">
                 <div class="col-lg-4 col-md-6">
                     <label class="form-label">

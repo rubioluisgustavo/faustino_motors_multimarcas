@@ -11,7 +11,7 @@
                                 </div>
                             <?php endif; ?>
 
-                            <a href="<?= url('index.php?id=' . $veiculo->getId()) ?>">
+                            <a href="<?= url('veiculo/' . $veiculo->getId()) ?>">
                                 <?php if (!empty($veiculo->getImagemPrincipal())): ?>
                                     <img
                                         src="<?= asset($veiculo->getImagemPrincipal()) ?>"
@@ -67,7 +67,7 @@
                                 </div>
 
                                 <a
-                                    href="<?= url('index.php?id=' . $veiculo->getId()) ?>"
+                                    href="<?= url('veiculo/' . $veiculo->getId()) ?>"
                                     class="btn-saiba-mais">
                                     Saiba mais
                                 </a>

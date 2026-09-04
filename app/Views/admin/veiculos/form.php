@@ -1,43 +1,6 @@
-<?php
-
-require_once __DIR__ . '/../includes/auth.php';
-require_once __DIR__ . '/../../app/bootstrap.php';
-
-$veiculoRepository = new App\Repositories\VeiculoRepository($pdo);
-$modeloRepository = new App\Repositories\ModeloRepository($pdo);
-$opcionalRepository = new App\Repositories\OpcionalRepository($pdo);
-
-$id = isset($_GET['id']) ? (int) $_GET['id'] : null;
-$veiculo = new App\Models\Veiculo();
-$opcionaisSelecionados = [];
-
-if ($id) {
-    $veiculoExistente = $veiculoRepository->buscarPorId($id);
-
-    if ($veiculoExistente) {
-        $veiculo = $veiculoExistente;
-    }
-
-    $opcionaisSelecionados = $opcionalRepository->listarIdsPorVeiculo($id);
-}
-
-$valor = $veiculo->getValor() > 0
-    ? number_format($veiculo->getValor(), 2, ',', '.')
-    : '';
-
-$modelos = $modeloRepository->listar();
-$opcionais = $opcionalRepository->listar();
-?>
-
-<link href="../css/admin.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-
 <div class="card-admin">
-    <form method="POST" action="salvar.php" enctype="multipart/form-data">
-        <input
-            type="hidden"
-            name="id"
-            value="<?= $veiculo->getId() ?? '' ?>">
+    <form method="POST" action="<?= url('admin/veiculos') ?>" enctype="multipart/form-data">
+        <input type="hidden" name="id" value="<?= e($veiculo->getId() ?? '') ?>">
 
         <div class="row g-4">
             <div class="col-md-6">
@@ -51,10 +14,8 @@ $opcionais = $opcionalRepository->listar();
                     </option>
 
                     <?php foreach ($modelos as $modelo): ?>
-                        <option
-                            value="<?= $modelo->getId() ?>"
-                            <?= $modelo->getId() == $veiculo->getIdModelo() ? 'selected' : '' ?>>
-                            <?= htmlspecialchars($modelo->getNomeCompleto()) ?>
+                        <option value="<?= $modelo->getId() ?>" <?= selected($veiculo->getIdModelo(), $modelo->getId()) ?>>
+                            <?= e($modelo->getNomeCompleto()) ?>
                         </option>
                     <?php endforeach; ?>
                 </select>
@@ -69,7 +30,7 @@ $opcionais = $opcionalRepository->listar();
                     type="number"
                     class="form-control"
                     name="ano"
-                    value="<?= htmlspecialchars((string) ($veiculo->getAno() ?? '')) ?>">
+                    value="<?= e($veiculo->getAno() ?? '') ?>">
             </div>
 
             <div class="col-md-3">
@@ -81,7 +42,7 @@ $opcionais = $opcionalRepository->listar();
                     type="number"
                     class="form-control"
                     name="km"
-                    value="<?= htmlspecialchars((string) ($veiculo->getKm() ?? '')) ?>">
+                    value="<?= e($veiculo->getKm() ?? '') ?>">
             </div>
 
             <div class="col-md-4">
@@ -93,11 +54,9 @@ $opcionais = $opcionalRepository->listar();
                     <option value="">
                         Selecione o câmbio
                     </option>
-
-                    <option value="manual" <?= $veiculo->getCambio() == 'manual' ? 'selected' : '' ?>>
+                    <option value="manual" <?= selected($veiculo->getCambio(), 'manual') ?>>
                         manual
                     </option>
-
                     <option value="automático" <?= in_array($veiculo->getCambio(), ['automático', 'automatico'], true) ? 'selected' : '' ?>>
                         automático
                     </option>
@@ -113,30 +72,12 @@ $opcionais = $opcionalRepository->listar();
                     <option value="">
                         Selecione o combustível
                     </option>
-
-                    <option value="flex" <?= $veiculo->getCombustivel() == 'flex' ? 'selected' : '' ?>>
-                        flex
-                    </option>
-
-                    <option value="gasolina" <?= $veiculo->getCombustivel() == 'gasolina' ? 'selected' : '' ?>>
-                        gasolina
-                    </option>
-
-                    <option value="etanol" <?= $veiculo->getCombustivel() == 'etanol' ? 'selected' : '' ?>>
-                        etanol
-                    </option>
-
-                    <option value="diesel" <?= $veiculo->getCombustivel() == 'diesel' ? 'selected' : '' ?>>
-                        diesel
-                    </option>
-
-                    <option value="eletrico" <?= $veiculo->getCombustivel() == 'eletrico' ? 'selected' : '' ?>>
-                        elétrico
-                    </option>
-
-                    <option value="hibrido" <?= $veiculo->getCombustivel() == 'hibrido' ? 'selected' : '' ?>>
-                        híbrido
-                    </option>
+                    <option value="flex" <?= selected($veiculo->getCombustivel(), 'flex') ?>>flex</option>
+                    <option value="gasolina" <?= selected($veiculo->getCombustivel(), 'gasolina') ?>>gasolina</option>
+                    <option value="etanol" <?= selected($veiculo->getCombustivel(), 'etanol') ?>>etanol</option>
+                    <option value="diesel" <?= selected($veiculo->getCombustivel(), 'diesel') ?>>diesel</option>
+                    <option value="eletrico" <?= selected($veiculo->getCombustivel(), 'eletrico') ?>>elétrico</option>
+                    <option value="hibrido" <?= selected($veiculo->getCombustivel(), 'hibrido') ?>>híbrido</option>
                 </select>
             </div>
 
@@ -149,7 +90,7 @@ $opcionais = $opcionalRepository->listar();
                     type="text"
                     class="form-control"
                     name="valor"
-                    value="<?= htmlspecialchars($valor) ?>">
+                    value="<?= e($valor) ?>">
             </div>
 
             <div class="col-md-6">
@@ -171,9 +112,7 @@ $opcionais = $opcionalRepository->listar();
                     </label>
 
                     <div class="preview-imagem">
-                        <img
-                            src="../../<?= htmlspecialchars($veiculo->getImagemPrincipal()) ?>"
-                            class="img-fluid">
+                        <img src="<?= asset($veiculo->getImagemPrincipal()) ?>" class="img-fluid">
                     </div>
                 <?php endif; ?>
             </div>
@@ -183,10 +122,7 @@ $opcionais = $opcionalRepository->listar();
                     Descrição
                 </label>
 
-                <textarea
-                    class="form-control"
-                    rows="5"
-                    name="descricao"><?= htmlspecialchars($veiculo->getDescricao()) ?></textarea>
+                <textarea class="form-control" rows="5" name="descricao"><?= e($veiculo->getDescricao()) ?></textarea>
             </div>
 
             <div class="col-12">
@@ -203,12 +139,10 @@ $opcionais = $opcionalRepository->listar();
                                 name="opcionais[]"
                                 value="<?= $opcional->getId() ?>"
                                 id="opcional_<?= $opcional->getId() ?>"
-                                <?= in_array($opcional->getId(), $opcionaisSelecionados, true) ? 'checked' : '' ?>>
+                                <?= checked(in_array($opcional->getId(), $opcionaisSelecionados, true)) ?>>
 
-                            <label
-                                class="form-check-label text-gold"
-                                for="opcional_<?= $opcional->getId() ?>">
-                                <?= htmlspecialchars($opcional->getNome()) ?>
+                            <label class="form-check-label text-gold" for="opcional_<?= $opcional->getId() ?>">
+                                <?= e($opcional->getNome()) ?>
                             </label>
                         </div>
                     <?php endforeach; ?>
@@ -223,7 +157,7 @@ $opcionais = $opcionalRepository->listar();
                         id="marcar_novo"
                         name="novo"
                         value="y"
-                        <?= $veiculo->isNovo() ? 'checked' : '' ?>>
+                        <?= checked($veiculo->isNovo()) ?>>
 
                     <label for="marcar_novo" class="marcar-novo-label">
                         <span class="marcar-novo-check">
@@ -244,7 +178,7 @@ $opcionais = $opcionalRepository->listar();
                     Salvar
                 </button>
 
-                <a href="index.php" class="btn btn-voltar px-4">
+                <a href="<?= url('admin/veiculos') ?>" class="btn btn-voltar px-4">
                     Voltar
                 </a>
             </div>

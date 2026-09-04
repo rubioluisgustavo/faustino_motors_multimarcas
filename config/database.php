@@ -1,21 +1,22 @@
 <?php
 
-if (
-    $_SERVER['SERVER_NAME'] === 'localhost' ||
-    $_SERVER['SERVER_NAME'] === '127.0.0.1'
-) {
+$serverName = $_SERVER['SERVER_NAME'] ?? 'localhost';
+$isLocal = PHP_SAPI === 'cli' || in_array($serverName, ['localhost', '127.0.0.1'], true);
+
+if ($isLocal) {
     $host = "localhost";
     $dbname = "faustino_motors_multimarcas";
     $user = "root";
     $password = "Bella251176!";
 } else {
+    $host = getenv('DB_HOST') ?: 'localhost';
+    $dbname = getenv('DB_DATABASE') ?: '';
+    $user = getenv('DB_USERNAME') ?: '';
+    $password = getenv('DB_PASSWORD') ?: '';
 
-    // Ambiente produção - Hostinger
-
-    // $host = "localhost";
-    // $dbname = "u458022580_5HHE2";
-    // $user = "u458022580_mz51w";
-    // $password = "FaustinoMotorsMultimarcas123!!!";
+    if ($dbname === '' || $user === '') {
+        die('Configure as variaveis de ambiente DB_DATABASE e DB_USERNAME.');
+    }
 }
 
 try {
