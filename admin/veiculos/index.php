@@ -5,11 +5,18 @@ require_once "../includes/auth.php";
 require_once __DIR__ . '/VeiculoRepository.php';
 require_once __DIR__ . '/../includes/head.php';
 
+$veiculoRepository = new VeiculoRepository($pdo);
+
 // excluir
 
 if (isset($_GET['excluir'])) {
 
     $id = filter_input(INPUT_GET, 'excluir', FILTER_VALIDATE_INT);
+    if ($id && $veiculoRepository->contarRelacionamentos($id) > 0) {
+        header('Location: index.php?erro=' . urlencode('Não é possível excluir o veículo porque existem opcionais vinculados a ele.'));
+        exit;
+    }
+
     if ($id) {
         $stmt = $pdo->prepare("DELETE FROM veiculos WHERE id = ?");
         $stmt->execute([$id]);
@@ -23,7 +30,8 @@ if (isset($_GET['excluir'])) {
 
 
 
-$veiculos = (new VeiculoRepository($pdo))->listar();
+$veiculos = $veiculoRepository->listar();
+$erro = $_GET['erro'] ?? null;
 
 
 ?>
@@ -50,10 +58,10 @@ $veiculos = (new VeiculoRepository($pdo))->listar();
     </a>
 
     <a
-        href="/new/admin"
+        href="../index.php"
         class="btn btn-adicionar">
 
-        <i class="bi bi-plus-circle"></i>
+        <i class="bi bi-arrow-left-circle"></i>
 
         voltar
 
@@ -61,6 +69,10 @@ $veiculos = (new VeiculoRepository($pdo))->listar();
 
 
 </div>
+
+<?php if ($erro): ?>
+    <div class="alert alert-warning"><?= htmlspecialchars($erro) ?></div>
+<?php endif; ?>
 
 <div class="card-admin">
 

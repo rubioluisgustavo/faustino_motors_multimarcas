@@ -12,7 +12,7 @@
             <ul class="navbar-nav mx-auto">
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/new/">INÍCIO</a>
+                    <a class="nav-link" href="index.php">INÍCIO</a>
                 </li>
 
                 <li class="nav-item">

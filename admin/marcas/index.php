@@ -9,6 +9,11 @@ $marcaRepository = new MarcaRepository($pdo);
 
 if (isset($_GET['excluir'])) {
     $id = (int) $_GET['excluir'];
+    if ($marcaRepository->contarRelacionamentos($id) > 0) {
+        header('Location: index.php?erro=' . urlencode('Não é possível excluir a marca porque existem modelos vinculados a ela.'));
+        exit;
+    }
+
     $marcaRepository->excluir($id);
 
     header("Location:index.php");
@@ -16,6 +21,7 @@ if (isset($_GET['excluir'])) {
 }
 
 $marcas = $marcaRepository->listar();
+$erro = $_GET['erro'] ?? null;
 ?>
 
 <link href="../marcas/marcas.css" rel="stylesheet">
@@ -40,10 +46,10 @@ $marcas = $marcaRepository->listar();
     </a>
 
     <a
-        href="/new/admin"
+        href="../index.php"
         class="btn btn-adicionar">
 
-        <i class="bi bi-plus-circle"></i>
+        <i class="bi bi-arrow-left-circle"></i>
 
         voltar
 
@@ -51,6 +57,10 @@ $marcas = $marcaRepository->listar();
 
 
 </div>
+
+<?php if ($erro): ?>
+    <div class="alert alert-warning"><?= htmlspecialchars($erro) ?></div>
+<?php endif; ?>
 
 <div class="card-admin">
 

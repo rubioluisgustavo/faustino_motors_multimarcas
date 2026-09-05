@@ -82,4 +82,14 @@ class MarcaRepository
         $sql = $this->pdo->prepare('DELETE FROM marcas WHERE id = :id');
         $sql->execute(['id' => $id]);
     }
+
+    public function contarRelacionamentos(int $id): int
+    {
+        $sql = $this->pdo->prepare(
+            'SELECT COUNT(*) FROM modelos WHERE id_marca = :id_marca'
+        );
+        $sql->execute(['id_marca' => $id]);
+
+        return (int) $sql->fetchColumn();
+    }
 }

@@ -33,6 +33,16 @@ class VeiculoRepository
         return array_map([Veiculo::class, 'fromArray'], $stmt->fetchAll());
     }
 
+    public function contarRelacionamentos(int $id): int
+    {
+        $stmt = $this->pdo->prepare(
+            'SELECT COUNT(*) FROM veiculos_opcionais WHERE id_veiculo = :id_veiculo'
+        );
+        $stmt->execute(['id_veiculo' => $id]);
+
+        return (int) $stmt->fetchColumn();
+    }
+
     public function buscarPorId(int $id): ?Veiculo
     {
         $stmt = $this->pdo->prepare($this->baseQuery() . ' WHERE v.id = ? LIMIT 1');

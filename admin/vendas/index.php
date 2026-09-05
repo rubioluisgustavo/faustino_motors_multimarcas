@@ -28,7 +28,7 @@ $vendas = $repository->listar();
         <i class="bi bi-plus-circle"></i>
         Adicionar venda
     </a>
-    <a href="/new/admin" class="btn btn-adicionar d-inline-flex align-items-center justify-content-center gap-2">
+    <a href="../index.php" class="btn btn-adicionar d-inline-flex align-items-center justify-content-center gap-2">
         <i class="bi bi-arrow-left-circle"></i>
         Voltar
     </a>

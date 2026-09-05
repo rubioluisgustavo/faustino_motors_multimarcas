@@ -10,14 +10,14 @@ $modeloRepository = new ModeloRepository($pdo);
 // excluir modelo
 
 if (isset($_GET['excluir'])) {
+    $id = (int) $_GET['excluir'];
+    if ($modeloRepository->contarRelacionamentos($id) > 0) {
+        header('Location: index.php?erro=' . urlencode('Não é possível excluir o modelo porque existem veículos vinculados a ele.'));
+        exit;
+    }
 
-
-    $modeloRepository->excluir((int) $_GET['excluir']);
-
-
-
+    $modeloRepository->excluir($id);
     header("Location: index.php");
-
     exit;
 }
 
@@ -28,6 +28,7 @@ if (isset($_GET['excluir'])) {
 // listar modelos
 
 $modelos = $modeloRepository->listar();
+$erro = $_GET['erro'] ?? null;
 
 ?>
 <link href="../modelos/modelos.css" rel="stylesheet">
@@ -53,7 +54,7 @@ $modelos = $modeloRepository->listar();
 
 
     <a
-        href="/new/admin"
+        href="../index.php"
         class="btn btn-adicionar">
 
         <i class="bi bi-arrow-left-circle"></i>
@@ -64,6 +65,10 @@ $modelos = $modeloRepository->listar();
 
 
 </div>
+
+<?php if ($erro): ?>
+    <div class="alert alert-warning"><?= htmlspecialchars($erro) ?></div>
+<?php endif; ?>
 
 <div class="card-admin">
 

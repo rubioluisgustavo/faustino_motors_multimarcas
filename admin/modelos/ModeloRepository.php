@@ -69,4 +69,14 @@ class ModeloRepository
         $stmt = $this->pdo->prepare('DELETE FROM modelos WHERE id = :id');
         $stmt->execute(['id' => $id]);
     }
+
+    public function contarRelacionamentos(int $id): int
+    {
+        $stmt = $this->pdo->prepare(
+            'SELECT COUNT(*) FROM veiculos WHERE id_modelo = :id_modelo'
+        );
+        $stmt->execute(['id_modelo' => $id]);
+
+        return (int) $stmt->fetchColumn();
+    }
 }

@@ -39,4 +39,14 @@ class OpcionalRepository
         $stmt = $this->pdo->prepare('DELETE FROM opcionais WHERE id = :id');
         $stmt->execute(['id' => $id]);
     }
+
+    public function contarRelacionamentos(int $id): int
+    {
+        $stmt = $this->pdo->prepare(
+            'SELECT COUNT(*) FROM veiculos_opcionais WHERE id_opcionais = :id_opcional'
+        );
+        $stmt->execute(['id_opcional' => $id]);
+
+        return (int) $stmt->fetchColumn();
+    }
 }

@@ -5,14 +5,8 @@ session_start();
 
 if (!isset($_SESSION['usuario'])) {
 
-    if (
-        $_SERVER['SERVER_NAME'] === 'localhost' ||
-        $_SERVER['SERVER_NAME'] === '127.0.0.1'
-    ) {
-        header("Location: login");
-    } else {
-        header("Location: /new/admin/login");
-    }
+    $adminPath = rtrim(str_replace('\\', '/', dirname(dirname($_SERVER['SCRIPT_NAME']))), '/');
+    header("Location: {$adminPath}/login/");
 
     exit;
 }
