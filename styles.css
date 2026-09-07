@@ -4,6 +4,72 @@
     font-size: .95rem;
 }
 
+.form-financiamento {
+    background: #494949;
+    border: 2px solid #bb9000;
+    border-radius: 15px;
+    padding: 2rem;
+}
+
+.form-financiamento fieldset {
+    border: 1px solid #bb9000;
+    border-radius: 10px;
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.form-financiamento legend {
+    color: #bb9000;
+    font-weight: 800;
+    font-size: 1.15rem;
+    width: auto;
+    padding: 0 .5rem;
+}
+
+.form-financiamento label {
+    display: block;
+    color: #fff;
+    font-weight: 600;
+}
+
+.form-financiamento input:not([type="checkbox"]),
+.form-financiamento select {
+    display: block;
+    width: 100%;
+    margin-top: .35rem;
+    background: #5f5f5f;
+    color: #fff;
+    border: 1px solid #bb9000;
+    border-radius: 6px;
+    padding: .65rem .75rem;
+}
+
+.form-financiamento input:focus,
+.form-financiamento select:focus {
+    outline: 2px solid #fff;
+}
+
+.check-aceite {
+    margin-bottom: 1rem;
+    font-weight: 400 !important;
+}
+
+.check-aceite input {
+    margin-right: .5rem;
+}
+
+.btn-whatsapp {
+    background: #25d366;
+    color: #fff;
+    font-weight: 800;
+    padding: .8rem 1.5rem;
+}
+
+.btn-whatsapp:hover {
+    background: #1da851;
+    color: #fff;
+}
+
 .topbar a {
     color: #fff;
     text-decoration: none;
@@ -1180,37 +1246,59 @@
 .plano-veiculo {
     display: flex;
     flex-direction: column;
-    gap: 5px;
-    padding: 18px;
-    border: 1px solid #bb9000;
-    border-radius: 10px;
-    background: #fafafa;
+    gap: 7px;
+    padding: 20px;
+    border: 2px solid #bb9000;
+    border-radius: 12px;
+    background: #c99f5c;
 }
 
 .plano-veiculo .plano-titulo {
-    color: #bb9000;
+    color: #111;
     font-weight: 800;
     text-transform: uppercase;
+    font-size: 1.3rem;
+    line-height: 1.05;
+    margin: 0;
 }
 
-.plano-veiculo strong {
-    color: #222;
-    font-size: 1.25rem;
+.plano-subtitulo {
+    color: #333;
+    font-size: .72rem;
+    line-height: 1.2;
+    min-height: 32px;
+    margin: 0;
 }
 
-.plano-veiculo small {
-    color: #666;
+.plano-preco {
+    display: flex;
+    align-items: baseline;
+    gap: 2px;
+    color: #111;
+    margin: 4px 0 8px;
+}
+
+.plano-preco strong {
+    color: inherit;
+    font-size: 2rem;
+    line-height: 1;
+}
+
+.plano-preco small {
+    color: inherit;
+    font-size: .95rem;
+    font-weight: 800;
 }
 
 .vantagens-plano {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    margin: 10px 0 0;
+    gap: 9px;
+    margin: 4px 0 0;
     padding: 0;
     list-style: none;
-    color: #333;
-    font-size: .9rem;
+    color: #222;
+    font-size: .78rem;
 }
 
 .vantagens-plano li {
@@ -1220,7 +1308,8 @@
 }
 
 .vantagens-plano i {
-    color: #198754;
+    color: #111;
+    font-size: .9rem;
 }
 
 .vantagens-plano i.indisponivel {
@@ -1228,8 +1317,48 @@
 }
 
 .plano-premium {
-    background: #fff8df;
-    border-width: 2px;
+    background: #151515;
+}
+
+.plano-premium .plano-titulo,
+.plano-premium .plano-preco,
+.plano-premium .plano-preco small,
+.plano-premium .vantagens-plano,
+.plano-premium .premium-intro {
+    color: #e8c781;
+}
+
+.plano-premium .plano-subtitulo,
+.plano-premium .vantagens-plano li {
+    color: #eee;
+}
+
+.plano-premium .vantagens-plano i {
+    color: #d5a94e;
+}
+
+.premium-intro {
+    font-size: .75rem;
+    margin-top: 2px;
+}
+
+.plano-observacao {
+    border-top: 1px solid rgba(40, 25, 5, .35);
+    padding-top: 10px;
+    margin-top: auto;
+    color: #5a4528;
+    font-size: .67rem;
+    line-height: 1.45;
+}
+
+.plano-premium .plano-observacao {
+    border-top-color: #665436;
+    color: #bbb;
+}
+
+.plano-premium .plano-observacao strong {
+    color: #e8c781;
+    font-size: .68rem;
 }
 
 .opcionais-quadro {

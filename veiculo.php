@@ -35,6 +35,10 @@ if (!$veiculo) {
 */
 
 $opcionais = $veiculoRepository->listarOpcionais($id);
+$valorEssencial = number_format($veiculo->getValor(), 2, ',', '.');
+$valorPremium = number_format($veiculo->getValorPremium() ?? $veiculo->getValor(), 2, ',', '.');
+[$valorEssencialInteiro, $valorEssencialCentavos] = explode(',', $valorEssencial);
+[$valorPremiumInteiro, $valorPremiumCentavos] = explode(',', $valorPremium);
 
 ?>
 
@@ -124,23 +128,30 @@ $opcionais = $veiculoRepository->listarOpcionais($id);
 
 
                     <div class="planos-veiculo">
-                        <div class="plano-veiculo">
-                            <span class="plano-titulo">Venda essencial</span>
-                            <strong>R$ <?= number_format($veiculo->getValor(), 2, ",", ".") ?></strong>
+                        <div class="plano-veiculo plano-essencial">
+                            <h2 class="plano-titulo">Faustino<br>Essencial</h2>
+                            <p class="plano-subtitulo">O melhor preço para sair<br>de carro novo.</p>
+                            <div class="plano-preco"><small>R$</small><strong><?= $valorEssencialInteiro ?></strong><small>,<?= $valorEssencialCentavos ?></small></div>
                             <ul class="vantagens-plano">
-                                <li><i class="bi bi-check-circle-fill"></i> Revisão básica</li>
-                                <li><i class="bi bi-x-circle-fill indisponivel"></i> Garantia de 1 ano</li>
-                                <li><i class="bi bi-x-circle-fill indisponivel"></i> Assistência 24 horas</li>
+                                <li><i class="bi bi-check-circle-fill"></i> Veículo revisado</li>
+                                <li><i class="bi bi-check-circle-fill"></i> Documentação em dia</li>
+                                <li><i class="bi bi-check-circle-fill"></i> Pronto para transferência</li>
+                                <li><i class="bi bi-check-circle-fill"></i> Melhor custo-benefício</li>
                             </ul>
+                            <div class="plano-observacao">Sem garantia da loja<br>Sem cobertura de motor/câmbio<br>Sem assistência pós-venda</div>
                         </div>
                         <div class="plano-veiculo plano-premium">
-                            <span class="plano-titulo">Venda premium</span>
-                            <strong>R$ <?= number_format($veiculo->getValorPremium() ?? $veiculo->getValor(), 2, ",", ".") ?></strong>
+                            <h2 class="plano-titulo">Faustino<br>Premium</h2>
+                            <p class="plano-subtitulo">Mais tranquilidade,<br>mais segurança.</p>
+                            <div class="plano-preco"><small>R$</small><strong><?= $valorPremiumInteiro ?></strong><small>,<?= $valorPremiumCentavos ?></small></div>
+                            <strong class="premium-intro">Tudo do Essencial, mais:</strong>
                             <ul class="vantagens-plano">
-                                <li><i class="bi bi-check-circle-fill"></i> Revisão básica</li>
-                                <li><i class="bi bi-check-circle-fill"></i> Garantia de 1 ano</li>
-                                <li><i class="bi bi-check-circle-fill"></i> Assistência 24 horas</li>
+                                <li><i class="bi bi-check-circle-fill"></i> Garantia da loja</li>
+                                <li><i class="bi bi-check-circle-fill"></i> Cobertura de motor e câmbio*</li>
+                                <li><i class="bi bi-check-circle-fill"></i> Assistência pós-venda</li>
+                                <li><i class="bi bi-check-circle-fill"></i> Benefícios exclusivos</li>
                             </ul>
+                            <div class="plano-observacao"><strong>Garantia Faustino Motors</strong><br>Condições especiais — consulte<br>a loja.</div>
                         </div>
                     </div>
 

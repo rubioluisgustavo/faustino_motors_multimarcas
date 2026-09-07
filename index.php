@@ -21,6 +21,9 @@
             case 'vendidos':
                 include("vendidos.php");
                 break;
+            case 'financiamento':
+                include("financiamento.php");
+                break;
 
             default:
                 # code...

@@ -24,7 +24,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#">FICHA DE FINANCIAMENTO</a>
+                    <a class="nav-link" href="?menu=financiamento">FICHA DE FINANCIAMENTO</a>
                 </li>
 
                 <li class="nav-item">
