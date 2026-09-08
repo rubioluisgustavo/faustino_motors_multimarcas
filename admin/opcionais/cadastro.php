@@ -16,7 +16,7 @@ $opcional = $id ? $opcionalRepository->buscarPorId($id) : new Opcional();
 
     <form
         method="POST"
-        action="salvar.php"
+        action="<?= site_path() ?>/admin/opcionais/salvar.php"
         enctype="multipart/form-data">
 
 
@@ -66,7 +66,7 @@ $opcional = $id ? $opcionalRepository->buscarPorId($id) : new Opcional();
 
 
                 <a
-                    href="index.php"
+                    href="<?= site_path() ?>/admin/opcionais/"
                     class="btn btn-voltar px-4">
 
                     Voltar

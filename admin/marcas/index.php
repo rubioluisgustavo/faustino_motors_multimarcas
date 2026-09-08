@@ -10,13 +10,13 @@ $marcaRepository = new MarcaRepository($pdo);
 if (isset($_GET['excluir'])) {
     $id = (int) $_GET['excluir'];
     if ($marcaRepository->contarRelacionamentos($id) > 0) {
-        header('Location: index.php?erro=' . urlencode('Não é possível excluir a marca porque existem modelos vinculados a ela.'));
+        header('Location: ' . site_path() . '/admin/marcas/?erro=' . urlencode('Não é possível excluir a marca porque existem modelos vinculados a ela.'));
         exit;
     }
 
     $marcaRepository->excluir($id);
 
-    header("Location:index.php");
+    header("Location:" . site_path() . "/admin/marcas/");
     exit;
 }
 
@@ -36,7 +36,7 @@ $erro = $_GET['erro'] ?? null;
 
 
     <a
-        href="cadastro.php"
+        href="<?= site_path() ?>/admin/marcas/cadastro.php"
         class="btn btn-adicionar">
 
         <i class="bi bi-plus-circle"></i>
@@ -46,7 +46,7 @@ $erro = $_GET['erro'] ?? null;
     </a>
 
     <a
-        href="../index.php"
+        href="<?= site_path() ?>/admin/"
         class="btn btn-adicionar">
 
         <i class="bi bi-arrow-left-circle"></i>
@@ -104,7 +104,7 @@ $erro = $_GET['erro'] ?? null;
 
 
                             <a
-                                href="cadastro.php?id=<?= $marca->getId() ?>"
+                                href="<?= site_path() ?>/admin/marcas/cadastro.php?id=<?= $marca->getId() ?>"
                                 class="btn btn-sm btn-editar">
                                 Editar
                             </a>
@@ -112,7 +112,7 @@ $erro = $_GET['erro'] ?? null;
 
 
                             <a
-                                href="index.php?excluir=<?= $marca->getId() ?>"
+                                href="<?= site_path() ?>/admin/marcas/?excluir=<?= $marca->getId() ?>"
                                 class="btn btn-sm btn-excluir"
                                 onclick="return confirm('Excluir marca?')">
                                 Excluir

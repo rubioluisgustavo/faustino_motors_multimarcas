@@ -45,7 +45,7 @@ $veiculos = (new VeiculoRepository($pdo))->listar([
 
                             <?php endif; ?>
 
-                            <a href="index.php?id=<?= $veiculo->getId() ?>">
+                            <a href="<?= site_path() ?>/?id=<?= $veiculo->getId() ?>">
 
                                 <?php if (!empty($veiculo->getImagemPrincipal())): ?>
 
@@ -137,7 +137,7 @@ $veiculos = (new VeiculoRepository($pdo))->listar([
 
 
                                 <a
-                                    href="index.php?id=<?= $veiculo->getId() ?>"
+                                    href="<?= site_path() ?>/?id=<?= $veiculo->getId() ?>"
                                     class="btn-saiba-mais">
 
                                     Saiba mais

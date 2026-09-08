@@ -22,7 +22,7 @@ $marcas = $marcaRepository->listar();
 
     <form
         method="POST"
-        action="salvar.php">
+        action="<?= site_path() ?>/admin/modelos/salvar.php">
 
 
 
@@ -155,7 +155,7 @@ $marcas = $marcaRepository->listar();
 
                 <a
 
-                    href="index.php"
+                    href="<?= site_path() ?>/admin/modelos/"
 
                     class="btn btn-voltar px-4">
 

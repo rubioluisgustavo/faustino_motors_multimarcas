@@ -238,7 +238,7 @@ try {
     // ============================= 
     // RETORNA PARA LISTA 
     // ============================= 
-    header("Location: index.php");
+    header("Location: " . site_path() . "/admin/veiculos/");
     exit;
 } catch (Exception $e) {
     $pdo->rollBack();

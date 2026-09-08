@@ -13,7 +13,7 @@ $modelos = (new ModeloRepository($pdo))->listarDisponiveis();
 
     <div class="container">
 
-        <form method="GET" action="index.php">
+        <form method="GET" action="<?= site_path() ?>/">
 
             <div class="row g-3 align-items-end">
 

@@ -109,7 +109,7 @@ $opcionais = (new OpcionalRepository($pdo))->listar();
 
     <form
         method="POST"
-        action="salvar.php"
+        action="<?= site_path() ?>/admin/veiculos/salvar.php"
         enctype="multipart/form-data">
 
 
@@ -496,7 +496,7 @@ $opcionais = (new OpcionalRepository($pdo))->listar();
 
 
                 <a
-                    href="index.php"
+                    href="<?= site_path() ?>/admin/veiculos/"
                     class="btn btn-voltar px-4">
 
                     Voltar

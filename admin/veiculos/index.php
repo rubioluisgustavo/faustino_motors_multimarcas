@@ -13,7 +13,7 @@ if (isset($_GET['excluir'])) {
 
     $id = filter_input(INPUT_GET, 'excluir', FILTER_VALIDATE_INT);
     if ($id && $veiculoRepository->contarRelacionamentos($id) > 0) {
-        header('Location: index.php?erro=' . urlencode('Não é possível excluir o veículo porque existem opcionais vinculados a ele.'));
+        header('Location: ' . site_path() . '/admin/veiculos/?erro=' . urlencode('Não é possível excluir o veículo porque existem opcionais vinculados a ele.'));
         exit;
     }
 
@@ -23,7 +23,7 @@ if (isset($_GET['excluir'])) {
     }
 
 
-    header("Location:index.php");
+    header("Location:" . site_path() . "/admin/veiculos/");
 
     exit;
 }
@@ -48,7 +48,7 @@ $erro = $_GET['erro'] ?? null;
 
 
     <a
-        href="cadastro.php"
+        href="<?= site_path() ?>/admin/veiculos/cadastro.php"
         class="btn btn-adicionar">
 
         <i class="bi bi-plus-circle"></i>
@@ -58,7 +58,7 @@ $erro = $_GET['erro'] ?? null;
     </a>
 
     <a
-        href="../index.php"
+        href="<?= site_path() ?>/admin/"
         class="btn btn-adicionar">
 
         <i class="bi bi-arrow-left-circle"></i>
@@ -147,7 +147,7 @@ $erro = $_GET['erro'] ?? null;
 
 
                             <a
-                                href="cadastro.php?id=<?= $v->getId() ?>"
+                                href="<?= site_path() ?>/admin/veiculos/cadastro.php?id=<?= $v->getId() ?>"
                                 class="btn btn-sm btn-editar">
                                 Editar
                             </a>
@@ -155,7 +155,7 @@ $erro = $_GET['erro'] ?? null;
 
 
                             <a
-                                href="index.php?excluir=<?= $v->getId() ?>"
+                                href="<?= site_path() ?>/admin/veiculos/?excluir=<?= $v->getId() ?>"
                                 class="btn btn-sm btn-excluir"
                                 onclick="return confirm('Excluir veÃ­culo?')">
                                 Excluir

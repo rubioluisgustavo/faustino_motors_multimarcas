@@ -24,7 +24,7 @@ if ($id) {
 
     <form
         method="POST"
-        action="salvar.php"
+        action="<?= site_path() ?>/admin/marcas/salvar.php"
         enctype="multipart/form-data">
 
 
@@ -74,7 +74,7 @@ if ($id) {
 
 
                 <a
-                    href="index.php"
+                    href="<?= site_path() ?>/admin/marcas/"
                     class="btn btn-voltar px-4">
 
                     Voltar

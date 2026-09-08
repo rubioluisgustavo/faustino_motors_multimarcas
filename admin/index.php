@@ -61,7 +61,7 @@
                     </p>
 
                     <a
-                        href="marcas/index.php"
+                        href="<?= site_path() ?>/admin/marcas/"
                         class="btn btn-adicionar w-100">
 
                         Acessar
@@ -97,7 +97,7 @@
                     </p>
 
                     <a
-                        href="modelos/index.php"
+                        href="<?= site_path() ?>/admin/modelos/"
                         class="btn btn-adicionar w-100">
 
                         Acessar
@@ -135,7 +135,7 @@
                     </p>
 
                     <a
-                        href="veiculos/index.php"
+                        href="<?= site_path() ?>/admin/veiculos/"
                         class="btn btn-adicionar w-100">
 
                         Acessar
@@ -173,7 +173,7 @@
                     </p>
 
                     <a
-                        href="opcionais/index.php"
+                        href="<?= site_path() ?>/admin/opcionais/"
                         class="btn btn-adicionar w-100">
 
                         Acessar
@@ -192,7 +192,18 @@
                     </div>
                     <h4>Vendidos</h4>
                     <p>Cadastre os veículos vendidos e os depoimentos dos clientes.</p>
-                    <a href="vendas/index.php" class="btn btn-adicionar w-100">Acessar</a>
+                    <a href="<?= site_path() ?>/admin/vendas/" class="btn btn-adicionar w-100">Acessar</a>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="card-dashboard">
+                    <div class="icone-dashboard">
+                        <i class="bi bi-database-gear"></i>
+                    </div>
+                    <h4>Banco de dados</h4>
+                    <p>Execute um script SQL revisado diretamente no banco.</p>
+                    <a href="<?= site_path() ?>/sql/" class="btn btn-adicionar w-100">Atualizar banco</a>
                 </div>
             </div>
 

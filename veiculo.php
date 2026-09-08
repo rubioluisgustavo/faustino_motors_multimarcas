@@ -6,7 +6,7 @@ require_once __DIR__ . '/admin/veiculos/VeiculoRepository.php';
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 
 if (!$id) {
-    header("Location: index.php");
+    header("Location: " . site_path() . "/");
     exit;
 }
 
@@ -23,7 +23,7 @@ $veiculo = $veiculoRepository->buscarPorId($id);
 
 if (!$veiculo) {
 
-    header("Location: index.php");
+    header("Location: " . site_path() . "/");
     exit;
 }
 
@@ -272,7 +272,7 @@ $valorPremium = number_format($veiculo->getValorPremium() ?? $veiculo->getValor(
         <div class="mt-4">
 
             <a
-                href="index.php"
+                href="<?= site_path() ?>/"
                 class="btn-voltar">
 
                 <i class="bi bi-arrow-left"></i>

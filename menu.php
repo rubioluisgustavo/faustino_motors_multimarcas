@@ -12,19 +12,19 @@
             <ul class="navbar-nav mx-auto">
 
                 <li class="nav-item">
-                    <a class="nav-link" href="index.php">INÍCIO</a>
+                    <a class="nav-link" href="<?= site_path() ?>/">INÍCIO</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="?menu=empresa">A EMPRESA</a>
+                    <a class="nav-link" href="<?= site_path() ?>/?menu=empresa">A EMPRESA</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="?menu=vendidos">VENDIDOS</a>
+                    <a class="nav-link" href="<?= site_path() ?>/?menu=vendidos">VENDIDOS</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="?menu=financiamento">FICHA DE FINANCIAMENTO</a>
+                    <a class="nav-link" href="<?= site_path() ?>/?menu=financiamento">FICHA DE FINANCIAMENTO</a>
                 </li>
 
                 <li class="nav-item">
@@ -32,7 +32,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#">CONTATO</a>
+                    <a class="nav-link" href="<?= site_path() ?>/?menu=contato">CONTATO</a>
                 </li>
 
             </ul>

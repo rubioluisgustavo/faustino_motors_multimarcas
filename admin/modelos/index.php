@@ -12,12 +12,12 @@ $modeloRepository = new ModeloRepository($pdo);
 if (isset($_GET['excluir'])) {
     $id = (int) $_GET['excluir'];
     if ($modeloRepository->contarRelacionamentos($id) > 0) {
-        header('Location: index.php?erro=' . urlencode('Não é possível excluir o modelo porque existem veículos vinculados a ele.'));
+        header('Location: ' . site_path() . '/admin/modelos/?erro=' . urlencode('Não é possível excluir o modelo porque existem veículos vinculados a ele.'));
         exit;
     }
 
     $modeloRepository->excluir($id);
-    header("Location: index.php");
+    header("Location: " . site_path() . "/admin/modelos/");
     exit;
 }
 
@@ -43,7 +43,7 @@ $erro = $_GET['erro'] ?? null;
 
 
     <a
-        href="cadastro.php"
+        href="<?= site_path() ?>/admin/modelos/cadastro.php"
         class="btn btn-adicionar">
 
         <i class="bi bi-plus-circle"></i>
@@ -54,7 +54,7 @@ $erro = $_GET['erro'] ?? null;
 
 
     <a
-        href="../index.php"
+        href="<?= site_path() ?>/admin/"
         class="btn btn-adicionar">
 
         <i class="bi bi-arrow-left-circle"></i>
@@ -126,7 +126,7 @@ $erro = $_GET['erro'] ?? null;
 
 
                             <a
-                                href="cadastro.php?id=<?= $m->getId() ?>"
+                                href="<?= site_path() ?>/admin/modelos/cadastro.php?id=<?= $m->getId() ?>"
                                 class="btn btn-sm btn-editar">
 
                                 Editar
@@ -137,7 +137,7 @@ $erro = $_GET['erro'] ?? null;
 
 
                             <a
-                                href="index.php?excluir=<?= $m->getId() ?>"
+                                href="<?= site_path() ?>/admin/modelos/?excluir=<?= $m->getId() ?>"
                                 class="btn btn-sm btn-excluir"
                                 onclick="return confirm('Excluir modelo?')">
 

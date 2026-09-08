@@ -10,12 +10,12 @@ $id = isset($_POST['id']) && $_POST['id'] !== '' ? (int) $_POST['id'] : null;
 $nome = trim($_POST['nome'] ?? '');
 
 if ($nome === '') {
-    header('Location: cadastro.php' . ($id ? '?id=' . $id : ''));
+    header('Location: ' . site_path() . '/admin/marcas/cadastro.php' . ($id ? '?id=' . $id : ''));
     exit;
 }
 
 $marca = new Marca($id, $nome);
 $marcaRepository->salvar($marca);
 
-header("Location:index.php");
+header("Location:" . site_path() . "/admin/marcas/");
 exit;

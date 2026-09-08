@@ -4,6 +4,176 @@
     font-size: .95rem;
 }
 
+/* CONTATO */
+.contato-page {
+    min-height: 60vh;
+    background: #111;
+}
+
+.contato-heading {
+    margin-bottom: 2.5rem;
+}
+
+.contato-heading h1 {
+    margin: .35rem 0 .5rem;
+    color: #bb9000;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.contato-heading p,
+.contato-card-intro {
+    color: #ddd;
+}
+
+.contato-eyebrow {
+    color: #fff;
+    font-size: .85rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+.contato-card {
+    padding: 2rem;
+    background: #000;
+    border: 1px solid rgba(187, 144, 0, .65);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .25);
+}
+
+.contato-card h2 {
+    color: #bb9000;
+    font-size: 1.35rem;
+    font-weight: 800;
+    margin-bottom: .5rem;
+}
+
+.contato-canais {
+    display: grid;
+    gap: .75rem;
+    margin-top: 1.5rem;
+}
+
+.contato-canal {
+    display: flex;
+    align-items: center;
+    gap: .9rem;
+    padding: .9rem 1rem;
+    color: #fff;
+    text-decoration: none;
+    border: 1px solid #333;
+    border-radius: 8px;
+    transition: border-color .2s ease, background-color .2s ease, transform .2s ease;
+}
+
+.contato-canal:hover {
+    color: #fff;
+    background: #171717;
+    border-color: #bb9000;
+    transform: translateY(-2px);
+}
+
+.contato-canal strong,
+.contato-canal small {
+    display: block;
+}
+
+.contato-canal small {
+    margin-top: .15rem;
+    color: #ccc;
+    overflow-wrap: anywhere;
+}
+
+.contato-icone {
+    display: grid;
+    flex: 0 0 42px;
+    width: 42px;
+    height: 42px;
+    place-items: center;
+    color: #111;
+    font-size: 1.25rem;
+    border-radius: 50%;
+}
+
+.contato-icone.whatsapp {
+    background: #25d366;
+}
+
+.contato-icone.email,
+.contato-icone.telefone {
+    background: #bb9000;
+}
+
+.contato-endereco {
+    display: flex;
+    flex-direction: column;
+}
+
+.endereco-conteudo {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    margin: 1.5rem 0;
+    color: #ddd;
+}
+
+.endereco-conteudo > i {
+    color: #bb9000;
+    font-size: 1.5rem;
+}
+
+.endereco-conteudo address {
+    margin: 0;
+    line-height: 1.7;
+}
+
+.btn-contato-mapa {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    width: 100%;
+    margin-top: auto;
+    padding: .7rem 1rem;
+    color: #111;
+    font-weight: 700;
+    text-decoration: none;
+    background: #bb9000;
+    border-radius: 6px;
+}
+
+.btn-contato-mapa:hover {
+    color: #111;
+    background: #d0a618;
+}
+
+.contato-mapa {
+    height: 300px;
+    overflow: hidden;
+    border: 1px solid #bb9000;
+    border-radius: 12px;
+}
+
+.contato-mapa iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+@media (max-width: 575px) {
+    .contato-card {
+        padding: 1.25rem;
+    }
+
+    .contato-canal {
+        padding: .8rem;
+    }
+
+    .contato-canal small {
+        font-size: .8rem;
+    }
+}
+
 .form-financiamento {
     background: #494949;
     border: 2px solid #bb9000;
@@ -1589,7 +1759,27 @@
 ===================================================== */
 
 .sobre-empresa {
-    background: #fff;
+    background: #f8f8f8;
+}
+
+.empresa-cabecalho {
+    max-width: 760px;
+    margin: 0 auto 2.75rem;
+    text-align: center;
+}
+
+.empresa-cabecalho h1 {
+    margin: .45rem 0 .55rem;
+    color: #111;
+    font-size: clamp(2rem, 4vw, 3.15rem);
+    font-weight: 800;
+    line-height: 1.15;
+}
+
+.empresa-cabecalho p {
+    margin: 0;
+    color: #666;
+    font-size: 1.08rem;
 }
 
 
@@ -1598,12 +1788,13 @@
 ===================================================== */
 
 .imagem-empresa {
+    position: relative;
     width: 100%;
-    height: 500px;
+    min-height: 530px;
     overflow: hidden;
     border-radius: 16px;
-    background: #f5f5f5;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    background: linear-gradient(145deg, #222, #080808);
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.14);
 }
 
 .imagem-empresa img {
@@ -1613,13 +1804,60 @@
     display: block;
 }
 
+.foto-placeholder {
+    display: flex;
+    min-height: 530px;
+    padding: 2rem;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: .6rem;
+    color: #fff;
+    text-align: center;
+}
+
+.foto-placeholder i {
+    color: #bb9000;
+    font-size: 4rem;
+}
+
+.foto-placeholder strong {
+    color: #f0d083;
+    font-size: 1.2rem;
+}
+
+.foto-placeholder span {
+    max-width: 260px;
+    color: #bbb;
+    font-size: .9rem;
+}
+
+.foto-legenda {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    left: 1rem;
+    padding: .65rem .8rem;
+    color: #fff;
+    font-size: .8rem;
+    letter-spacing: .8px;
+    text-align: center;
+    background: rgba(0, 0, 0, .7);
+    border-radius: 6px;
+}
+
 
 /* =====================================================
    INFORMAÇÕES
 ===================================================== */
 
 .info-empresa {
-    padding: 20px 10px;
+    height: 100%;
+    padding: 2.25rem;
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .06);
 }
 
 .info-empresa .marca-detalhes {
@@ -1631,10 +1869,12 @@
     margin-bottom: 8px;
 }
 
-.info-empresa h1 {
-    font-size: 42px;
+.info-empresa h2 {
+    max-width: 520px;
+    font-size: clamp(1.8rem, 3vw, 2.45rem);
     font-weight: 700;
     color: #111;
+    line-height: 1.2;
     margin-bottom: 15px;
 }
 
@@ -1772,15 +2012,15 @@
 @media (max-width: 991px) {
 
     .imagem-empresa {
-        height: 400px;
+        min-height: 400px;
+    }
+
+    .foto-placeholder {
+        min-height: 400px;
     }
 
     .info-empresa {
-        padding: 0;
-    }
-
-    .info-empresa h1 {
-        font-size: 36px;
+        padding: 2rem;
     }
 
 }
@@ -1789,12 +2029,22 @@
 @media (max-width: 767px) {
 
     .imagem-empresa {
-        height: 300px;
+        min-height: 300px;
         border-radius: 12px;
     }
 
-    .info-empresa h1 {
-        font-size: 30px;
+    .foto-placeholder {
+        min-height: 300px;
+        padding: 1.5rem;
+    }
+
+    .foto-placeholder i {
+        font-size: 3rem;
+    }
+
+    .info-empresa {
+        padding: 1.5rem;
+        border-radius: 12px;
     }
 
     .info-empresa p {

@@ -12,7 +12,7 @@ $idMarca = isset($_POST['id_marca']) && $_POST['id_marca'] !== '' ? (int) $_POST
 $nome = trim($_POST['nome'] ?? '');
 
 if ($idMarca === null || $nome === '') {
-    header('Location: cadastro.php' . ($id ? '?id=' . $id : ''));
+    header('Location: ' . site_path() . '/admin/modelos/cadastro.php' . ($id ? '?id=' . $id : ''));
     exit;
 }
 
@@ -24,6 +24,6 @@ if ($idMarca === null || $nome === '') {
 
 // retorna para lista
 
-header("Location: index.php");
+header("Location: " . site_path() . "/admin/modelos/");
 
 exit;

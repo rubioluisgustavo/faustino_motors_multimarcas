@@ -1,5 +1,6 @@
 <?php
 
+require_once dirname(__DIR__, 2) . '/config.php';
 session_start();
 
 
@@ -47,13 +48,13 @@ if (
 
 
 
-    header("Location: ../index.php");
+    header('Location: ' . site_path() . '/admin/');
 
     exit;
 }
 
 
 
-header("Location:index.php?erro=1");
+header("Location: " . site_path() . "/admin/login/?erro=1");
 
 exit;

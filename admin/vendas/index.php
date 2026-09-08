@@ -12,7 +12,7 @@ if (isset($_GET['excluir'])) {
     if ($id) {
         $repository->excluir($id);
     }
-    header('Location: index.php');
+    header('Location: ' . site_path() . '/admin/vendas/');
     exit;
 }
 
@@ -24,11 +24,11 @@ $vendas = $repository->listar();
 
 <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
     <h2 class="titulo-admin m-0">Vendidos</h2>
-    <a href="cadastro.php" class="btn btn-adicionar d-inline-flex align-items-center justify-content-center gap-2">
+    <a href="<?= site_path() ?>/admin/vendas/cadastro.php" class="btn btn-adicionar d-inline-flex align-items-center justify-content-center gap-2">
         <i class="bi bi-plus-circle"></i>
         Adicionar venda
     </a>
-    <a href="../index.php" class="btn btn-adicionar d-inline-flex align-items-center justify-content-center gap-2">
+    <a href="<?= site_path() ?>/admin/" class="btn btn-adicionar d-inline-flex align-items-center justify-content-center gap-2">
         <i class="bi bi-arrow-left-circle"></i>
         Voltar
     </a>
@@ -60,8 +60,8 @@ $vendas = $repository->listar();
                         <td><?= htmlspecialchars($venda->getNome()) ?></td>
                         <td class="venda-depoimento"><?= htmlspecialchars($venda->getDepoimento()) ?></td>
                         <td>
-                            <a href="cadastro.php?id=<?= $venda->getId() ?>" class="btn btn-sm btn-editar">Editar</a>
-                            <a href="index.php?excluir=<?= $venda->getId() ?>"
+                            <a href="<?= site_path() ?>/admin/vendas/cadastro.php?id=<?= $venda->getId() ?>" class="btn btn-sm btn-editar">Editar</a>
+                            <a href="<?= site_path() ?>/admin/vendas/?excluir=<?= $venda->getId() ?>"
                                class="btn btn-sm btn-excluir"
                                onclick="return confirm('Excluir venda?')">Excluir</a>
                         </td>

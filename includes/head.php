@@ -1,6 +1,14 @@
 <?php
 
+require_once dirname(__DIR__) . '/config.php';
+
 $faviconPath = $faviconPath ?? 'img/favicon-16x16.png';
+
+// Report all PHP errors
+error_reporting(E_ALL);
+
+// Force errors to be displayed on the screen
+ini_set('display_errors', '1');
 
 ?>
 <meta charset="utf-8">

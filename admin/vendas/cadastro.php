@@ -13,7 +13,7 @@ $venda = $id ? $repository->buscarPorId($id) : new Venda();
 <link href="../css/admin.css" rel="stylesheet">
 
 <div class="card-admin">
-    <form method="POST" action="salvar.php" enctype="multipart/form-data">
+    <form method="POST" action="<?= site_path() ?>/admin/vendas/salvar.php" enctype="multipart/form-data">
         <input type="hidden" name="id" value="<?= $venda->getId() ?? '' ?>">
 
         <div class="row g-4">
@@ -39,7 +39,7 @@ $venda = $id ? $repository->buscarPorId($id) : new Venda();
 
             <div class="col-12">
                 <button class="btn btn-gold px-5">Salvar</button>
-                <a href="index.php" class="btn btn-voltar px-4">Voltar</a>
+                <a href="<?= site_path() ?>/admin/vendas/" class="btn btn-voltar px-4">Voltar</a>
             </div>
         </div>
     </form>

@@ -1,12 +1,10 @@
 <?php
 
+require_once dirname(__DIR__, 2) . '/config.php';
 session_start();
 
 
 if (!isset($_SESSION['usuario'])) {
-
-    $adminPath = rtrim(str_replace('\\', '/', dirname(dirname($_SERVER['SCRIPT_NAME']))), '/');
-    header("Location: {$adminPath}/login/");
-
+    header('Location: ' . site_path() . '/admin/login/');
     exit;
 }

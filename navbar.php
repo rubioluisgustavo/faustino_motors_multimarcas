@@ -28,7 +28,7 @@
         <div class="row align-items-center w-100">
 
             <div class="col-lg-6">
-                <a class="navbar-brand d-flex align-items-center m-0" href="index.php">
+                <a class="navbar-brand d-flex align-items-center m-0" href="<?= site_path() ?>/">
                     <img src="img/logo.png" alt="Logo" class="me-3">
 
                     <div>

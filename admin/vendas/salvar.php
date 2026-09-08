@@ -9,7 +9,7 @@ $nome = trim($_POST['nome'] ?? '');
 $depoimento = trim($_POST['depoimento'] ?? '');
 
 if ($nome === '') {
-    header('Location: cadastro.php' . ($id ? '?id=' . $id : ''));
+    header('Location: ' . site_path() . '/admin/vendas/cadastro.php' . ($id ? '?id=' . $id : ''));
     exit;
 }
 
@@ -44,5 +44,5 @@ $repository->salvar(new Venda([
     'depoimento' => $depoimento,
 ]), $imagem);
 
-header('Location: index.php');
+header('Location: ' . site_path() . '/admin/vendas/');
 exit;

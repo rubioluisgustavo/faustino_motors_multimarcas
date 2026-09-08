@@ -12,12 +12,12 @@ $opcionalRepository = new OpcionalRepository($pdo);
 if (isset($_GET['excluir'])) {
     $id = (int) $_GET['excluir'];
     if ($opcionalRepository->contarRelacionamentos($id) > 0) {
-        header('Location: index.php?erro=' . urlencode('Não é possível excluir o opcional porque ele está vinculado a veículos.'));
+        header('Location: ' . site_path() . '/admin/opcionais/?erro=' . urlencode('Não é possível excluir o opcional porque ele está vinculado a veículos.'));
         exit;
     }
 
     $opcionalRepository->excluir($id);
-    header("Location:index.php");
+    header("Location:" . site_path() . "/admin/opcionais/");
     exit;
 }
 
@@ -41,7 +41,7 @@ $erro = $_GET['erro'] ?? null;
 
 
     <a
-        href="cadastro.php"
+        href="<?= site_path() ?>/admin/opcionais/cadastro.php"
         class="btn btn-adicionar">
 
         <i class="bi bi-plus-circle"></i>
@@ -51,7 +51,7 @@ $erro = $_GET['erro'] ?? null;
     </a>
 
     <a
-        href="../index.php"
+        href="<?= site_path() ?>/admin/"
         class="btn btn-adicionar">
 
         <i class="bi bi-arrow-left-circle"></i>
@@ -109,13 +109,13 @@ $erro = $_GET['erro'] ?? null;
                         <td>
 
                             <a
-                                href="cadastro.php?id=<?= $o->getId() ?>"
+                                href="<?= site_path() ?>/admin/opcionais/cadastro.php?id=<?= $o->getId() ?>"
                                 class="btn btn-sm btn-editar">
                                 Editar
                             </a>
 
                             <a
-                                href="index.php?excluir=<?= $o->getId() ?>"
+                                href="<?= site_path() ?>/admin/opcionais/?excluir=<?= $o->getId() ?>"
                                 class="btn btn-sm btn-excluir"
                                 onclick="return confirm('Excluir opcional?')">
                                 Excluir

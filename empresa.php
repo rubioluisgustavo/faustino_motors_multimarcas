@@ -2,21 +2,30 @@
 
     <div class="container">
 
-        <!-- =====================================================
-             SOBRE A EMPRESA
-        ====================================================== -->
+        <div class="empresa-cabecalho">
+            <span class="marca-detalhes">FAUSTINO MOTORS MULTIMARCAS</span>
+            <h1>Uma história construída com confiança</h1>
+            <p>Experiência, transparência e respeito em cada negociação.</p>
+            <div class="linha-detalhe-central"></div>
+        </div>
 
-        <div class="row g-5 align-items-center">
+        <div class="row g-4 g-xl-5 align-items-start">
 
             <!-- FOTO DA EMPRESA -->
 
             <div class="col-lg-6">
 
                 <div class="imagem-empresa">
-
-                    <img
-                        src="img/empresa.jpg"
-                        alt="Faustino Motors Multimarcas">
+                    <?php if (is_file(__DIR__ . '/img/empresa.jpg')): ?>
+                        <img src="img/empresa.jpg" alt="Faustino Motors Multimarcas">
+                    <?php else: ?>
+                        <div class="foto-placeholder">
+                            <i class="bi bi-image" aria-hidden="true"></i>
+                            <strong>Espaço reservado para foto</strong>
+                            <span>Adicione aqui uma imagem da Faustino Motors</span>
+                        </div>
+                    <?php endif; ?>
+                    <span class="foto-legenda">Faustino Motors Multimarcas</span>
 
                 </div>
 
@@ -30,12 +39,10 @@
                 <div class="info-empresa">
 
                     <span class="marca-detalhes">
-                        FAUSTINO MOTORS
+                        NOSSA HISTÓRIA
                     </span>
 
-                    <h1>
-                        EMPRESA
-                    </h1>
+                    <h2>Mais do que vender carros, criar relações.</h2>
 
                     <div class="linha-detalhe"></div>
 
@@ -55,13 +62,9 @@
 
                         Mas a ligação com o mercado automotivo nunca deixou de existir.
 
-                        Em 2026, essa história ganha um novo capítulo.
-
-                        Em Avaré, São Paulo, Alexandre Faustino retoma sua atuação no mercado de veículos de forma independente, trazendo consigo mais de duas décadas de experiência no setor e uma filosofia de trabalho construída ao longo de toda essa trajetória:
+                        Em 2026, essa história ganha um novo capítulo. Em Avaré, São Paulo, Alexandre Faustino retoma sua atuação no mercado de veículos de forma independente, trazendo consigo mais de duas décadas de experiência no setor e uma filosofia de trabalho construída ao longo de toda essa trajetória:
 
                         transparência, respeito, responsabilidade e honestidade.
-
-                        Existe ainda outro capítulo importante nessa história.
 
                     </p>
                     <p> Há décadas, Alexandre também dedica parte de sua vida ao Judô, formando crianças, jovens e adultos dentro e fora do tatame.
@@ -229,7 +232,7 @@
         <div class="mt-4">
 
             <a
-                href="index.php"
+                href="<?= site_path() ?>/"
                 class="btn-voltar">
 
                 <i class="bi bi-arrow-left"></i>
