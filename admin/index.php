@@ -195,7 +195,8 @@
                     <a href="<?= site_path() ?>/admin/vendas/" class="btn btn-adicionar w-100">Acessar</a>
                 </div>
             </div>
-
+            
+            <?php if (usuarioPodeGerenciarUsuarios()): ?>
             <!-- USUÁRIOS -->
             <div class="col-lg-4 col-md-6">
                 <div class="card-dashboard">
@@ -207,6 +208,7 @@
                     <a href="<?= site_path() ?>/admin/usuarios/" class="btn btn-adicionar w-100">Acessar</a>
                 </div>
             </div>
+            <?php endif; ?>
 
             <?php if (usuarioPodeGerenciarUsuarios()): ?>
             <div class="col-lg-4 col-md-6">
