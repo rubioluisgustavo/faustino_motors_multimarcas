@@ -82,7 +82,7 @@
 
 
 
-/* BOTÃO ADICIONAR */
+/* BOTï¿½O ADICIONAR */
 
 .btn-adicionar {
 
@@ -110,35 +110,66 @@
 /* FORM ADMIN */
 
 .card-admin {
-
     background: #000;
     border: 2px solid #bb9000;
     border-radius: 15px;
-    padding: 30px;
-
+    padding: clamp(1rem, 3vw, 2rem);
+    width: 100%;
+    max-width: 1100px;
+    margin-inline: auto;
 }
 
+.admin-container {
+    width: min(100% - 2rem, 1320px);
+    margin-inline: auto;
+    padding-block: clamp(1.5rem, 4vw, 3rem);
+}
 
+.admin-form .row {
+    --bs-gutter-y: 1.25rem;
+}
+
+.admin-form .form-group {
+    min-width: 0;
+}
 
 .form-label {
-
     color: #bb9000;
     font-weight: 700;
     text-transform: uppercase;
     font-size: .9rem;
-
+    margin-bottom: .5rem;
 }
 
 
 
 .form-control,
 .form-select {
-
     background: #5f5f5f;
     color: #fff;
     border: 1px solid #bb9000;
     border-radius: 8px;
+    min-height: 46px;
+    width: 100%;
+}
 
+.form-control[type="file"] {
+    padding: .65rem .75rem;
+}
+
+.form-control[type="file"]::file-selector-button {
+    background: #bb9000;
+    border: 0;
+    border-radius: 5px;
+    color: #000;
+    font-weight: 700;
+    margin: -.25rem .75rem -.25rem -.25rem;
+    padding: .45rem .7rem;
+}
+
+textarea.form-control {
+    min-height: 130px;
+    resize: vertical;
 }
 
 
@@ -207,11 +238,10 @@
 }
 
 .btn-gold {
-
     background: #be9200 !important;
     color: #fff;
     font-weight: bold;
-
+    border: 1px solid #be9200;
 }
 
 
@@ -226,21 +256,38 @@
 
 
 @media(max-width:768px) {
-
-
     .card-admin {
-
-        padding: 15px;
-
+        border-radius: 10px;
     }
-
 
     .preview-imagem img {
-
         width: 100%;
         height: auto;
+    }
+}
 
+@media(max-width:575.98px) {
+    .admin-container {
+        width: min(100% - 1rem, 1320px);
+        padding-block: 1rem;
     }
 
+    .card-admin {
+        padding: .9rem;
+    }
+
+    .admin-form .row {
+        --bs-gutter-x: 1rem;
+        --bs-gutter-y: 1rem;
+    }
+
+    .form-actions {
+        display: grid;
+        gap: .65rem;
+    }
+
+    .form-actions .btn {
+        width: 100%;
+    }
 
 }

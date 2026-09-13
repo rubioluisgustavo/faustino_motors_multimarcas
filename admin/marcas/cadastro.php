@@ -22,7 +22,7 @@ if ($id) {
 <link href="../css/admin.css" rel="stylesheet">
 <div class="card-admin">
 
-    <form
+    <form class="admin-form"
         method="POST"
         action="<?= site_path() ?>/admin/marcas/salvar.php"
         enctype="multipart/form-data">
@@ -38,7 +38,7 @@ if ($id) {
         <div class="row g-4">
 
 
-            <div class="col-md-4">
+            <div class="col-md-4 form-group">
 
 
                 <label class="form-label">
@@ -59,7 +59,7 @@ if ($id) {
 
 
             <!-- BotÃµes -->
-            <div class="col-12 mt-3">
+            <div class="col-12 mt-3 form-actions">
 
 
                 <button

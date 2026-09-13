@@ -16,8 +16,8 @@
             <div class="col-lg-6">
 
                 <div class="imagem-empresa">
-                    <?php if (is_file(__DIR__ . '/img/empresa.jpg')): ?>
-                        <img src="img/empresa.jpg" alt="Faustino Motors Multimarcas">
+                    <?php if (is_file(__DIR__ . '/img/alx.png')): ?>
+                        <img src="img/alx.png" alt="Faustino Motors Multimarcas">
                     <?php else: ?>
                         <div class="foto-placeholder">
                             <i class="bi bi-image" aria-hidden="true"></i>

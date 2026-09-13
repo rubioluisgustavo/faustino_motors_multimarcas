@@ -14,7 +14,7 @@ $opcional = $id ? $opcionalRepository->buscarPorId($id) : new Opcional();
 <link href="../css/admin.css" rel="stylesheet">
 <div class="card-admin">
 
-    <form
+    <form class="admin-form"
         method="POST"
         action="<?= site_path() ?>/admin/opcionais/salvar.php"
         enctype="multipart/form-data">
@@ -30,7 +30,7 @@ $opcional = $id ? $opcionalRepository->buscarPorId($id) : new Opcional();
         <div class="row g-4">
 
 
-            <div class="col-md-4">
+            <div class="col-md-4 form-group">
 
 
                 <label class="form-label">
@@ -51,7 +51,7 @@ $opcional = $id ? $opcionalRepository->buscarPorId($id) : new Opcional();
 
 
             <!-- BotÃµes -->
-            <div class="col-12 mt-3">
+            <div class="col-12 mt-3 form-actions">
 
 
                 <button

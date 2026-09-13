@@ -107,7 +107,7 @@ $opcionais = (new OpcionalRepository($pdo))->listar();
 <link href="../css/admin.css" rel="stylesheet">
 <div class="card-admin">
 
-    <form
+    <form class="admin-form"
         method="POST"
         action="<?= site_path() ?>/admin/veiculos/salvar.php"
         enctype="multipart/form-data">
@@ -125,7 +125,7 @@ $opcionais = (new OpcionalRepository($pdo))->listar();
 
 
             <!-- Modelo -->
-            <div class="col-md-6">
+            <div class="col-md-6 form-group">
 
 
                 <label class="form-label">
@@ -170,7 +170,7 @@ $opcionais = (new OpcionalRepository($pdo))->listar();
 
 
             <!-- Ano -->
-            <div class="col-md-3">
+            <div class="col-md-3 form-group">
 
 
                 <label class="form-label">
@@ -192,7 +192,7 @@ $opcionais = (new OpcionalRepository($pdo))->listar();
 
 
             <!-- KM -->
-            <div class="col-md-3">
+            <div class="col-md-3 form-group">
 
 
                 <label class="form-label">
@@ -214,7 +214,7 @@ $opcionais = (new OpcionalRepository($pdo))->listar();
 
 
             <!-- CÃÂ¢mbio -->
-            <div class="col-md-4">
+            <div class="col-md-4 form-group">
 
 
                 <label class="form-label">
@@ -245,22 +245,8 @@ $opcionais = (new OpcionalRepository($pdo))->listar();
 
             </div>
 
-            <div class="col-md-4">
-                <label class="form-label">Valor premium</label>
-                <input
-                    type="text"
-                    class="form-control"
-                    name="valor_premium"
-                    value="<?= htmlspecialchars($valorPremium) ?>"
-                    placeholder="Opcional">
-            </div>
-
-
-
-
-
             <!-- CombustÃÂ­vel -->
-            <div class="col-md-4">
+            <div class="col-md-4 form-group">
 
 
                 <label class="form-label">
@@ -311,22 +297,30 @@ $opcionais = (new OpcionalRepository($pdo))->listar();
 
 
 
-            <!-- Valor -->
-            <div class="col-md-4">
-
-
-                <label class="form-label">
-                    Valor
-                </label>
-
-
+            <div class="col-md-6 form-group">
+                <label class="form-label" for="valor">Valor</label>
                 <input
                     type="text"
-                    class="form-control"
+                    id="valor"
+                    class="form-control campo-valor"
                     name="valor"
-                    value="<?= $valor ?>">
+                    value="<?= htmlspecialchars($valor, ENT_QUOTES, 'UTF-8') ?>"
+                    inputmode="decimal"
+                    autocomplete="off"
+                    required>
+            </div>
 
-
+            <div class="col-md-6 form-group">
+                <label class="form-label" for="valor_premium">Valor premium</label>
+                <input
+                    type="text"
+                    id="valor_premium"
+                    class="form-control campo-valor"
+                    name="valor_premium"
+                    value="<?= htmlspecialchars($valorPremium, ENT_QUOTES, 'UTF-8') ?>"
+                    placeholder="Opcional"
+                    inputmode="decimal"
+                    autocomplete="off">
             </div>
 
 
@@ -334,7 +328,7 @@ $opcionais = (new OpcionalRepository($pdo))->listar();
 
 
             <!-- Imagem -->
-            <div class="col-md-6">
+            <div class="col-md-6 form-group">
 
 
                 <label class="form-label">
@@ -350,6 +344,32 @@ $opcionais = (new OpcionalRepository($pdo))->listar();
 
 
             </div>
+
+            <script>
+                (function () {
+                    const camposValor = document.querySelectorAll('.campo-valor');
+
+                    function aplicarMascara(input) {
+                        const digitos = input.value.replace(/\D/g, '');
+
+                        if (!digitos) {
+                            input.value = '';
+                            return;
+                        }
+
+                        const valor = (Number(digitos) / 100).toFixed(2);
+                        const partes = valor.split('.');
+                        partes[0] = Number(partes[0]).toLocaleString('pt-BR');
+                        input.value = partes[0] + ',' + partes[1];
+                    }
+
+                    camposValor.forEach(function (campo) {
+                        campo.addEventListener('input', function () {
+                            aplicarMascara(campo);
+                        });
+                    });
+                }());
+            </script>
 
 
 
@@ -481,7 +501,7 @@ $opcionais = (new OpcionalRepository($pdo))->listar();
 
 
             <!-- BotÃÂµes -->
-            <div class="col-12 mt-3">
+            <div class="col-12 mt-3 form-actions">
 
 
                 <button

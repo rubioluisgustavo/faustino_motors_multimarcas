@@ -20,7 +20,7 @@ $marcas = $marcaRepository->listar();
 <link href="../css/admin.css" rel="stylesheet">
 <div class="card-admin">
 
-    <form
+    <form class="admin-form"
         method="POST"
         action="<?= site_path() ?>/admin/modelos/salvar.php">
 
@@ -42,7 +42,7 @@ $marcas = $marcaRepository->listar();
 
 
             <!-- Marca -->
-            <div class="col-md-6">
+            <div class="col-md-6 form-group">
 
 
                 <label class="form-label">
@@ -98,7 +98,7 @@ $marcas = $marcaRepository->listar();
 
 
             <!-- Nome -->
-            <div class="col-md-6">
+            <div class="col-md-6 form-group">
 
 
 
@@ -130,7 +130,7 @@ $marcas = $marcaRepository->listar();
 
 
             <!-- Botões -->
-            <div class="col-12 mt-3">
+            <div class="col-12 mt-3 form-actions">
 
 
 

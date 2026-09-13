@@ -179,30 +179,19 @@
 }
 
 .opcionais-container {
-
     background: #111111;
-
     border: 1px solid #333333;
-
     border-radius: 10px;
-
-    padding: 20px;
-
+    padding: clamp(12px, 3vw, 20px);
     display: flex;
-
     flex-wrap: wrap;
-
     gap: 10px 25px;
-
 }
 
 
 .opcional-item {
-
     margin: 0;
-
-    min-width: 200px;
-
+    min-width: min(200px, 100%);
 }
 
 
