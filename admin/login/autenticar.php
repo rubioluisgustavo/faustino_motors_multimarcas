@@ -15,7 +15,7 @@ $senha = $_POST['senha'] ?? '';
 
 $sql = $pdo->prepare("
 
-    SELECT id, nome, senha
+    SELECT id, nome, email, senha
 
     FROM usuarios
 
@@ -42,7 +42,9 @@ if (
 
         'id' => $usuario['id'],
 
-        'nome' => $usuario['nome']
+        'nome' => $usuario['nome'],
+
+        'email' => $usuario['email']
 
     ];
 

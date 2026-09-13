@@ -196,6 +196,19 @@
                 </div>
             </div>
 
+            <!-- USUÁRIOS -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card-dashboard">
+                    <div class="icone-dashboard">
+                        <i class="bi bi-people-fill"></i>
+                    </div>
+                    <h4>Usuários</h4>
+                    <p>Visualize e gerencie os usuários do painel administrativo.</p>
+                    <a href="<?= site_path() ?>/admin/usuarios/" class="btn btn-adicionar w-100">Acessar</a>
+                </div>
+            </div>
+
+            <?php if (usuarioPodeGerenciarUsuarios()): ?>
             <div class="col-lg-4 col-md-6">
                 <div class="card-dashboard">
                     <div class="icone-dashboard">
@@ -206,6 +219,7 @@
                     <a href="<?= site_path() ?>/sql/" class="btn btn-adicionar w-100">Atualizar banco</a>
                 </div>
             </div>
+            <?php endif; ?>
 
 
         </div>

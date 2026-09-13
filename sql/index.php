@@ -2,8 +2,9 @@
 
 require_once __DIR__ . '/../admin/includes/auth.php';
 
-if (session_status() !== PHP_SESSION_ACTIVE) {
-    session_start();
+if (!usuarioPodeGerenciarUsuarios()) {
+    http_response_code(403);
+    exit('Você não tem permissão para acessar o administrador SQL.');
 }
 
 if (empty($_SESSION['sql_csrf_token'])) {
