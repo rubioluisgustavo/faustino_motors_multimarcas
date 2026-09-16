@@ -129,10 +129,17 @@ $veiculos = (new VeiculoRepository($pdo))->listar([
 
                             <div class="acoes-veiculo">
 
-                                <div class="valor">
-
-                                    R$ <?= number_format($veiculo->getValor(), 2, ",", ".") ?>
-
+                                <?php
+                                $valorVeiculo = (float) $veiculo->getValor();
+                                ?>
+                                <div class="valor plano-veiculo plano-essencial text-center">
+                                    <h2 class="plano-titulo">Faustino<br>Essencial</h2>
+                                    <!-- <p class="plano-subtitulo">O melhor preço para sair<br>de carro novo.</p> -->
+                                    <div class="plano-preco">
+                                        <small>R$</small>
+                                        <strong><?= number_format($valorVeiculo, 0, ",", ".") ?></strong>
+                                        <small>,<?= str_pad((string) round(($valorVeiculo - floor($valorVeiculo)) * 100), 2, '0', STR_PAD_LEFT) ?></small>
+                                    </div>
                                 </div>
 
 

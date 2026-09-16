@@ -3,6 +3,10 @@
     border: 2px solid #bb9000;
     border-radius: 15px;
     padding: 20px;
+    width: 100%;
+    max-width: none;
+    box-sizing: border-box;
+    margin-inline: auto;
 }
 
 .table-admin {

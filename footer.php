@@ -42,7 +42,7 @@
 
                     <li>
                         <i class="bi bi-envelope-fill"></i>
-                        alexandre.faustino1308@gmail.com
+                        faustinomotorsmultimarcas@gmail.com
                     </li>
 
                     <li>

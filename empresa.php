@@ -9,15 +9,18 @@
             <div class="linha-detalhe-central"></div>
         </div>
 
-        <div class="row g-4 g-xl-5 align-items-start">
+        <div class="empresa-destaque">
 
             <!-- FOTO DA EMPRESA -->
 
-            <div class="col-lg-6">
+            <div class="empresa-linha-imagem">
 
                 <div class="imagem-empresa">
-                    <?php if (is_file(__DIR__ . '/img/alx.png')): ?>
-                        <img src="img/alx.png" alt="Faustino Motors Multimarcas">
+                    <?php
+                    $imagemEmpresa = is_file(__DIR__ . '/img/alx.png') ? 'img/alx.png' : (is_file(__DIR__ . '/img/alx2.jpg') ? 'img/alx2.jpg' : null);
+                    ?>
+                    <?php if ($imagemEmpresa): ?>
+                        <img src="<?= $imagemEmpresa ?>" alt="Faustino Motors Multimarcas">
                     <?php else: ?>
                         <div class="foto-placeholder">
                             <i class="bi bi-image" aria-hidden="true"></i>
@@ -34,7 +37,7 @@
 
             <!-- HISTÓRIA -->
 
-            <div class="col-lg-6">
+            <div class="empresa-linha-texto">
 
                 <div class="info-empresa">
 

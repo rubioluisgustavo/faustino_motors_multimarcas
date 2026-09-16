@@ -28,6 +28,10 @@
                 </li>
 
                 <li class="nav-item">
+                    <a class="nav-link" href="<?= site_path() ?>/?menu=pre-simulacao">SIMULAÇÃO DE FINANCIAMENTO</a>
+                </li>
+
+                <li class="nav-item">
                     <a class="nav-link" href="#">CONSIGNAÇÃO</a>
                 </li>
 

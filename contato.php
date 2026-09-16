@@ -22,11 +22,11 @@
                             <i class="bi bi-arrow-up-right ms-auto" aria-hidden="true"></i>
                         </a>
 
-                        <a class="contato-canal" href="mailto:alexandre.faustino1308@gmail.com">
+                        <a class="contato-canal" href="mailto:faustinomotorsmultimarcas@gmail.com">
                             <span class="contato-icone email"><i class="bi bi-envelope-fill"></i></span>
                             <span>
                                 <strong>E-mail</strong>
-                                <small>alexandre.faustino1308@gmail.com</small>
+                                <small>faustinomotorsmultimarcas@gmail.com</small>
                             </span>
                             <i class="bi bi-arrow-up-right ms-auto" aria-hidden="true"></i>
                         </a>
@@ -39,25 +39,24 @@
                             </span>
                             <i class="bi bi-arrow-up-right ms-auto" aria-hidden="true"></i>
                         </a>
+
+                        <div class="contato-canal contato-endereco-inline">
+                            <span class="contato-icone telefone"><i class="bi bi-geo-alt-fill"></i></span>
+                            <span>
+                                <strong>Onde estamos</strong>
+                                <small>Rua Dublin, 150 - Jardim Europa III, Avaré/SP</small>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="col-lg-5">
-                <div class="contato-card contato-endereco h-100">
-                    <h2>Onde estamos</h2>
-                    <div class="endereco-conteudo">
-                        <i class="bi bi-geo-alt-fill" aria-hidden="true"></i>
-                        <address>
-                            Rua Dublin, 150<br>
-                            Jardim Europa III<br>
-                            18708-530 - Avaré/SP
-                        </address>
+                <div class="contato-card contato-imagem h-100">
+                    <div class="contato-imagem-placeholder">
+                        <i class="bi bi-image" aria-hidden="true"></i>
+                        <strong>Espaço reservado para imagem</strong>
                     </div>
-                    <a class="btn-contato-mapa" href="https://www.google.com/maps/search/?api=1&query=Rua+Dublin%2C+150%2C+Avar%C3%A9+-+SP" target="_blank" rel="noopener noreferrer">
-                        <i class="bi bi-map" aria-hidden="true"></i>
-                        Ver no mapa
-                    </a>
                 </div>
             </div>
         </div>

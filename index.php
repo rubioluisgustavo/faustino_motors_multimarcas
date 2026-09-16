@@ -24,6 +24,9 @@
             case 'financiamento':
                 include("financiamento.php");
                 break;
+            case 'pre-simulacao':
+                include("pre-simulacao.php");
+                break;
             case 'contato':
                 include("contato.php");
                 break;

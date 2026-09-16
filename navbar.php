@@ -9,8 +9,8 @@
 
             <div class="col-lg-4 mb-2 mb-lg-0 text-lg-center">
                 <strong>E-mail:</strong>
-                <a href="mailto:alexandre.faustino1308@gmail.com">
-                    alexandre.faustino1308@gmail.com
+                <a href="mailto:faustinomotorsmultimarcas@gmail.com">
+                    faustinomotorsmultimarcas@gmail.com
                 </a>
             </div>
 
