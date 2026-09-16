@@ -17,19 +17,22 @@
 
     <div class="container admin-container">
 
-        <div class="mb-5">
+        <div class="admin-header mb-5">
 
-            <h1 class="titulo-admin">
+            <div>
+                <h1 class="titulo-admin">
+                    Painel Administrativo
+                </h1>
 
-                Painel Administrativo
+                <p class="text-light">
+                    Bem-vindo ao sistema da <strong class="text-gold">Faustino Motors Multimarcas</strong>.
+                </p>
+            </div>
 
-            </h1>
-
-            <p class="text-light">
-
-                Bem-vindo ao sistema da <strong class="text-gold">Faustino Motors Multimarcas</strong>.
-
-            </p>
+            <a href="<?= site_path() ?>/admin/login/sair.php" class="btn btn-sair">
+                <i class="bi bi-box-arrow-right"></i>
+                Sair
+            </a>
 
         </div>
 

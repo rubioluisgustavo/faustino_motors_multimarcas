@@ -68,6 +68,29 @@
 
 }
 
+.admin-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.btn-sair {
+    background: #8b0000 !important;
+    color: #fff !important;
+    font-weight: 800;
+    text-transform: uppercase;
+    border: 1px solid #a52a2a;
+    border-radius: 10px;
+    padding: 10px 18px;
+    white-space: nowrap;
+}
+
+.btn-sair:hover {
+    background: #b22222 !important;
+    color: #fff !important;
+}
+
 /* TITULO */
 
 .titulo-admin {
@@ -256,6 +279,15 @@ textarea.form-control {
 
 
 @media(max-width:768px) {
+    .admin-header {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .btn-sair {
+        align-self: flex-start;
+    }
+
     .card-admin {
         border-radius: 10px;
     }
