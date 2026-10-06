@@ -32,7 +32,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#">CONSIGNAÇÃO</a>
+                    <a class="nav-link" href="<?= site_path() ?>/?menu=consignacao">CONSIGNAÇÃO</a>
                 </li>
 
                 <li class="nav-item">

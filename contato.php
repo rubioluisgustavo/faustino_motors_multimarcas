@@ -7,7 +7,7 @@
         </div>
 
         <div class="row g-4">
-            <div class="col-lg-7">
+            <div class="col-lg-12">
                 <div class="contato-card h-100">
                     <h2>Fale conosco</h2>
                     <p class="contato-card-intro">Escolha o canal de atendimento que preferir.</p>
@@ -51,14 +51,14 @@
                 </div>
             </div>
 
-            <div class="col-lg-5">
+            <!-- <div class="col-lg-5">
                 <div class="contato-card contato-imagem h-100">
                     <div class="contato-imagem-placeholder">
                         <i class="bi bi-image" aria-hidden="true"></i>
                         <strong>Espaço reservado para imagem</strong>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
 
         <div class="contato-mapa mt-4">

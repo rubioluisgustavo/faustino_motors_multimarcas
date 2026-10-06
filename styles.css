@@ -270,6 +270,168 @@
     outline: 2px solid #fff;
 }
 
+.consignacao-page {
+    min-height: 60vh;
+    color: #eee;
+    background: #111;
+}
+
+.consignacao-heading {
+    max-width: 900px;
+    margin: 0 auto 3rem;
+}
+
+.consignacao-heading h1,
+.consignacao-section > h2,
+.consignacao-form-heading h2 {
+    color: #bb9000;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.consignacao-heading h1 {
+    margin: .4rem 0 1rem;
+}
+
+.consignacao-heading p {
+    color: #ddd;
+}
+
+.consignacao-eyebrow {
+    color: #fff;
+    font-size: .85rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+.consignacao-section {
+    margin: 2rem 0;
+}
+
+.consignacao-section > h2,
+.consignacao-form-heading h2 {
+    margin-bottom: 1.25rem;
+    font-size: 1.5rem;
+}
+
+.consignacao-etapas {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    padding: 0;
+    list-style: none;
+    counter-reset: consignacao-etapa;
+}
+
+.consignacao-etapas li,
+.consignacao-combinados article {
+    padding: 1.25rem;
+    background: #000;
+    border: 1px solid rgba(187, 144, 0, .55);
+    border-radius: 10px;
+}
+
+.consignacao-etapas li {
+    counter-increment: consignacao-etapa;
+}
+
+.consignacao-etapas h3,
+.consignacao-combinados h3 {
+    color: #e8c781;
+    font-size: 1.05rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.consignacao-etapas h3::before {
+    content: counter(consignacao-etapa) ". ";
+    color: #bb9000;
+}
+
+.consignacao-etapas p,
+.consignacao-combinados p {
+    margin: 0;
+    color: #ddd;
+}
+
+.consignacao-etapas p + p {
+    margin-top: .75rem;
+}
+
+.consignacao-beneficios {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: .75rem 1.25rem;
+    padding: 0;
+    list-style: none;
+}
+
+.consignacao-beneficios li {
+    position: relative;
+    padding: .85rem .85rem .85rem 2.5rem;
+    color: #fff;
+    background: #000;
+    border: 1px solid #333;
+    border-radius: 8px;
+}
+
+.consignacao-beneficios li::before {
+    position: absolute;
+    left: .9rem;
+    color: #bb9000;
+    content: "✓";
+    font-weight: 800;
+}
+
+.consignacao-combinados {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.consignacao-form-section {
+    padding: 2rem;
+    background: #171717;
+    border: 1px solid rgba(187, 144, 0, .65);
+    border-radius: 12px;
+}
+
+.consignacao-form-heading p {
+    color: #ddd;
+}
+
+.consignacao-aviso {
+    margin: 1.5rem 0;
+    color: #eee;
+}
+
+.consignacao-footer {
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    color: #ddd;
+    text-align: center;
+    border-top: 1px solid rgba(187, 144, 0, .55);
+}
+
+.consignacao-footer strong {
+    color: #bb9000;
+}
+
+@media (max-width: 767px) {
+    .consignacao-etapas,
+    .consignacao-beneficios,
+    .consignacao-combinados {
+        grid-template-columns: 1fr;
+    }
+
+    .consignacao-form-section {
+        padding: 1.25rem;
+    }
+}
+
 .check-aceite {
     margin-bottom: 1rem;
     font-weight: 400 !important;

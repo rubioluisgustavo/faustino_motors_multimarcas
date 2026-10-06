@@ -4,7 +4,7 @@
 <head>
     <?php require_once __DIR__ . '/includes/head.php'; ?>
     <?php require_once __DIR__ . '/includes/assets.php'; ?>
-    <link href="<?= site_path() ?>/styles.css?v=4" rel="stylesheet">
+    <link href="<?= site_path() ?>/styles.css?v=5" rel="stylesheet">
 </head>
 
 <body>
@@ -26,6 +26,9 @@
                 break;
             case 'pre-simulacao':
                 include("pre-simulacao.php");
+                break;
+            case 'consignacao':
+                include("consignacao.php");
                 break;
             case 'contato':
                 include("contato.php");
