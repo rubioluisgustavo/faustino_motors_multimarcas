@@ -91,7 +91,7 @@ $veiculos = (new VeiculoRepository($pdo))->listar([
 
                                         <i class="bi bi-calendar3"></i>
 
-                                        <?= $veiculo->getAno() ?>
+                                        <?= htmlspecialchars($veiculo->getAno(), ENT_QUOTES, 'UTF-8') ?>
 
                                     </div>
 

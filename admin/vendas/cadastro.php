@@ -24,11 +24,30 @@ $venda = $id ? $repository->buscarPorId($id) : new Venda();
             </div>
 
             <div class="col-md-6 form-group">
-                <label class="form-label">Imagem principal</label>
-                <input type="file" class="form-control" name="imagem_principal" accept="image/*">
+                <label class="form-label">Foto principal</label>
+                <input type="file" class="form-control" name="imagem_principal" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
                 <?php if ($venda->getImagemPrincipal()): ?>
                     <img src="../../<?= htmlspecialchars($venda->getImagemPrincipal()) ?>"
                          alt="Imagem atual" class="img-fluid mt-2" style="max-height: 160px">
+                <?php endif; ?>
+            </div>
+
+            <div class="col-md-6 form-group">
+                <label class="form-label" for="imagens-venda">Fotos adicionais para o carrossel</label>
+                <input
+                    type="file"
+                    id="imagens-venda"
+                    class="form-control"
+                    name="imagens[]"
+                    accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+                    multiple>
+                <small class="form-text text-light">Selecione uma ou mais fotos para adicionar à galeria.</small>
+                <?php if ($venda->getImagens()): ?>
+                    <div class="preview-galeria-venda mt-2">
+                        <?php foreach ($venda->getImagens() as $imagemAtual): ?>
+                            <img src="../../<?= htmlspecialchars($imagemAtual) ?>" alt="Foto atual da venda">
+                        <?php endforeach; ?>
+                    </div>
                 <?php endif; ?>
             </div>
 

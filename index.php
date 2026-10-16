@@ -4,7 +4,7 @@
 <head>
     <?php require_once __DIR__ . '/includes/head.php'; ?>
     <?php require_once __DIR__ . '/includes/assets.php'; ?>
-    <link href="<?= site_path() ?>/styles.css?v=5" rel="stylesheet">
+    <link href="<?= site_path() ?>/styles.css?v=6" rel="stylesheet">
 </head>
 
 <body>

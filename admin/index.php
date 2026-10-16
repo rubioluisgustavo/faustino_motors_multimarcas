@@ -29,10 +29,16 @@
                 </p>
             </div>
 
-            <a href="<?= site_path() ?>/admin/login/sair.php" class="btn btn-sair">
-                <i class="bi bi-box-arrow-right"></i>
-                Sair
-            </a>
+            <div class="d-flex flex-wrap gap-2">
+                <a href="<?= site_path() ?>/" class="btn btn-adicionar">
+                    <i class="bi bi-globe"></i>
+                    Ir para o site
+                </a>
+                <a href="<?= site_path() ?>/admin/login/sair.php" class="btn btn-sair">
+                    <i class="bi bi-box-arrow-right"></i>
+                    Sair
+                </a>
+            </div>
 
         </div>
 

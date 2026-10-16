@@ -2,6 +2,7 @@
 
 require_once "conexao.php";
 require_once __DIR__ . '/admin/veiculos/VeiculoRepository.php';
+require_once __DIR__ . '/includes/vehicle_description.php';
 
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 
@@ -35,6 +36,10 @@ if (!$veiculo) {
 */
 
 $opcionais = $veiculoRepository->listarOpcionais($id);
+$imagensVeiculo = array_values(array_unique(array_filter(array_merge(
+    $veiculo->getImagemPrincipal() ? [$veiculo->getImagemPrincipal()] : [],
+    $veiculoRepository->listarImagens($id)
+))));
 $valorEssencial = number_format($veiculo->getValor(), 2, ',', '.');
 $valorPremium = number_format($veiculo->getValorPremium() ?? $veiculo->getValor(), 2, ',', '.');
 [$valorEssencialInteiro, $valorEssencialCentavos] = explode(',', $valorEssencial);
@@ -58,23 +63,31 @@ $valorPremium = number_format($veiculo->getValorPremium() ?? $veiculo->getValor(
             <div class="col-lg-7">
 
                 <div class="imagem-detalhes-veiculo">
-
-                    <?php if (!empty($veiculo->getImagemPrincipal())): ?>
-
-                        <img
-                            src="<?= htmlspecialchars($veiculo->getImagemPrincipal()) ?>"
-                            alt="<?= htmlspecialchars(
-                                        $veiculo->getMarca() . ' ' . $veiculo->getModelo()
-                                    ) ?>">
-
+                    <?php if (count($imagensVeiculo) > 1): ?>
+                        <div id="veiculo-imagens-<?= $veiculo->getId() ?>" class="carousel slide" data-bs-interval="false">
+                            <div class="carousel-inner">
+                                <?php foreach ($imagensVeiculo as $indice => $imagem): ?>
+                                    <div class="carousel-item <?= $indice === 0 ? 'active' : '' ?>">
+                                        <img
+                                            src="<?= htmlspecialchars($imagem) ?>"
+                                            alt="<?= htmlspecialchars($veiculo->getMarca() . ' ' . $veiculo->getModelo()) ?> - Foto <?= $indice + 1 ?>">
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#veiculo-imagens-<?= $veiculo->getId() ?>" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Foto anterior</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#veiculo-imagens-<?= $veiculo->getId() ?>" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Próxima foto</span>
+                            </button>
+                        </div>
                     <?php else: ?>
-
                         <img
-                            src="img/sem-imagem.jpg"
-                            alt="Sem imagem">
-
+                            src="<?= htmlspecialchars($imagensVeiculo[0] ?? 'img/carros/noimage.svg') ?>"
+                            alt="<?= $imagensVeiculo ? htmlspecialchars($veiculo->getMarca() . ' ' . $veiculo->getModelo()) : 'Sem imagem' ?>">
                     <?php endif; ?>
-
                 </div>
 
                 <?php if (!empty($opcionais)): ?>
@@ -95,6 +108,13 @@ $valorPremium = number_format($veiculo->getValorPremium() ?? $veiculo->getValor(
                             <?php endforeach; ?>
                         </div>
                     </div>
+                <?php endif; ?>
+
+                <?php if ($veiculo->getDescricao() !== ''): ?>
+                    <section class="descricao-detalhes-veiculo mt-4">
+                        <h2>Descrição do veículo</h2>
+                        <div><?= vehicleDescriptionHtml($veiculo->getDescricao()) ?></div>
+                    </section>
                 <?php endif; ?>
 
             </div>
@@ -245,11 +265,16 @@ $valorPremium = number_format($veiculo->getValorPremium() ?? $veiculo->getValor(
 
                     <a
                         href="https://wa.me/5514997533055?text=<?= urlencode(
-                                                                    'Olá! Venho pelo site e tenho interesse no veículo ' .
-                                                                        $veiculo->getMarca() . ' ' .
-                                                                        $veiculo->getModelo() . ' ' .
-                                                                        $veiculo->getAno()
-                                                                ) ?>"
+                            "Olá! Venho pelo site e tenho interesse neste veículo.\n\n" .
+                            "*Marca:* " . $veiculo->getMarca() . "\n" .
+                            "*Modelo:* " . $veiculo->getModelo() . "\n" .
+                            "*Ano:* " . $veiculo->getAno() . "\n" .
+                            "*Quilometragem:* " . number_format($veiculo->getKm(), 0, ',', '.') . " km\n" .
+                            "*Câmbio:* " . $veiculo->getCambio() . "\n" .
+                            "*Combustível:* " . $veiculo->getCombustivel() . "\n" .
+                            "*Faustino Essencial:* R$ " . $valorEssencial . "\n" .
+                            "*Faustino Premium:* R$ " . $valorPremium
+                        ) ?>"
                         target="_blank"
                         class="btn-interesse">
 

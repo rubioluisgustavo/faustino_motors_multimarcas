@@ -14,7 +14,28 @@ class VendaRepository
              ORDER BY id DESC'
         );
 
-        return array_map([Venda::class, 'fromArray'], $stmt->fetchAll());
+        $vendas = $stmt->fetchAll();
+        if (!$vendas) {
+            return [];
+        }
+
+        $placeholders = implode(',', array_fill(0, count($vendas), '?'));
+        $imagensStmt = $this->pdo->prepare(
+            "SELECT id_venda, imagem FROM venda_imagens
+             WHERE id_venda IN ($placeholders) ORDER BY id ASC"
+        );
+        $imagensStmt->execute(array_column($vendas, 'id'));
+        $imagensPorVenda = [];
+        foreach ($imagensStmt->fetchAll() as $imagem) {
+            $imagensPorVenda[$imagem['id_venda']][] = $imagem['imagem'];
+        }
+
+        foreach ($vendas as &$venda) {
+            $venda['imagens'] = $imagensPorVenda[$venda['id']] ?? [];
+        }
+        unset($venda);
+
+        return array_map([Venda::class, 'fromArray'], $vendas);
     }
 
     public function buscarPorId(int $id): ?Venda
@@ -26,10 +47,20 @@ class VendaRepository
         $stmt->execute(['id' => $id]);
         $dados = $stmt->fetch();
 
-        return $dados ? Venda::fromArray($dados) : null;
+        if (!$dados) {
+            return null;
+        }
+
+        $imagensStmt = $this->pdo->prepare(
+            'SELECT imagem FROM venda_imagens WHERE id_venda = ? ORDER BY id ASC'
+        );
+        $imagensStmt->execute([$id]);
+        $dados['imagens'] = array_column($imagensStmt->fetchAll(), 'imagem');
+
+        return Venda::fromArray($dados);
     }
 
-    public function salvar(Venda $venda, ?string $imagem = null): void
+    public function salvar(Venda $venda, ?string $imagem = null): int
     {
         if ($venda->getId() !== null) {
             $sql = 'UPDATE vendas SET nome = :nome, depoimento = :depoimento';
@@ -46,7 +77,7 @@ class VendaRepository
 
             $stmt = $this->pdo->prepare($sql . ' WHERE id = :id');
             $stmt->execute($params);
-            return;
+            return $venda->getId() ?? throw new LogicException('O ID da venda não foi definido.');
         }
 
         $stmt = $this->pdo->prepare(
@@ -58,11 +89,26 @@ class VendaRepository
             'imagem_principal' => $imagem,
             'depoimento' => $venda->getDepoimento(),
         ]);
+        return (int) $this->pdo->lastInsertId();
     }
 
     public function excluir(int $id): void
     {
         $stmt = $this->pdo->prepare('DELETE FROM vendas WHERE id = :id');
         $stmt->execute(['id' => $id]);
+    }
+
+    public function adicionarImagens(int $idVenda, array $imagens): void
+    {
+        if (!$imagens) {
+            return;
+        }
+
+        $stmt = $this->pdo->prepare(
+            'INSERT INTO venda_imagens (id_venda, imagem) VALUES (:id_venda, :imagem)'
+        );
+        foreach ($imagens as $imagem) {
+            $stmt->execute(['id_venda' => $idVenda, 'imagem' => $imagem]);
+        }
     }
 }

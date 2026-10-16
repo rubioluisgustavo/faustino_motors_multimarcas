@@ -14,6 +14,8 @@ USE `faustino_motors_multimarcas`;
 SET FOREIGN_KEY_CHECKS = 0;
 
 DROP TABLE IF EXISTS `veiculos_opcionais`;
+DROP TABLE IF EXISTS `veiculo_imagens`;
+DROP TABLE IF EXISTS `venda_imagens`;
 DROP TABLE IF EXISTS `veiculos`;
 DROP TABLE IF EXISTS `vendas`;
 DROP TABLE IF EXISTS `modelos`;
@@ -90,14 +92,14 @@ ALTER TABLE `usuarios` AUTO_INCREMENT = 4;
 CREATE TABLE `veiculos` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `id_modelo` int(11) NOT NULL,
-    `ano` varchar(10) DEFAULT NULL,
+    `ano` varchar(20) DEFAULT NULL,
     `km` varchar(100) DEFAULT NULL,
     `cambio` enum('manual','automatico') NOT NULL,
     `combustivel` enum('flex','gasolina','etanol','diesel','eletrico','hibrido') NOT NULL,
     `valor` int(11) DEFAULT NULL,
     `valor_premium` int(11) DEFAULT NULL,
     `imagem_principal` varchar(255) DEFAULT NULL,
-    `descricao` varchar(1000) DEFAULT NULL,
+    `descricao` longtext DEFAULT NULL,
     `novo` enum('y','n') NOT NULL DEFAULT 'n',
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -121,6 +123,16 @@ INSERT INTO `veiculos` (
     (12, 10, '2010', '120000', 'manual', 'diesel', 125000, NULL, 'img/carros/1788547460_6a9b1184346c4.jpg', 'Hilux impecável', 'y');
 
 ALTER TABLE `veiculos` AUTO_INCREMENT = 13;
+
+CREATE TABLE `veiculo_imagens` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `id_veiculo` int(11) NOT NULL,
+    `imagem` varchar(255) NOT NULL,
+    PRIMARY KEY (`id`),
+    KEY `idx_veiculo_imagens_veiculo` (`id_veiculo`),
+    CONSTRAINT `fk_veiculo_imagens_veiculo`
+        FOREIGN KEY (`id_veiculo`) REFERENCES `veiculos` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `veiculos_opcionais` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -150,9 +162,18 @@ CREATE TABLE `vendas` (
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+CREATE TABLE `venda_imagens` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `id_venda` int(11) NOT NULL,
+    `imagem` varchar(255) NOT NULL,
+    PRIMARY KEY (`id`),
+    KEY `idx_venda_imagens_venda` (`id_venda`),
+    CONSTRAINT `fk_venda_imagens_venda`
+        FOREIGN KEY (`id_venda`) REFERENCES `vendas` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 INSERT INTO `vendas` (`id`, `nome`, `imagem_principal`, `depoimento`) VALUES
     (1, 'Zé2', 'img/vendas/1788551140_6a9b1fe4d57ed5.36251248.jpg', 'ótima compra'),
     (2, 'Pedro teles', 'img/vendas/1788551402_6a9b20eae759b2.71812269.jpg', 'compra melhor de todas');
 
 ALTER TABLE `vendas` AUTO_INCREMENT = 3;
-

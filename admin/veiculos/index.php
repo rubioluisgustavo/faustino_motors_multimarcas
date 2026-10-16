@@ -126,7 +126,7 @@ $erro = $_GET['erro'] ?? null;
 
 
                         <td>
-                            <?= $v->getAno() ?>
+                            <?= htmlspecialchars($v->getAno(), ENT_QUOTES, 'UTF-8') ?>
                         </td>
 
 

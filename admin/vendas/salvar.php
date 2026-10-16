@@ -3,6 +3,7 @@
 require_once "../../conexao.php";
 require_once "../includes/auth.php";
 require_once __DIR__ . '/VendaRepository.php';
+require_once __DIR__ . '/../../includes/image_upload.php';
 
 $id = isset($_POST['id']) && $_POST['id'] !== '' ? (int) $_POST['id'] : null;
 $nome = trim($_POST['nome'] ?? '');
@@ -13,36 +14,61 @@ if ($nome === '') {
     exit;
 }
 
-$imagem = null;
-if (isset($_FILES['imagem_principal']) && $_FILES['imagem_principal']['error'] !== UPLOAD_ERR_NO_FILE) {
-    if ($_FILES['imagem_principal']['error'] !== UPLOAD_ERR_OK) {
-        die('Erro ao enviar a imagem.');
+try {
+    $imagem = null;
+    if (isset($_FILES['imagem_principal']) && $_FILES['imagem_principal']['error'] !== UPLOAD_ERR_NO_FILE) {
+        if ($_FILES['imagem_principal']['error'] !== UPLOAD_ERR_OK) {
+            throw new RuntimeException('Erro ao enviar a imagem principal.');
+        }
+        $imagem = storeUploadedImage(
+            $_FILES['imagem_principal']['tmp_name'],
+            $_FILES['imagem_principal']['name'],
+            __DIR__ . '/../../img/vendas',
+            'img/vendas'
+        );
     }
 
-    $extensao = strtolower(pathinfo($_FILES['imagem_principal']['name'], PATHINFO_EXTENSION));
-    $extensoesPermitidas = ['jpg', 'jpeg', 'png', 'webp'];
-    if (!in_array($extensao, $extensoesPermitidas, true)) {
-        die('Formato de imagem não permitido.');
+    $imagensExtras = [];
+    if (isset($_FILES['imagens'])) {
+        foreach ($_FILES['imagens']['error'] as $index => $error) {
+            if ($error === UPLOAD_ERR_NO_FILE) {
+                continue;
+            }
+            if ($error !== UPLOAD_ERR_OK) {
+                throw new RuntimeException('Erro ao enviar uma das fotos adicionais.');
+            }
+            $imagensExtras[] = storeUploadedImage(
+                $_FILES['imagens']['tmp_name'][$index],
+                $_FILES['imagens']['name'][$index],
+                __DIR__ . '/../../img/vendas',
+                'img/vendas'
+            );
+        }
     }
 
-    $pasta = "../../img/vendas/";
-    if (!is_dir($pasta) && !mkdir($pasta, 0755, true)) {
-        die('Não foi possível preparar a pasta de imagens.');
+    $repository = new VendaRepository($pdo);
+    $pdo->beginTransaction();
+    $idVenda = $repository->salvar(new Venda([
+        'id' => $id,
+        'nome' => $nome,
+        'depoimento' => $depoimento,
+    ]), $imagem);
+    $repository->adicionarImagens($idVenda, $imagensExtras);
+    $pdo->commit();
+} catch (RuntimeException $exception) {
+    if ($pdo->inTransaction()) {
+        $pdo->rollBack();
     }
-
-    $nomeArquivo = time() . '_' . uniqid('', true) . '.' . $extensao;
-    if (!move_uploaded_file($_FILES['imagem_principal']['tmp_name'], $pasta . $nomeArquivo)) {
-        die('Não foi possível salvar a imagem.');
+    http_response_code(400);
+    exit(htmlspecialchars($exception->getMessage(), ENT_QUOTES, 'UTF-8'));
+} catch (PDOException $exception) {
+    if ($pdo->inTransaction()) {
+        $pdo->rollBack();
     }
-    $imagem = 'img/vendas/' . $nomeArquivo;
+    error_log('Erro ao salvar venda: ' . $exception->getMessage());
+    http_response_code(500);
+    exit('Não foi possível salvar a venda.');
 }
-
-$repository = new VendaRepository($pdo);
-$repository->salvar(new Venda([
-    'id' => $id,
-    'nome' => $nome,
-    'depoimento' => $depoimento,
-]), $imagem);
 
 header('Location: ' . site_path() . '/admin/vendas/');
 exit;

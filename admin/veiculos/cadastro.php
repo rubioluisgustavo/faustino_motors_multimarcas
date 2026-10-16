@@ -4,6 +4,7 @@
 require_once "../../conexao.php";
 require_once "../includes/auth.php";
 require_once __DIR__ . '/VeiculoRepository.php';
+require_once __DIR__ . '/../../includes/vehicle_description.php';
 require_once __DIR__ . '/../modelos/ModeloRepository.php';
 require_once __DIR__ . '/../opcionais/OpcionalRepository.php';
 require_once __DIR__ . '/../includes/head.php';
@@ -22,6 +23,8 @@ $id = isset($_GET['id']) ? (int) $_GET['id'] : null;
 // =============================
 
 $veiculo = new Veiculo();
+$veiculoRepository = new VeiculoRepository($pdo);
+$imagensVeiculo = [];
 
 
 // =============================
@@ -37,7 +40,7 @@ $opcionaisSelecionados = [];
 
 if ($id) {
 
-    $veiculoEncontrado = (new VeiculoRepository($pdo))->buscarPorId($id);
+    $veiculoEncontrado = $veiculoRepository->buscarPorId($id);
     if ($veiculoEncontrado) {
         $veiculo = $veiculoEncontrado;
     }
@@ -63,6 +66,7 @@ if ($id) {
     $opcionaisSelecionados = $sql->fetchAll(
         PDO::FETCH_COLUMN
     );
+    $imagensVeiculo = $veiculoRepository->listarImagens($id);
 }
 
 
@@ -179,10 +183,12 @@ $opcionais = (new OpcionalRepository($pdo))->listar();
 
 
                 <input
-                    type="number"
+                    type="text"
                     class="form-control"
                     name="ano"
-                    value="<?= $veiculo->getAno() ?: '' ?>">
+                    value="<?= htmlspecialchars($veiculo->getAno(), ENT_QUOTES, 'UTF-8') ?>"
+                    maxlength="10"
+                    placeholder="Ex.: 2011/2012">
 
 
             </div>
@@ -340,9 +346,21 @@ $opcionais = (new OpcionalRepository($pdo))->listar();
                     type="file"
                     class="form-control"
                     name="imagem_principal"
-                    accept="image/*">
+                    accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
 
 
+            </div>
+
+            <div class="col-md-6 form-group">
+                <label class="form-label" for="imagens-veiculo">Fotos adicionais para o carrossel</label>
+                <input
+                    type="file"
+                    id="imagens-veiculo"
+                    class="form-control"
+                    name="imagens[]"
+                    accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+                    multiple>
+                <small class="form-text text-light">Selecione uma ou mais fotos para adicionar à galeria.</small>
             </div>
 
             <script>
@@ -376,28 +394,19 @@ $opcionais = (new OpcionalRepository($pdo))->listar();
 
 
             <!-- Preview -->
-            <div class="col-md-6">
+            <div class="col-12">
 
 
-                <?php if (!empty($veiculo->getImagemPrincipal())): ?>
-
-
-                    <label class="form-label">
-                        Imagem atual
-                    </label>
-
-
-                    <div class="preview-imagem">
-
-
-                        <img
-                            src="../../<?= htmlspecialchars($veiculo->getImagemPrincipal()) ?>"
-                            class="img-fluid">
-
-
+                <?php if (!empty($veiculo->getImagemPrincipal()) || $imagensVeiculo): ?>
+                    <label class="form-label">Fotos atuais</label>
+                    <div class="preview-galeria-veiculo">
+                        <?php foreach (array_merge(
+                            $veiculo->getImagemPrincipal() ? [$veiculo->getImagemPrincipal()] : [],
+                            $imagensVeiculo
+                        ) as $imagemAtual): ?>
+                            <img src="../../<?= htmlspecialchars($imagemAtual) ?>" alt="Foto atual do veículo">
+                        <?php endforeach; ?>
                     </div>
-
-
                 <?php endif; ?>
 
 
@@ -416,10 +425,21 @@ $opcionais = (new OpcionalRepository($pdo))->listar();
                 </label>
 
 
-                <textarea
-                    class="form-control"
-                    rows="5"
-                    name="descricao"><?= htmlspecialchars($veiculo->getDescricao()) ?></textarea>
+                <div class="descricao-toolbar" role="toolbar" aria-label="Formatação da descrição">
+                    <button type="button" class="btn btn-sm btn-outline-light" data-command="bold" aria-label="Negrito"><strong>B</strong></button>
+                    <button type="button" class="btn btn-sm btn-outline-light" data-command="italic" aria-label="Itálico"><em>I</em></button>
+                    <button type="button" class="btn btn-sm btn-outline-light" data-command="underline" aria-label="Sublinhado"><u>U</u></button>
+                    <button type="button" class="btn btn-sm btn-outline-light" data-command="insertUnorderedList">Lista</button>
+                    <button type="button" class="btn btn-sm btn-outline-light" data-command="insertOrderedList">Lista numerada</button>
+                </div>
+                <div
+                    id="descricao-editor"
+                    class="form-control descricao-editor"
+                    contenteditable="true"
+                    role="textbox"
+                    aria-label="Descrição do veículo"
+                    aria-multiline="true"><?= vehicleDescriptionHtml($veiculo->getDescricao()) ?></div>
+                <input type="hidden" name="descricao" id="descricao">
 
 
             </div>
@@ -489,13 +509,35 @@ $opcionais = (new OpcionalRepository($pdo))->listar();
                         </span>
 
                         <span class="marcar-novo-texto">
-                            <strong>Marcar como novo</strong>
-                            <small>Exibir este veículo com o selo "Novo"</small>
+                            <strong>Marcar como novidade</strong>
+                            <small>Exibir este veículo com o selo "Novidade"</small>
                         </span>
 
                     </label>
 
                 </div>
+
+                <script>
+                    (function () {
+                        const editor = document.getElementById('descricao-editor');
+                        const descricao = document.getElementById('descricao');
+                        const form = editor.closest('form');
+
+                        document.querySelectorAll('.descricao-toolbar [data-command]').forEach(function (button) {
+                            button.addEventListener('mousedown', function (event) {
+                                event.preventDefault();
+                            });
+                            button.addEventListener('click', function () {
+                                editor.focus();
+                                document.execCommand(button.dataset.command, false);
+                            });
+                        });
+
+                        form.addEventListener('submit', function () {
+                            descricao.value = editor.innerHTML;
+                        });
+                    }());
+                </script>
             </div>
 
 

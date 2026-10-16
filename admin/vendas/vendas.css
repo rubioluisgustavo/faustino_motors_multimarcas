@@ -43,6 +43,11 @@
     border: 1px solid #bb9000;
 }
 
+.preview-galeria-venda img {
+    width: 100px;
+    height: 70px;
+}
+
 .venda-depoimento {
     min-width: 280px;
     max-width: 520px;

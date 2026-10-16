@@ -94,26 +94,18 @@ $modelos = (new ModeloRepository($pdo))->listarDisponiveis();
                         </option>
 
                         <?php
-
                         $anoSelecionado = $_GET['ano'] ?? '';
-
-                        for (
-                            $ano = date('Y');
-                            $ano >= 1990;
-                            $ano--
-                        ):
-
+                        $anosDisponiveis = $pdo->query(
+                            "SELECT DISTINCT ano FROM veiculos WHERE ano IS NOT NULL AND ano <> '' ORDER BY ano DESC"
+                        )->fetchAll(PDO::FETCH_COLUMN);
                         ?>
-
+                        <?php foreach ($anosDisponiveis as $anoDisponivel): ?>
                             <option
-                                value="<?= $ano ?>"
-                                <?= $anoSelecionado == $ano ? 'selected' : '' ?>>
-
-                                <?= $ano ?>
-
+                                value="<?= htmlspecialchars($anoDisponivel, ENT_QUOTES, 'UTF-8') ?>"
+                                <?= $anoSelecionado === $anoDisponivel ? 'selected' : '' ?>>
+                                <?= htmlspecialchars($anoDisponivel, ENT_QUOTES, 'UTF-8') ?>
                             </option>
-
-                        <?php endfor; ?>
+                        <?php endforeach; ?>
 
                     </select>
 

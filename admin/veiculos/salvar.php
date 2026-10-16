@@ -2,6 +2,9 @@
 
 require_once "../../conexao.php";
 require_once "../includes/auth.php";
+require_once __DIR__ . '/../../includes/image_upload.php';
+require_once __DIR__ . '/../../includes/vehicle_description.php';
+require_once __DIR__ . '/VeiculoRepository.php';
 
 // ============================= 
 // DADOS RECEBIDOS 
@@ -9,12 +12,12 @@ require_once "../includes/auth.php";
 
 $id = $_POST['id'] ?? null;
 
-$id_modelo = $_POST['id_modelo'];
-$ano = $_POST['ano'];
-$km = $_POST['km'];
-$cambio = $_POST['cambio'];
-$combustivel = $_POST['combustivel'];
-$descricao = $_POST['descricao'];
+$id_modelo = $_POST['id_modelo'] ?? '';
+$ano = trim($_POST['ano'] ?? '');
+$km = $_POST['km'] ?? '';
+$cambio = $_POST['cambio'] ?? '';
+$combustivel = $_POST['combustivel'] ?? '';
+$descricao = sanitizeVehicleDescription($_POST['descricao'] ?? '');
 $novo = isset($_POST['novo']) && $_POST['novo'] == 'y' ? 'y' : 'n';
 
 // Opcionais selecionados 
@@ -38,41 +41,40 @@ $valorPremium = $valorPremium === ''
 // ============================= 
 
 $imagem = null;
+$imagensExtras = [];
 
-if (
-    isset($_FILES['imagem_principal']) &&
-    $_FILES['imagem_principal']['error'] == 0
-) {
-    $extensao = strtolower(pathinfo($_FILES['imagem_principal']['name'], PATHINFO_EXTENSION));
-    $tiposPermitidos = [
-        'jpg' => 'image/jpeg',
-        'jpeg' => 'image/jpeg',
-        'png' => 'image/png',
-        'webp' => 'image/webp',
-    ];
-    $mime = (new finfo(FILEINFO_MIME_TYPE))->file($_FILES['imagem_principal']['tmp_name']);
-
-    if (!isset($tiposPermitidos[$extensao]) || $tiposPermitidos[$extensao] !== $mime) {
-        die("Formato de imagem não permitido.");
-    }
-
-    $pasta = "../../img/carros/";
-
-    if (!is_dir($pasta)) {
-        mkdir($pasta, 0755, true);
-    }
-
-    $nomeArquivo = bin2hex(random_bytes(16)) . "." . $extensao;
-    $destino = $pasta . $nomeArquivo;
-
-    if (
-        move_uploaded_file(
+try {
+    if (isset($_FILES['imagem_principal']) && $_FILES['imagem_principal']['error'] !== UPLOAD_ERR_NO_FILE) {
+        if ($_FILES['imagem_principal']['error'] !== UPLOAD_ERR_OK) {
+            throw new RuntimeException('Erro ao enviar a imagem principal.');
+        }
+        $imagem = storeUploadedImage(
             $_FILES['imagem_principal']['tmp_name'],
-            $destino
-        )
-    ) {
-        $imagem = "img/carros/" . $nomeArquivo;
+            $_FILES['imagem_principal']['name'],
+            __DIR__ . '/../../img/carros',
+            'img/carros'
+        );
     }
+
+    if (isset($_FILES['imagens'])) {
+        foreach ($_FILES['imagens']['error'] as $index => $error) {
+            if ($error === UPLOAD_ERR_NO_FILE) {
+                continue;
+            }
+            if ($error !== UPLOAD_ERR_OK) {
+                throw new RuntimeException('Erro ao enviar uma das fotos adicionais.');
+            }
+            $imagensExtras[] = storeUploadedImage(
+                $_FILES['imagens']['tmp_name'][$index],
+                $_FILES['imagens']['name'][$index],
+                __DIR__ . '/../../img/carros',
+                'img/carros'
+            );
+        }
+    }
+} catch (RuntimeException $exception) {
+    http_response_code(400);
+    exit(htmlspecialchars($exception->getMessage(), ENT_QUOTES, 'UTF-8'));
 }
 
 // ============================= 
@@ -88,25 +90,21 @@ try {
     // ============================= 
     if ($id) {
 
-        // Com nova imagem 
         if ($imagem) {
-            // Corrigido: Removida aspas do ? do campo novo e adicionada a vírgula antes de novo
-            $sql = $pdo->prepare(" 
-                UPDATE veiculos SET 
-                    id_modelo = ?, 
-                    ano = ?, 
-                    km = ?, 
-                    cambio = ?, 
-                    combustivel = ?, 
+            $sql = $pdo->prepare("
+                UPDATE veiculos SET
+                    id_modelo = ?,
+                    ano = ?,
+                    km = ?,
+                    cambio = ?,
+                    combustivel = ?,
                     valor = ?,
                     valor_premium = ?,
-                    imagem_principal = ?, 
+                    imagem_principal = ?,
                     descricao = ?,
-                    novo = ? 
-                WHERE id = ? 
+                    novo = ?
+                WHERE id = ?
             ");
-
-            // Corrigido: Ordem das variáveis sincronizada com a query acima ($novo antes do $id)
             $sql->execute([
                 $id_modelo,
                 $ano,
@@ -120,25 +118,20 @@ try {
                 $novo,
                 $id
             ]);
-        }
-
-        // Sem nova imagem 
-        else {
-            // Corrigido: Adicionada a vírgula antes do campo novo e removida a aspas do ?
-            $sql = $pdo->prepare(" 
-                UPDATE veiculos SET 
-                    id_modelo = ?, 
-                    ano = ?, 
-                    km = ?, 
-                    cambio = ?, 
-                    combustivel = ?, 
+        } else {
+            $sql = $pdo->prepare("
+                UPDATE veiculos SET
+                    id_modelo = ?,
+                    ano = ?,
+                    km = ?,
+                    cambio = ?,
+                    combustivel = ?,
                     valor = ?,
                     valor_premium = ?,
                     descricao = ?,
-                    novo = ? 
-                WHERE id = ? 
+                    novo = ?
+                WHERE id = ?
             ");
-
             $sql->execute([
                 $id_modelo,
                 $ano,
@@ -152,8 +145,6 @@ try {
                 $id
             ]);
         }
-
-
 
         $id_veiculo = $id;
     }
@@ -229,6 +220,8 @@ try {
             ]);
         }
     }
+
+    (new VeiculoRepository($pdo))->adicionarImagens((int) $id_veiculo, $imagensExtras);
 
     // ============================= 
     // CONFIRMA 

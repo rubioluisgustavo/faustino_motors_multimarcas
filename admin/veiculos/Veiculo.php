@@ -6,7 +6,7 @@ class Veiculo
     private ?int $idModelo;
     private string $marca;
     private string $modelo;
-    private int $ano;
+    private string $ano;
     private float $km;
     private string $cambio;
     private string $combustivel;
@@ -22,7 +22,7 @@ class Veiculo
         $this->idModelo = isset($dados['id_modelo']) ? (int) $dados['id_modelo'] : null;
         $this->marca = $dados['marca'] ?? '';
         $this->modelo = $dados['modelo'] ?? '';
-        $this->ano = (int) ($dados['ano'] ?? 0);
+        $this->ano = (string) ($dados['ano'] ?? '');
         $this->km = (float) ($dados['km'] ?? 0);
         $this->cambio = $dados['cambio'] ?? '';
         $this->combustivel = $dados['combustivel'] ?? '';
@@ -40,7 +40,7 @@ class Veiculo
     public function getIdModelo(): ?int { return $this->idModelo; }
     public function getMarca(): string { return $this->marca; }
     public function getModelo(): string { return $this->modelo; }
-    public function getAno(): int { return $this->ano; }
+    public function getAno(): string { return $this->ano; }
     public function getKm(): float { return $this->km; }
     public function getCambio(): string { return $this->cambio; }
     public function getCombustivel(): string { return $this->combustivel; }

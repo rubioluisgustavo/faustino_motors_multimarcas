@@ -234,6 +234,42 @@
 
 }
 
+.preview-galeria-veiculo,
+.preview-galeria-venda {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.preview-galeria-veiculo img,
+.preview-galeria-venda img {
+    width: 120px;
+    height: 85px;
+    object-fit: cover;
+    border: 1px solid #bb9000;
+    border-radius: 6px;
+}
+
+.descricao-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 6px;
+}
+
+.descricao-editor {
+    min-height: 150px;
+    height: auto;
+    padding: 12px;
+    overflow-y: auto;
+    white-space: normal;
+}
+
+.descricao-editor ul,
+.descricao-editor ol {
+    padding-left: 1.5rem;
+}
+
 /* =========================================
    MARCAR COMO NOVO
 ========================================= */

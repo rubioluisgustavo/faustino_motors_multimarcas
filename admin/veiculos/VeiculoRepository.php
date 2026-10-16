@@ -61,4 +61,28 @@ class VeiculoRepository
         $stmt->execute([$idVeiculo]);
         return array_map([Opcional::class, 'fromArray'], $stmt->fetchAll());
     }
+
+    public function listarImagens(int $idVeiculo): array
+    {
+        $stmt = $this->pdo->prepare(
+            'SELECT imagem FROM veiculo_imagens
+             WHERE id_veiculo = ? ORDER BY id ASC'
+        );
+        $stmt->execute([$idVeiculo]);
+        return array_column($stmt->fetchAll(), 'imagem');
+    }
+
+    public function adicionarImagens(int $idVeiculo, array $imagens): void
+    {
+        if (!$imagens) {
+            return;
+        }
+
+        $stmt = $this->pdo->prepare(
+            'INSERT INTO veiculo_imagens (id_veiculo, imagem) VALUES (?, ?)'
+        );
+        foreach ($imagens as $imagem) {
+            $stmt->execute([$idVeiculo, $imagem]);
+        }
+    }
 }

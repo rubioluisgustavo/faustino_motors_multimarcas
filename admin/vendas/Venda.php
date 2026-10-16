@@ -6,6 +6,7 @@ class Venda
     private string $nome;
     private ?string $imagemPrincipal;
     private string $depoimento;
+    private array $imagens;
 
     public function __construct(array $dados = [])
     {
@@ -13,6 +14,7 @@ class Venda
         $this->nome = trim($dados['nome'] ?? '');
         $this->imagemPrincipal = $dados['imagem_principal'] ?? null;
         $this->depoimento = trim($dados['depoimento'] ?? '');
+        $this->imagens = $dados['imagens'] ?? [];
     }
 
     public static function fromArray(array $dados): self
@@ -24,4 +26,5 @@ class Venda
     public function getNome(): string { return $this->nome; }
     public function getImagemPrincipal(): ?string { return $this->imagemPrincipal; }
     public function getDepoimento(): string { return $this->depoimento; }
+    public function getImagens(): array { return $this->imagens; }
 }

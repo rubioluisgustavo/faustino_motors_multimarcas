@@ -52,6 +52,10 @@
                     <div class="subtitulo">
                         Aceitamos seu veículo como parte do pagamento.
                     </div>
+                    <a href="<?= site_path() ?>/admin/login/" class="btn btn-outline-warning btn-sm mt-2">
+                        <i class="bi bi-lock-fill"></i>
+                        Área administrativa
+                    </a>
                 </div>
             </div>
 
